@@ -1,0 +1,31 @@
+parameters:
+
+
+application:
+	errorPresenter: Error
+	mapping:
+		*: Ondra\App\*\UI\Http\Web\*Presenter
+
+
+latte:
+	strictTypes: yes
+
+tracy:
+	maxLength: 500
+	maxDepth: 2
+	showLocation: false
+	showBar: true
+
+session:
+	expiration: 14 days
+
+http:
+	headers:
+		Cache-Control: "no-store, no-cache, must-revalidate, post-check=0, pre-check=0"
+		Pragma: "no-cache"
+		Expires: "Thu, 19 Nov 1981 08:52:00 GMT"
+
+di:
+	export:
+		parameters: no
+		tags: no

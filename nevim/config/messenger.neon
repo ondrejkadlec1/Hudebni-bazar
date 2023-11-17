@@ -1,0 +1,27 @@
+extensions:
+	messenger: Contributte\Messenger\DI\MessengerExtension
+
+messenger:
+	debug:
+		panel: true
+	bus:
+		messageBus:
+			middlewares:
+				#- LoggerMiddleware()
+				#- @loggerMiddleware
+			autowired: true
+			allowNoHandlers: false
+			allowNoSenders: true
+	transport:
+		sync:
+			dsn: sync://
+
+services:
+	- Contributte\Messenger\Bus\QueryBus
+	- Contributte\Messenger\Bus\CommandBus
+	- \Ondra\App\System\Application\BusProvider(@Contributte\Messenger\Bus\CommandBus, @Contributte\Messenger\Bus\QueryBus)
+
+decorator:
+	Ondra\App\System\Application\CQRSCapable:
+		setup:
+			- setBusProvider(@\Ondra\App\System\Application\BusProvider)

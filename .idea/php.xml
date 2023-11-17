@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MessDetector">
+    <phpmd_settings>
+      <MessDetectorConfiguration tool_path="$PROJECT_DIR$/nevim/vendor/bin/phpmd" />
+    </phpmd_settings>
+  </component>
+  <component name="MessDetectorOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
+  <component name="PHPCSFixerOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
+  <component name="PHPCodeSnifferOptionsConfiguration">
+    <option name="highlightLevel" value="WARNING" />
+    <option name="transferred" value="true" />
+  </component>
+  <component name="PhpCSFixer">
+    <phpcsfixer_settings>
+      <PhpCSFixerConfiguration tool_path="$PROJECT_DIR$/nevim/vendor/bin/php-cs-fixer" />
+    </phpcsfixer_settings>
+  </component>
+  <component name="PhpCodeSniffer">
+    <phpcs_settings>
+      <PhpCSConfiguration beautifier_path="$PROJECT_DIR$/nevim/vendor/bin/phpcbf" tool_path="$PROJECT_DIR$/nevim/vendor/bin/phpcs" />
+    </phpcs_settings>
+  </component>
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$PROJECT_DIR$/nevim/vendor/nette/forms" />
+      <path value="$PROJECT_DIR$/nevim/vendor/nette/bootstrap" />
+      <path value="$PROJECT_DIR$/nevim/vendor/nette/security" />
+      <path value="$PROJECT_DIR$/nevim/vendor/nette/php-generator" />
+      <path value="$PROJECT_DIR$/nevim/vendor/nette/mail" />
+      <path value="$PROJECT_DIR$/nevim/vendor/nette/component-model" />
+      <path value="$PROJECT_DIR$/nevim/vendor/nette/utils" />
+      <path value="$PROJECT_DIR$/nevim/vendor/nette/robot-loader" />
+      <path value="$PROJECT_DIR$/nevim/vendor/latte/latte" />
+      <path value="$PROJECT_DIR$/nevim/vendor/nette/database" />
+      <path value="$PROJECT_DIR$/nevim/vendor/nette/di" />
+      <path value="$PROJECT_DIR$/nevim/vendor/tracy/tracy" />
+      <path value="$PROJECT_DIR$/nevim/vendor/symfony/thanks" />
+      <path value="$PROJECT_DIR$/nevim/vendor/nette/schema" />
+      <path value="$PROJECT_DIR$/nevim/vendor/nette/http" />
+      <path value="$PROJECT_DIR$/nevim/vendor/nette/finder" />
+      <path value="$PROJECT_DIR$/nevim/vendor/nette/neon" />
+      <path value="$PROJECT_DIR$/nevim/vendor/nette/tester" />
+      <path value="$PROJECT_DIR$/nevim/vendor/nette/application" />
+      <path value="$PROJECT_DIR$/nevim/vendor/nette/routing" />
+      <path value="$PROJECT_DIR$/nevim/vendor/composer" />
+      <path value="$PROJECT_DIR$/nevim/vendor/nette/caching" />
+      <path value="$PROJECT_DIR$/nevim/vendor/graham-campbell/result-type" />
+      <path value="$PROJECT_DIR$/nevim/vendor/vlucas/phpdotenv" />
+      <path value="$PROJECT_DIR$/nevim/vendor/phpoption/phpoption" />
+      <path value="$PROJECT_DIR$/nevim/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/nevim/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/nevim/vendor/symfony/polyfill-php80" />
+      <path value="$PROJECT_DIR$/nevim/vendor/symfony/var-dumper" />
+      <path value="$PROJECT_DIR$/nevim/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/nevim/vendor/symfony/clock" />
+      <path value="$PROJECT_DIR$/nevim/vendor/symfony/event-dispatcher" />
+      <path value="$PROJECT_DIR$/nevim/vendor/symfony/messenger" />
+      <path value="$PROJECT_DIR$/nevim/vendor/symfony/polyfill-intl-grapheme" />
+      <path value="$PROJECT_DIR$/nevim/vendor/symfony/event-dispatcher-contracts" />
+      <path value="$PROJECT_DIR$/nevim/vendor/symfony/console" />
+      <path value="$PROJECT_DIR$/nevim/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/nevim/vendor/symfony/string" />
+      <path value="$PROJECT_DIR$/nevim/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/nevim/vendor/contributte/messenger" />
+      <path value="$PROJECT_DIR$/nevim/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/nevim/vendor/psr/event-dispatcher" />
+      <path value="$PROJECT_DIR$/nevim/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/nevim/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/nevim/vendor/psr/clock" />
+      <path value="$PROJECT_DIR$/nevim/vendor/contributte/di" />
+      <path value="$PROJECT_DIR$/nevim/vendor/robmorgan/phinx" />
+      <path value="$PROJECT_DIR$/nevim/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/nevim/vendor/symfony/config" />
+      <path value="$PROJECT_DIR$/nevim/vendor/cakephp/database" />
+      <path value="$PROJECT_DIR$/nevim/vendor/cakephp/core" />
+      <path value="$PROJECT_DIR$/nevim/vendor/cakephp/utility" />
+      <path value="$PROJECT_DIR$/nevim/vendor/symfony/filesystem" />
+      <path value="$PROJECT_DIR$/nevim/vendor/cakephp/chronos" />
+      <path value="$PROJECT_DIR$/nevim/vendor/cakephp/datasource" />
+      <path value="$PROJECT_DIR$/nevim/vendor/league/container" />
+      <path value="$PROJECT_DIR$/nevim/vendor/phpstan/phpstan" />
+      <path value="$PROJECT_DIR$/nevim/vendor/phpstan/phpstan-nette" />
+      <path value="$PROJECT_DIR$/nevim/vendor/pdepend/pdepend" />
+      <path value="$PROJECT_DIR$/nevim/vendor/symfony/var-exporter" />
+      <path value="$PROJECT_DIR$/nevim/vendor/symfony/dependency-injection" />
+      <path value="$PROJECT_DIR$/nevim/vendor/phpmd/phpmd" />
+      <path value="$PROJECT_DIR$/nevim/vendor/symplify/easy-coding-standard" />
+      <path value="$PROJECT_DIR$/nevim/vendor/symfony/stopwatch" />
+      <path value="$PROJECT_DIR$/nevim/vendor/symfony/finder" />
+      <path value="$PROJECT_DIR$/nevim/vendor/symfony/options-resolver" />
+      <path value="$PROJECT_DIR$/nevim/vendor/symfony/process" />
+      <path value="$PROJECT_DIR$/nevim/vendor/symfony/polyfill-php81" />
+      <path value="$PROJECT_DIR$/nevim/vendor/sebastian/diff" />
+      <path value="$PROJECT_DIR$/nevim/vendor/friendsofphp/php-cs-fixer" />
+      <path value="$PROJECT_DIR$/nevim/vendor/squizlabs/php_codesniffer" />
+      <path value="$PROJECT_DIR$/nevim/vendor/rector/rector" />
+    </include_path>
+  </component>
+  <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
+  <component name="PhpStan">
+    <PhpStan_settings>
+      <PhpStanConfiguration tool_path="$PROJECT_DIR$/nevim/vendor/bin/phpstan" />
+    </PhpStan_settings>
+  </component>
+  <component name="PhpStanOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
+  <component name="PhpUnit">
+    <phpunit_settings>
+      <PhpUnitSettings custom_loader_path="$PROJECT_DIR$/nevim/vendor/autoload.php" />
+    </phpunit_settings>
+  </component>
+  <component name="PsalmOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
+</project>

@@ -1,0 +1,13 @@
+{layout __WWW_DIR__ . '/templates/layout.latte'}
+
+{block content}
+<div id="banner">
+	<h1 n:block=title>ONDRA TEST!</h1>
+</div>
+
+<div id="content">
+
+	<h2>{$status->name} [#{$status->id}]</h2>
+
+	<a n:href=":System:Home:default">Zpět domů</a>
+</div>

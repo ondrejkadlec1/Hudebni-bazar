@@ -1,0 +1,13 @@
+services:
+	- Ondra\App\System\UI\Http\Web\RouterFactory::createRouter
+
+
+search:
+	-	in: %appDir%
+		classes:
+			- *Factory
+	facades:
+		in: %appDir%
+		implements:
+			- Ondra\App\System\Application\Autowired
+

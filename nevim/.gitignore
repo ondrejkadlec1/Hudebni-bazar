@@ -1,0 +1,4 @@
+config/local.neon
+vendor/
+temp/
+log/

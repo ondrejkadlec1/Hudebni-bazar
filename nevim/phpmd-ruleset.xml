@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<ruleset name="My first PHPMD rule set"
+				 xmlns="http://pmd.sf.net/ruleset/1.0.0"
+				 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				 xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0
+                     http://pmd.sf.net/ruleset_xml_schema.xsd"
+				 xsi:noNamespaceSchemaLocation="
+                     http://pmd.sf.net/ruleset_xml_schema.xsd">
+	<description>
+		BRASTY - vlastní pravidla pro kontrolu kódu
+	</description>
+
+	<rule ref="rulesets/codesize.xml/ExcessiveMethodLength">
+		<priority>1</priority>
+		<properties>
+			<property name="minimum" value="40" />
+			<property name="ignore-whitespace" value="true" />
+		</properties>
+	</rule>
+
+	<rule ref="rulesets/codesize.xml/ExcessiveClassLength">
+		<priority>1</priority>
+		<properties>
+			<property name="minimum" value="400" />
+		</properties>
+	</rule>
+
+	<rule ref="rulesets/codesize.xml/ExcessiveParameterList">
+		<priority>1</priority>
+		<properties>
+			<property name="minimum" value="6" />
+		</properties>
+	</rule>
+
+	<rule ref="rulesets/codesize.xml/ExcessivePublicCount">
+		<priority>1</priority>
+		<properties>
+			<property name="minimum" value="30" />
+		</properties>
+	</rule>
+
+	<rule ref="rulesets/codesize.xml/TooManyFields">
+		<priority>1</priority>
+		<properties>
+			<property name="maxfields" value="10" />
+		</properties>
+	</rule>
+
+	<rule ref="rulesets/codesize.xml/TooManyMethods">
+		<priority>1</priority>
+		<properties>
+			<property name="maxfields" value="20" />
+		</properties>
+	</rule>
+
+	<rule ref="rulesets/codesize.xml/TooManyPublicMethods">
+		<priority>1</priority>
+		<properties>
+			<property name="maxmethods" value="10" />
+			<property name="ignorepattern" value="(^(get|on|is|action|render|create))i" />
+		</properties>
+	</rule>
+
+	<rule ref="rulesets/codesize.xml/ExcessiveClassComplexity">
+		<priority>1</priority>
+		<properties>
+			<property name="maximum" value="45" />
+		</properties>
+	</rule>
+
+	<rule ref="rulesets/cleancode.xml/ElseExpression">
+		<priority>1</priority>
+	</rule>
+
+	<rule ref="rulesets/cleancode.xml/IfStatementAssignment">
+		<priority>1</priority>
+	</rule>
+
+	<rule ref="rulesets/cleancode.xml/ErrorControlOperator">
+		<priority>1</priority>
+	</rule>
+
+	<rule ref="rulesets/cleancode.xml/MissingImport">
+		<priority>1</priority>
+	</rule>
+
+	<rule ref="rulesets/cleancode.xml/UndefinedVariable">
+		<priority>1</priority>
+	</rule>
+
+	<rule ref="rulesets/controversial.xml" />
+
+	<rule ref="rulesets/design.xml/ExitExpression">
+		<priority>1</priority>
+	</rule>
+
+	<rule ref="rulesets/design.xml/EvalExpression">
+		<priority>1</priority>
+	</rule>
+
+	<rule ref="rulesets/design.xml/GotoStatement">
+		<priority>1</priority>
+	</rule>
+
+	<rule ref="rulesets/design.xml/NumberOfChildren">
+		<priority>1</priority>
+		<properties>
+			<property name="minimum" value="15" />
+		</properties>
+	</rule>
+
+	<rule ref="rulesets/design.xml/DepthOfInheritance">
+		<priority>1</priority>
+		<properties>
+			<property name="minimum" value="6" />
+		</properties>
+	</rule>
+</ruleset>

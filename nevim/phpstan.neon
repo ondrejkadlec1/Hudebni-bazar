@@ -1,0 +1,25 @@
+includes:
+	- phpstan-rules.neon
+
+parameters:
+	level: 8
+	paths:
+		- src
+	bootstrapFiles:
+		- phpstan-bootstrap.php
+
+	parallel:
+		processTimeout: 300.0
+
+	excludePaths:
+		- *System/Application/Helper/Validator.php
+
+	ignoreErrors:
+		- '#Array destruct is not allowed#'
+		- '#uninitialized readonly property#'
+		- '#is assigned outside of the constructor#'
+		-
+			message: '#Do not use factory/method call in constructor#'
+			paths:
+				- *DTO.php
+				- *Template.php

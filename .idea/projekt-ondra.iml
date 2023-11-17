@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/app" isTestSource="false" packagePrefix="App\" />
+      <sourceFolder url="file://$MODULE_DIR$/nevim/src" isTestSource="false" packagePrefix="Ondra\App\" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/cakephp/chronos" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/cakephp/core" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/cakephp/database" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/cakephp/datasource" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/cakephp/utility" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/contributte/di" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/contributte/messenger" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/friendsofphp/php-cs-fixer" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/graham-campbell/result-type" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/latte/latte" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/league/container" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/nette/application" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/nette/bootstrap" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/nette/caching" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/nette/component-model" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/nette/database" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/nette/di" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/nette/finder" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/nette/forms" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/nette/http" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/nette/mail" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/nette/neon" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/nette/php-generator" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/nette/robot-loader" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/nette/routing" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/nette/schema" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/nette/security" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/nette/tester" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/nette/utils" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/pdepend/pdepend" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/phpmd/phpmd" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/phpoption/phpoption" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/phpstan/phpstan" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/phpstan/phpstan-nette" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/psr/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/psr/clock" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/psr/container" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/psr/event-dispatcher" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/psr/log" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/psr/simple-cache" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/rector/rector" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/robmorgan/phinx" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/sebastian/diff" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/squizlabs/php_codesniffer" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/symfony/clock" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/symfony/config" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/symfony/console" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/symfony/dependency-injection" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/symfony/deprecation-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/symfony/event-dispatcher" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/symfony/event-dispatcher-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/symfony/filesystem" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/symfony/finder" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/symfony/messenger" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/symfony/options-resolver" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/symfony/polyfill-ctype" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/symfony/polyfill-intl-grapheme" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/symfony/polyfill-intl-normalizer" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/symfony/polyfill-mbstring" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/symfony/polyfill-php80" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/symfony/polyfill-php81" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/symfony/process" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/symfony/service-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/symfony/stopwatch" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/symfony/string" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/symfony/thanks" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/symfony/var-dumper" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/symfony/var-exporter" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/symplify/easy-coding-standard" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/tracy/tracy" />
+      <excludeFolder url="file://$MODULE_DIR$/nevim/vendor/vlucas/phpdotenv" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
