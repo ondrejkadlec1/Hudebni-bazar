@@ -41,7 +41,6 @@
 <!ATTLIST filterArgument type #REQUIRED>
 <!ATTLIST filterArgument defaultValue #IMPLIED>
 <!ATTLIST filterArgument description #IMPLIED>
-<!ATTLIST filterArgument repeatable (true|false) #IMPLIED>
 
 <!ELEMENT variables (variable)+>
 

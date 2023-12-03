@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ondra\App\Test\Domain\Status;
+namespace Ondra\App\System\Domain\Status;
 
 final class Status
 {

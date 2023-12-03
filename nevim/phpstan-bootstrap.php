@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Ondra\App\Bootstrap;
+use Ondra\App\System\Bootstrap;
 
 require __DIR__ . '/src/Bootstrap.php';
 

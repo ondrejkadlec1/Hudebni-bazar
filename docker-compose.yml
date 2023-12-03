@@ -6,7 +6,6 @@ services:
     build: ./.docker/web
     volumes:
       - ./nevim/:/var/www/html/
-      - ./.docker/web/scripts/:/var/www/scripts/
       - ./.docker/web/sites-enabled:/etc/apache2/sites-enabled
       - ./.docker/web/php/php.ini:/usr/local/etc/php/php.ini
       - ./.docker/web/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
@@ -21,7 +20,6 @@ services:
       DOCKER_DEV: 'true'
       APACHE_RUN_USER: "www-data"
       APACHE_RUN_GROUP: "www-data"
-    command: "/var/www/scripts/init.sh"
 
   database:
     image: postgres:14.1
@@ -92,11 +90,6 @@ services:
     ports:
       - 6379:6379
 
-  mailhog:
-    image: teawithfruit/mailhog
-    ports:
-      - "1025:1025"
-      - "8025:8025"
 volumes:
   ondra-esdata:
   ondra-pgdata:

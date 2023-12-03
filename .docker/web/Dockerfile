@@ -1,4 +1,4 @@
-FROM --platform=linux/arm64 php:8.1-apache
+FROM php:8.1-apache
 
 MAINTAINER Vladimir Senflok <vladimir.senflok@brasty.com>
 
@@ -172,15 +172,6 @@ RUN a2enmod expires
 
 # lsof
 RUN apt-get install -y lsof
-
-# SENDING EMAIL
-RUN apt-get update &&\
-    apt-get install --no-install-recommends --assume-yes --quiet ca-certificates curl git &&\
-    rm -rf /var/lib/apt/lists/*
-RUN curl -Lsf 'https://storage.googleapis.com/golang/go1.10.1.linux-arm64.tar.gz' | tar -C '/usr/local' -xvzf -
-ENV PATH /usr/local/go/bin:$PATH
-RUN go get github.com/mailhog/mhsendmail
-RUN cp /root/go/bin/mhsendmail /usr/bin/mhsendmail
 
 # XSLT
 RUN apt-get update && \

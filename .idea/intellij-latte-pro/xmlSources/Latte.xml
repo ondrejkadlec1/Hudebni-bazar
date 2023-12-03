@@ -177,11 +177,6 @@
 				<argument name="expression" types="PHP_EXPRESSION" required="true" type="string" repeatable="true" />
 			</arguments>
 		</tag>
-		<tag name="translate" type="PAIR" documentation="to make the translation tags work, you need to set up translator. You can also use the translate filter for translation." documentationUrl="https://latte.nette.org/en/tags#toc-translate">
-			<arguments>
-				<argument name="args" types="PHP_EXPRESSION,KEY_VALUE" type="mixed" repeatable="true" />
-			</arguments>
-		</tag>
 		<tag name="ifchanged" type="PAIR" documentation="test if there has been a change" documentationUrl="https://latte.nette.org/en/tags#toc-ifchanged">
 			<arguments>
 				<argument name="expression" types="PHP_EXPRESSION" required="true" repeatable="true" />
@@ -238,12 +233,6 @@
 		<filter name="trim" description="strips whitespace or other characters from the beginning and end of the string" documentationUrl="https://latte.nette.org/en/filters#toc-trim">
 			<filterArguments>
 				<filterArgument name="charlist" type="string" defaultValue="' \t\n\r\0\x0B\u{A0}'" />
-			</filterArguments>
-		</filter>
-		<filter name="translate" description="it translates expressions into other languages. To make the filter available, you need set up translator." documentationUrl="https://latte.nette.org/en/filters#toc-translate">
-			<filterArguments>
-				<filterArgument name="message" type="string" />
-				<filterArgument name="args" type="mixed" repeatable="true" />
 			</filterArguments>
 		</filter>
 		<filter name="stripHtml" description="removes HTML tags and converts HTML entities to text" documentationUrl="https://latte.nette.org/en/filters#toc-striphtml" />
