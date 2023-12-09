@@ -1,6 +1,7 @@
 body{
-    /*font-family: 'MedievalSharp', cursive;*/
-    /*font-family: 'Roboto', sans-serif;*/
+    font-family: 'Armata', sans-serif;
+    font-family: 'MedievalSharp', cursive;
+    font-family: 'Roboto', sans-serif;
 }
 header{
     background: #B4B4B4;
@@ -56,16 +57,25 @@ header .navbar li:last-of-type a{
     border-radius: 8px;
     padding: 10px;
     margin: 0 8px 8px 0;
+    height: 40vh;
+    overflow: clip;
 }
-.post h1{
+.post:last-of-type{
+    margin-bottom: 30px;
+}
+.post h1, .about h2{
     font-weight: bold;
     font-size: 28px;
     border-bottom: 1px solid black;
     padding-bottom: 8px;
     margin-bottom: 8px;
 }
-.post p{
+.content p{
     font-size: 18px;
+    margin-bottom: 12px;
+}
+.post p{
+    margin: 0;
 }
 footer{
     background: #38383D;
@@ -88,4 +98,102 @@ footer .navbar li{
     text-align: center;
     color: #B4B4B4;
     padding: 10px 0;
+}
+.about{
+    width: 99%;
+    background: #FFFFFF;
+    border-radius: 8px;
+    padding: 10px;
+}
+.about h1{
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+.newPost{
+    font-size: 28px;
+    font-weight: bold;
+    background: #FFFFFF;
+    border-radius: 8px;
+    padding: 10px;
+    position: fixed;
+    top: 116px;
+    left: 87%;
+    cursor: pointer;
+    max-width: 8%;
+}
+.newPost:hover{
+    background: #38383D;
+    color: #FFFFFF;
+}
+.windowBackground{
+    background: #38383D;
+    opacity: 0.5;
+    width: 100%;
+    height: 100vh;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+#frm-postForm{
+    display: none;
+    position: fixed;
+    width: 50%;
+    left: 21.5%;
+    min-height: 50vh;
+    background: #FFFFFF;
+    z-index: 1;
+    padding: 50px;
+    border-radius: 8px;
+    top: 45px;
+}
+#frm-postForm input, #frm-postForm textarea{
+    display: block;
+    margin: 10px;
+    line-height: 28px;
+    font-family: inherit;
+    font-size: 18px;
+    border: black solid 2px;
+}
+textarea{
+    resize: none;
+    border-radius: 5px;
+}
+label{
+    font-size: 24px;
+    display: block;
+}
+#frm-postForm input{
+    border-radius: 5px;
+}
+#frm-postForm-title{
+    width: 60%;
+}
+#frm-postForm-content{
+    width: 80%;
+}
+form h2{
+    font-weight: bold;
+    font-size: 28px;
+    border-bottom: 1px solid black;
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+}
+.btn-default{
+    width: 150px;
+    height: 40px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+}
+.flash{
+    background: #B4B4B4;
+    border: black solid 1px;
+    border-radius: 5px;
+    position: fixed;
+    top: 70px;
+    left: 13%;
+    padding: 10px 50px;
+    color: white;
 }

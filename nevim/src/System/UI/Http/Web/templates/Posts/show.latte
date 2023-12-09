@@ -1,0 +1,38 @@
+{layout __WWW_DIR__ . '/templates/mainLayout.latte'}
+
+{block title}
+    Posts
+{/block}
+
+{block content}
+
+<div class="clearfix">
+{foreach $posts as $post}
+    <div class="post">
+        <a><h1>{$post->title}</h1></a>
+        <p>{$post->content}</p>
+    </div>
+{/foreach}
+</div>
+
+        <div class="newPost">Nový příspěvek</div>
+
+        <form n:name=postForm id="frm-postForm">
+            <h2>Nový příspěvek</h2>
+            <div>
+                <label n:name=title>Název<input n:name=title autofocus id="frm-postForm-title"></label>
+            </div>
+            <div>
+                <label n:name=content>Obsah<textarea n:name=content id="frm-postForm-content" rows=10></textarea></label>
+            </div>
+            <div>
+                <input n:name=send class="btn-default" value="Zveřejnit">
+            </div>
+        </form>
+
+{/block}
+{block scripts}
+    <script type="text/javascript" src="https://nevim.local/scripts/postShow.js"></script>
+    <script src="https://unpkg.com/nette-forms@3/src/assets/netteForms.js"></script>
+
+{/block}

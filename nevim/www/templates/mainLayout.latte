@@ -3,11 +3,12 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<link href="../styles/reset.css" rel="stylesheet">
-	<link href="../styles/styles.css" rel="stylesheet">
-{*	<link rel="preconnect" href="https://fonts.googleapis.com">*}
-{*	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>*}
-{*	<link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Roboto:wght@500&display=swap" rel="stylesheet">*}
+	<link href="https://nevim.local/styles/reset.css" rel="stylesheet">
+	<link href="https://nevim.local/styles/styles.css" rel="stylesheet">
+	<link href="https://nevim.local/styles/clearfix.css" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Armata&family=MedievalSharp&family=Roboto:wght@500&display=swap" rel="stylesheet">
 
 	<title>{ifset title}{include title|stripHtml} | {/ifset}Redenhorst</title>
 </head>
@@ -17,29 +18,39 @@
 	<header>
 		<nav>
 			<ul class="navbar">
-				<li><a href="">Home</a></li>
-				<li><a href="">Posts</a></li>
+				<li><a n:href="Home:default">Domů</a></li>
+				<li><a n:href="Posts:show">Příspěvky</a></li>
 			</ul>
 		</nav>
 	</header>
 
 	<section class="content">
-		<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
+		<div n:foreach="$flashes as $flash" class="flash">{$flash->message}</div>
 	{include content}
 	</section>
+
+	<div class="windowBackground"></div>
 
 	<footer>
 		<nav>
 			<ul class="navbar">
-				<li><a href="">Home</a></li>
-				<li><a href="">Posts</a></li>
-				<li><a href="">About</a></li>
+				<li><a n:href="Home:default">Domů</a></li>
+				<li><a n:href="Posts:show">Příspěvky</a></li>
+				<li><a n:href="About:default">O nás</a></li>
 			</ul>
 		</nav>
 		<p class="copyright">©Copyright 2023 Redenhorst</p>
 	</footer>
+
+	<script type="text/javascript" src="https://nevim.local/scripts/jquery.js"></script>
+	<script type="text/javascript" src="https://nevim.local/scripts/script.js"></script>
+
 	{block scripts}
 
 	{/block}
+
+
+
+
 </body>
 </html>
