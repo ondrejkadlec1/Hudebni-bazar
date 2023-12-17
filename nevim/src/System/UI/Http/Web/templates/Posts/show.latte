@@ -19,15 +19,9 @@
 
         <form n:name=postForm id="frm-postForm">
             <h2>Nový příspěvek</h2>
-            <div>
-                <label n:name=title>Název<input n:name=title autofocus id="frm-postForm-title"></label>
-            </div>
-            <div>
-                <label n:name=content>Obsah<textarea n:name=content id="frm-postForm-content" rows=10></textarea></label>
-            </div>
-            <div>
-                <input n:name=send class="btn-default" value="Zveřejnit">
-            </div>
+                <label>Název<input n:name=title autofocus id="frm-postForm-title"></label>
+                <label>Obsah<textarea n:name=content id="frm-postForm-content" rows=10></textarea></label>
+                <input n:name=send id="frm-postForm-btn" value="Zveřejnit">
         </form>
 
 {/block}

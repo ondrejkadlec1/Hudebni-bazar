@@ -1,0 +1,28 @@
+body{
+    font-family: 'Armata', sans-serif;
+    font-family: 'MedievalSharp', cursive;
+    font-family: 'Roboto', sans-serif;
+}
+a{
+    color: inherit;
+    text-decoration: none;
+}
+li a{
+    width: 100%;
+    padding: auto;
+    display: inline-block;
+}
+.windowBackground{
+    background: #38383D;
+    opacity: 0.5;
+    width: 100%;
+    height: 100vh;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.block{
+    background: #FFFFFF;
+    border-radius: 8px;
+    padding: 10px;

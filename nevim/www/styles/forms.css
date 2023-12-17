@@ -1,0 +1,49 @@
+#frm-postForm{
+    display: none;
+    position: fixed;
+    width: 50%;
+    left: 21.5%;
+    min-height: 50vh;
+    background: #FFFFFF;
+    z-index: 1;
+    padding: 50px;
+    border-radius: 8px;
+    top: 45px;
+}
+form input, form textarea{
+    display: block;
+    margin: 10px;
+    line-height: 28px;
+    font-family: inherit;
+    font-size: 18px;
+    border: black solid 1px;
+    border-radius: 5px;
+}
+textarea{
+    resize: none;
+    border-radius: 5px;
+}
+label{
+    font-size: 24px;
+    display: block;
+}
+#frm-postForm-title{
+    width: 60%;
+}
+#frm-postForm-content{
+    width: 80%;
+}
+form h2{
+    font-weight: bold;
+    font-size: 28px;
+    border-bottom: 1px solid black;
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+}
+#frm-postForm-btn, #frm-signInForm-btn, #frm-signUpForm-btn{
+    width: 150px;
+    height: 40px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+}

@@ -101,7 +101,7 @@
       <path value="$PROJECT_DIR$/nevim/vendor/rector/rector" />
     </include_path>
   </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
+  <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />
   <component name="PhpStan">
     <PhpStan_settings>
       <PhpStanConfiguration tool_path="$PROJECT_DIR$/nevim/vendor/bin/phpstan" />

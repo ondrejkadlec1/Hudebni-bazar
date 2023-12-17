@@ -1,0 +1,36 @@
+header{
+    background: #003F88;
+    position: fixed;
+    width: 100%;
+    top: 0;
+}
+.navbar li{
+    display: inline-block;
+    text-align: center;
+}
+header .navbar li{
+    height: 100%;
+    font-size: 18px;
+    width: 10%;
+    color: #FFFFFF;
+}
+header .navbar li a{
+    padding: 15px 0;
+}
+header .navbar a:hover{
+    background: #fdc500;
+}
+header .navbar li.sign{
+    margin-left: 65%;
+    width: 8%;
+}
+header .navbar li.sign a{
+    border-radius: 24px;
+    color: black;
+    background: #FFFFFF;
+    padding: 11px 0;
+}
+header .navbar li.sign a:hover{
+    color: #FFFFFF;
+    background: #fdc500;
+}

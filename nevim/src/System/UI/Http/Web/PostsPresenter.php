@@ -13,6 +13,13 @@ class PostsPresenter extends Presenter
         private Connection $connection,
     ) {
     }
+
+    public function beforeRender()
+    {
+        $this->session->start();
+        $this->template->backlink = $this->storeRequest();
+    }
+
     protected function createComponentPostForm(): Form
     {
         $form = new Form;
@@ -21,13 +28,12 @@ class PostsPresenter extends Presenter
         $form->addText('content', 'Obsah')
             ->setRequired("Seš úplná móka? Mosíš tam aspoň něco nadatlovat!");
         $form->addSubmit('send', 'Zveřejnit');
-        $form->onSuccess[] = [$this, 'formSucceeded'];
+        $form->onSuccess[] = [$this, 'formSubmitted'];
         return $form;
     }
-    public function formSucceeded(Form $form, $data){
+    public function formSubmitted(Form $form, \stdClass $data){
         $this->connection->query("INSERT INTO posts(title, content) VALUES(?, ?)", $data->title, $data->content);
         $this->flashMessage('Přidáno');
-        $this->redirect('Posts:show');
     }
     public function renderShow(): void
     {

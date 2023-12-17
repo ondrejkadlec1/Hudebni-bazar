@@ -1,0 +1,70 @@
+.content{
+    margin: 40px 0 0 0;
+    padding: 20px 12% 0 13%;
+    min-height: 800px;
+    background: #198CFF;
+}
+.flash{
+    background: #B4B4B4;
+    border: black solid 1px;
+    border-radius: 5px;
+    position: fixed;
+    top: 70px;
+    left: 13%;
+    padding: 10px 50px;
+    color: white;
+}
+/*posts*/
+.post{
+    float: left;
+    width: 30%;
+    background: #FFFFFF;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 0 8px 8px 0;
+    height: 40vh;
+    overflow: clip;
+}
+.post:last-of-type{
+    margin-bottom: 30px;
+}
+.post h1, .about h2{
+    font-weight: bold;
+    font-size: 28px;
+    border-bottom: 1px solid black;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+}
+.content p{
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+.post p{
+    margin: 0;
+}
+.newPost{
+    font-size: 28px;
+    font-weight: bold;
+    background: #FFFFFF;
+    border-radius: 8px;
+    padding: 10px;
+    position: fixed;
+    top: 116px;
+    left: 87%;
+    cursor: pointer;
+    max-width: 8%;
+}
+.newPost:hover{
+    color: #FFFFFF;
+    background: #fdc500;
+}
+/*about*/
+.about{
+    width: 99%;
+}
+.about h1{
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+

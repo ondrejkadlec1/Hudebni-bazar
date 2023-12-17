@@ -1,6 +1,9 @@
 services:
 	- Ondra\App\System\UI\Http\Web\RouterFactory::createRouter
+	- Ondra\App\System\Application\Model\UserAuthenticator
+	- Ondra\App\System\Application\Model\SignInFormFactory
 
+	security.passwords: Nette\Security\Passwords(::PASSWORD_BCRYPT, [cost: 10])
 
 search:
 	-	in: %appDir%

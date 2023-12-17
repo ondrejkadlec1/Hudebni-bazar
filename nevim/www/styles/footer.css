@@ -1,0 +1,22 @@
+footer{
+    background: #38383D;
+}
+footer nav{
+    width: 100%;
+}
+footer .navbar{
+    margin: 0 auto;
+    width: 60%;
+}
+footer .navbar li{
+    display: inline-block;
+    font-size: 18px;
+    width: 33%;
+    color: #B4B4B4;
+    margin: 20px 0;
+}
+.copyright{
+    text-align: center;
+    color: #B4B4B4;
+    padding: 10px 0;
+}
