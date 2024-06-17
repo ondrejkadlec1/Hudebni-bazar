@@ -1,0 +1,20 @@
+{layout __WWW_DIR__ . '/templates/mainlayout.latte'}
+
+
+{block content}
+    <form n:name=changePwdForm id="frm-chagePwdForm" class="block">
+
+        <label>Staré heslo<input n:name=oldPassword id="frm-changePwdForm-oldPassword"></label>
+
+        <label>Nové heslo<input n:name=newPassword id="frm-changePwdForm-newPassword"></label>
+
+        <label>Heslo znovu<input n:name=newPasswordAgain id="frm-changePwdForm-newPasswordAgain"></label>
+
+        <input n:name=submit id="frm-changePwdForm-btn" value="Odeslat">
+
+        <ul class="errors" n:ifcontent>
+            <li n:foreach="$form->getOwnErrors() as $error">{$error}</li>
+        </ul>
+
+    </form>
+{/block}

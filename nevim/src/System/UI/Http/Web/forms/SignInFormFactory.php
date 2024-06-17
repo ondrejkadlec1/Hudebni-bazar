@@ -1,9 +1,11 @@
 <?php
 
-namespace Ondra\App\System\Application\Model;
+namespace Ondra\App\System\UI\Http\Web\authentication;
 
 use Nette\Application\UI\Form;
+use Nette\Security\AuthenticationException;
 use Nette\Security\User;
+
 class SignInFormFactory
 {
      public function __construct(
@@ -25,8 +27,8 @@ class SignInFormFactory
         try{
             $this->user->login($data->username, $data->password, $this);
         }
-        catch (Nette\Security\AuthenticationException $e) {
-            $form->addError(print_r($e));
+        catch (AuthenticationException $e) {
+            $form->addError($e->getMessage());
             return;
         }
     }
