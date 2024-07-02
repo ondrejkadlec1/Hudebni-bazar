@@ -1,0 +1,19 @@
+{layout __WWW_DIR__ . '/templates/mainLayout.latte'}
+
+{block title}
+    Profil
+{/block}
+
+{block content}
+<section class="block">
+    <h1>Informace o účtu</h1>
+    <table>
+         <tr>
+             <th>Uživatelské jméno:</th>
+             <td>{$data['username']}</td>
+         </tr>
+        <tr>
+            <th><a n:href="changePwd">Změnit heslo</a></th>
+        </tr>
+     </table>
+</section>
