@@ -1,6 +1,6 @@
 <?php
 
-namespace Ondra\App\Adverts\Application\Query;
+namespace Ondra\App\Adverts\Application\Query\DTOs;
 
 class AdvertOverviewDTO
 {
@@ -8,6 +8,8 @@ class AdvertOverviewDTO
     private string $name;
     private int $price;
     private string $state;
+    private string $subsubcategory;
+    private ?string $brand;
     private string $sellerName;
     private int $sellerId;
     private string $details;
@@ -21,13 +23,15 @@ class AdvertOverviewDTO
      * @param int $price
      * @param string $state
      * @param string $sellerName
+     * @param string $subsubcategory
+     * @param string $brand
      * @param int $sellerId
      * @param string $details
      * @param string $createdAt
      * @param string|null $lastUpdate
      * @param string|null $mainImageName
      */
-    public function __construct(string $id, string $name, int $price, string $state, string $sellerName, int $sellerId, string $details, string $createdAt, ?string $lastUpdate, ?string $mainImageName)
+    public function __construct(string $id, string $name, int $price, string $state, string $sellerName, int $sellerId, string $details, string $subsubcategory, string $createdAt, ?string $brand, ?string $lastUpdate, ?string $mainImageName)
     {
         $this->id = $id;
         $this->name = $name;
@@ -39,6 +43,8 @@ class AdvertOverviewDTO
         $this->createdAt = $createdAt;
         $this->lastUpdate = $lastUpdate;
         $this->mainImageName = $mainImageName;
+        $this->subsubcategory = $subsubcategory;
+        $this->brand = $brand;
     }
 
     /**
@@ -56,6 +62,10 @@ class AdvertOverviewDTO
     {
         return $this->name;
     }
+    public function getSubsubcategory(): string
+    {
+        return $this->subsubcategory;
+    }
 
     /**
      * @return int
@@ -72,7 +82,10 @@ class AdvertOverviewDTO
     {
         return $this->state;
     }
-
+    public function getBrand(): ?string
+    {
+        return $this->brand;
+    }
     /**
      * @return string
      */

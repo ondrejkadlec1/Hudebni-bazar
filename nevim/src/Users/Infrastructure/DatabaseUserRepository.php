@@ -1,6 +1,6 @@
 <?php
 
-namespace Ondra\App\Users\Infracstructure\Repositories;
+namespace Ondra\App\Users\Infrastructure;
 
 use Nette\Database\Connection;
 use Nette\Database\Explorer;

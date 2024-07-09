@@ -1,6 +1,6 @@
 <?php
 
-namespace Ondra\App\Offers\Domain;
+namespace Ondra\App\Adverts\Domain;
 
 class Seller
 {

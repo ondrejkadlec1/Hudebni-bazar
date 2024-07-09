@@ -1,18 +1,20 @@
 <?php
 
-namespace Ondra\App\Offers\Application\Command;
+namespace Ondra\App\Adverts\Application\Command;
 
 use Ondra\App\Shared\Application\Command\CommandRequest;
 
-class CreateOfferCommandRequest implements CommandRequest
+class CreateAdvertCommandRequest implements CommandRequest
 {
-    public OfferDTO $dto;
+    private AdvertDTO $dto;
 
-    /**
-     * @param OfferDTO $dto
-     */
-    public function __construct(string $name, int $stateId, int $price, int $quantity = 1, string $details = "", array $images = [])
+    public function __construct(string $name, int $stateId, int $price, int $subsubcategoryId, int $quantity = 1, string $details = "", array $images = [])
     {
-        $this->dto = new OfferDTO($name, $stateId, $price, $quantity, $details, $images);
+        $this->dto = new AdvertDTO($name, $stateId, $price, $quantity, $details, $images, $subsubcategoryId);
     }
+    public function getDto(): AdvertDTO
+    {
+        return $this->dto;
+    }
+
 }

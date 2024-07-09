@@ -1,7 +1,8 @@
 <?php
 
-namespace Ondra\App\System\Application\Command;
+namespace Ondra\App\Users\Application\Command;
 
+use Ondra\App\Shared\Application\Command\CommandRequest;
 class ChangePasswordCommandRequest implements CommandRequest
 {
     public int $id;

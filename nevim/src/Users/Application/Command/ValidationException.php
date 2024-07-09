@@ -1,6 +1,6 @@
 <?php
 
-namespace Ondra\App\System\Application\Command;
+namespace Ondra\App\Users\Application\Command;
 
 class ValidationException extends \Exception
 {

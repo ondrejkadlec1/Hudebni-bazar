@@ -1,9 +1,9 @@
 <?php
 
-namespace Ondra\App\System\UI\Http\Web\forms;
+namespace Ondra\App\Shared\UI\Http\Web\forms;
 
-use Ondra\App\System\Application\CQRS;
-use Ondra\App\System\Application\CQRSCapable;
+use Ondra\App\Shared\Application\CQRS;
+use Ondra\App\Shared\Application\CQRSCapable;
 
 abstract class FormFactory implements CQRSCapable
 {

@@ -1,22 +1,23 @@
 <?php
 
-namespace Ondra\App\System\UI\Http\Web\forms;
+namespace Ondra\App\Users\UI\Http\Web\forms;
 
 use Nette\Application\UI\Form;
 use Nette\Security\AuthenticationException;
 use Nette\Security\Passwords;
 use Nette\Security\User;
-use Ondra\App\System\Application\BusProvider;
-use Ondra\App\System\Application\Command\ChangePasswordCommandRequest;
-use Ondra\App\System\Application\security\UserAuthenticator;
+use Ondra\App\Shared\Application\BusProvider;
+use Ondra\App\Users\Application\Command\ChangePasswordCommandRequest;
+use Ondra\App\Users\Application\security\UserAuthenticator;
+use Ondra\App\Shared\UI\Http\Web\forms\FormFactory;
 
-class ChangePwdFormFactory
+class ChangePwdFormFactory extends FormFactory
 {
     public function __construct(
         private User $user,
         private Passwords $passwords,
         private UserAuthenticator $authenticator,
-        private BusProvider $busProvider
+        protected BusProvider $busProvider
     ){
     }
     public function create(): Form {
@@ -43,10 +44,10 @@ class ChangePwdFormFactory
             $form->addError($exception->getMessage());
         }
         try {
-            $this->busProvider->sendCommand(new ChangePasswordCommandRequest($id, $this->passwords->hash($data->newPassword)));
+            $this->sendQuery(new ChangePasswordCommandRequest($id, $this->passwords->hash($data->newPassword)));
         }
         catch (\Exception $exception) {
-            $form->addError($exception->getPrevious()->getMessage());
+            $form->addError($exception->getMessage());
         }
     }
 }

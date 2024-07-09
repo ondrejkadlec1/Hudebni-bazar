@@ -1,11 +1,12 @@
 <?php
 
-namespace Ondra\App\Adverts\Application\Query;
+namespace Ondra\App\Adverts\Application\Query\Handlers;
 
 use Ondra\App\Adverts\Application\IAdvertRepository;
+use Ondra\App\Adverts\Application\Query\Messages\GetAdvertsQuery;
+use Ondra\App\Adverts\Application\Query\Messages\GetAdvertsResponse;
 use Ondra\App\Offers\Application\Query\GetAdvertQueryHandler;
 use Ondra\App\Shared\Application\Autowired;
-use Ondra\App\Shared\Application\Query\Query;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
@@ -21,6 +22,6 @@ class GetAdvertsQueryHandler implements Autowired
         $this->repository = $repository;
     }
     public function __invoke(GetAdvertsQuery $query): GetAdvertsResponse{
-        return new GetAdvertsResponse($this->repository->getMultiple($query->getCriteria()));
+        return new GetAdvertsResponse($this->repository->getOverviews($query->getCriteria()));
     }
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ondra\App\System\UI\Http\Web;
+namespace Ondra\App\Shared\UI\Http\Web;
 
 use Nette\Application\Routers\RouteList;
 use Nette\StaticClass;
@@ -14,7 +14,9 @@ final class RouterFactory
 	public static function createRouter(): RouteList
 	{
 		$router = new RouteList();
-		$router->addRoute('', 'Offers:Home:default');
+		$router->addRoute('', 'Shared:Home:default');
+        $router->addRoute('image/<imageName>', 'Adverts:Browse:image');
+        $router->addRoute('images/<imageName>', 'Adverts:Detail:images');
 		$router->addRoute('[<module>/]<presenter>/<action>[/<id>]', 'Home:default');
 		return $router;
 	}

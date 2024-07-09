@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ondra\App\System\Application;
+namespace Ondra\App\Shared\Application;
 
 interface Autowired
 {

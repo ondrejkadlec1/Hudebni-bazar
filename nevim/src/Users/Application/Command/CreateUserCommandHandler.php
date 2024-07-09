@@ -1,15 +1,16 @@
 <?php
 
-namespace Ondra\App\System\Application\Command;
+namespace Ondra\App\Users\Application\Command;
 
-use Ondra\App\System\Application\Autowired;
+use Ondra\App\Shared\Application\Autowired;
+use Ondra\App\Users\Infrastructure\IUserRepository;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
-use Ondra\App\System\Application\Repositories\UserRepository;
+
 #[AsMessageHandler]
 final class CreateUserCommandHandler implements Autowired
 {
-    private UserRepository $repository;
-    public function __construct(UserRepository $repository){
+    private IUserRepository $repository;
+    public function __construct(IUserRepository $repository){
         $this->repository = $repository;
     }
     private $nameUsed;

@@ -1,14 +1,14 @@
 <?php
 
-namespace Ondra\App\System\UI\Http\Web;
+namespace Ondra\App\Users\UI\Http\Web;
 
 use Nette\Application\UI\Presenter;
 use Nette\Security\User;
-use Ondra\App\System\UI\Http\Web\forms\ChangePwdFormFactory;
+use Ondra\App\Users\UI\Http\Web\forms\ChangePwdFormFactory;
 
 class ProfilePresenter extends Presenter
 {
-    public function __construct(private readonly User $user, private ChangePwdFormFactory $factory)
+    public function __construct(private readonly User $user, private readonly ChangePwdFormFactory $factory)
     {
     }
 

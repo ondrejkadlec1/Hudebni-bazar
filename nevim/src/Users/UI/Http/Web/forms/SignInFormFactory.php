@@ -1,6 +1,6 @@
 <?php
 
-namespace Ondra\App\System\UI\Http\Web\forms;
+namespace Ondra\App\Users\UI\Http\Web\forms;
 
 use Nette\Application\UI\Form;
 use Nette\Security\AuthenticationException;

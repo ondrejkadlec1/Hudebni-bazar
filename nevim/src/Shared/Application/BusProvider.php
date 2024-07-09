@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Ondra\App\System\Application;
+namespace Ondra\App\Shared\Application;
 
 use Contributte\Messenger\Bus\CommandBus;
 use Contributte\Messenger\Bus\QueryBus;
-use Ondra\App\System\Application\Command\CommandRequest;
-use Ondra\App\System\Application\Query\Query;
+use Ondra\App\Shared\Application\Command\CommandRequest;
+use Ondra\App\Shared\Application\Query\Query;
 
 final class BusProvider
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Ondra\App\System\Application\security;
+namespace Ondra\App\Users\Application\security;
 
 use Nette\Security\Authorizator;
 

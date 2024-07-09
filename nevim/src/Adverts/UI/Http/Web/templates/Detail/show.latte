@@ -1,32 +1,35 @@
 {layout __WWW_DIR__ . '/templates/mainLayout.latte'}
 {block title}
-    {$offer->getProduct()->getName()}
+    {$advert->getName()}
 {/block}
 {block content}
     <article class="block clearfix" >
-        <h1>{$offer->getProduct()->getName()}</h1>
+        <h1>{$advert->getName()}</h1>
         <div class='info'>
-                        <span class='price'>{$offer->getPrice()} kč</span>
-                        <span class='state'>{$offer->getProduct()->getState()}</span>
-                        od <span class='seller'>{$offer->getSeller()->getUsername()}</span>
-                    </div>
-                    <div class='detail'>
-                        {if !empty($offer->getProduct()->getDetails())}
-                            <p>{$offer->getProduct()->getDetails()}</p>
-                        {else}
-                        <p>Nejsou tu žádné podrobnosti.</p>
-                        {/if}
-                    </div>
-                    <div class='timeline'>
-                        <span class='created-at'>Vytvořeno: {$offer->getCreatedAt()}</span>
-                        {if $offer->getUpdatedAt()!==null}
-                            <span class='updated-at'>Upraveno: {$offer->getUpdatedAt()}</span>
-                        {/if}
-                    </div>
-        {if $offer->getProduct()->getImages()!==[]}
-            <img class="mainImage" src={$mainImage}>
-            {foreach $images as $image}
-                <img class="thumb" src={$image}>
+            <span class='price'>{$advert->getPrice()} kč</span>
+            <span class='state'>{$advert->getState()}</span>
+            {if $advert->getBrand()!==null}
+                <span class='brand'>{$advert->getBrand()}</span>
+            {/if}
+            od <span class='seller'>{$advert->getSellerName()}</span>
+        </div>
+        <div class='detail'>
+            {if !empty($advert->getDetails())}
+                <p>{$advert->getDetails()}</p>
+                {else}
+                    <p>Nejsou tu žádné podrobnosti.</p>
+            {/if}
+        </div>
+        <div class='timeline'>
+            <span class='created-at'>Vytvořeno: {$advert->getCreatedAt()}</span>
+                {if $advert->getLastUpdate()!==null}
+                    <span class='updated-at'>Upraveno: {$advert->getLastUpdate()}</span>
+                {/if}
+        </div>
+        {if $advert->getMainImageName()!==null}
+            <img class="mainImage" src='/images/{$advert->getMainImageName()}/'>
+            {foreach $imageNames as $imageName}
+                <img class="thumb" src='/images/{$imageName}/'>
             {/foreach}
             {else}
                 <img src="/images/unknown.jpg">

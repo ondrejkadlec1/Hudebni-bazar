@@ -1,8 +1,10 @@
 <?php
 
-namespace Ondra\App\Adverts\Application\Query;
+namespace Ondra\App\Adverts\Application\Query\Handlers;
 use Nette\Application\Responses\FileResponse;
 use Nette\Utils\Image;
+use Ondra\App\Adverts\Application\Query\Messages\GetItemImageQuery;
+use Ondra\App\Adverts\Application\Query\Messages\GetItemImageResponse;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]

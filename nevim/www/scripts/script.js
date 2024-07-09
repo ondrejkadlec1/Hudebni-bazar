@@ -5,7 +5,6 @@ $(document).ready(function(){
     function showBackground(){
         windowBackground.show();
         $('html, body').css({
-            overflow: 'hidden',
             height: '100%'
         });
     }
@@ -16,10 +15,10 @@ $(document).ready(function(){
             height: 'auto'
         });
     }
-    var newPost = $(document).find(".newPost");
-    var form = $(document).find("#frm-postForm");
+    var newAdvert = $(document).find(".newAdvert");
+    var form = $(document).find("#frm-advertForm");
 
-    newPost.on('click', function (){
+    newAdvert.on('click', function (){
         showBackground();
         form.show();
 

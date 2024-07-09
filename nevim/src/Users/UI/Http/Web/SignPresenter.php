@@ -1,13 +1,14 @@
 <?php
 
-namespace Ondra\App\System\UI\Http\Web;
+namespace Ondra\App\Users\UI\Http\Web;
 
+use Nette\Application\UI\Presenter;
 use Nette\Application\Attributes\Persistent;
 use Nette\Security\User;
-use Ondra\App\System\UI\Http\Web\forms\SignInFormFactory;
-use Ondra\App\System\UI\Http\Web\forms\SignUpFormFactory;
+use Ondra\App\Users\UI\Http\Web\forms\SignInFormFactory;
+use Ondra\App\Users\UI\Http\Web\forms\SignUpFormFactory;
 
-final class SignPresenter extends FrontendPresenter
+final class SignPresenter extends Presenter
 {
     #[Persistent]
     public $backlink;
@@ -28,7 +29,7 @@ final class SignPresenter extends FrontendPresenter
                 $this->restoreRequest($this->backlink);
             }
             else{
-                $this->redirect('Home:default');
+                $this->redirect(':Shared:Home:default');
             }
     }
     public function actionOut($backlink){
@@ -37,7 +38,7 @@ final class SignPresenter extends FrontendPresenter
             $this->restoreRequest($backlink);
         }
         else{
-            $this->redirect('Home:default');
+            $this->redirect(':Shared:Home:default');
         }
     }
     public function createComponentSignInForm(){

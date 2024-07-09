@@ -1,30 +1,29 @@
 <?php
 
-namespace Ondra\App\Offers\UI\Http\Web;
+namespace Ondra\App\Adverts\UI\Http\Web;
 
-use Nette\Application\UI\Presenter;
 use Nette\Application\UI\Form;
-use Ondra\App\Offers\UI\Http\Web\forms\OfferFormFactory;
+use Ondra\App\Adverts\Application\Query\Messages\GetItemImageQuery;
+use Ondra\App\Adverts\UI\Http\Web\forms\AdvertFormFactory;
 use Ondra\App\Shared\Application\BusProvider;
-use Nette\Application\Responses\FileResponse;
-use Nette\Utils\Image;
+use Ondra\App\Shared\UI\Http\Web\FrontendPresenter;
 
-class BrowsePresenter extends Presenter
+class BrowsePresenter extends FrontendPresenter
 {
-    private OfferFormFactory $formFactory;
-    private BusProvider $busProvider;
-    public function __construct(OfferFormFactory $formFactory, BusProvider $busProvider)
+    private AdvertFormFactory $formFactory;
+    protected BusProvider $busProvider;
+    public function __construct(AdvertFormFactory $formFactory, BusProvider $busProvider)
     {
         $this->formFactory = $formFactory;
         $this->busProvider = $busProvider;
     }
 
-    public function createComponentOffersList(): OffersListControl
+    public function createComponentAdvertsList(): AdvertsListControl
     {
-        return new OffersListControl($this->busProvider);
+        return new AdvertsListControl($this->busProvider);
     }
 
-    public function createComponentOfferForm(): Form
+    public function createComponentAdvertForm(): Form
     {
         $form = $this->formFactory->create();
         $form->onSuccess[] = function (){
@@ -35,9 +34,8 @@ class BrowsePresenter extends Presenter
 
     public function actionImage(string $imageName)
     {
-        $imagePath = "../src/Offers/Infrastructure/uploads/" . $imageName;
-        $mimeType = Image::typeToMimeType(Image::detectTypeFromFile($imagePath));
-        $this->getHttpResponse()->setHeader('Content-Type', $mimeType);
-        $this->sendResponse(new FileResponse($imagePath));
+        $response = $this->sendQuery(new GetItemImageQuery($imageName));
+        $this->getHttpResponse()->setHeader('Content-Type', $response->getMimeType());
+        $this->sendResponse($response->getFileResponse());
     }
 }

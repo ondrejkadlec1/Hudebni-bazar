@@ -19,9 +19,9 @@ messenger:
 services:
 	- Contributte\Messenger\Bus\QueryBus
 	- Contributte\Messenger\Bus\CommandBus
-	- \Ondra\App\System\Application\BusProvider(@Contributte\Messenger\Bus\CommandBus, @Contributte\Messenger\Bus\QueryBus)
+	- \Ondra\App\Shared\Application\BusProvider(@Contributte\Messenger\Bus\CommandBus, @Contributte\Messenger\Bus\QueryBus)
 
 decorator:
-	Ondra\App\System\Application\CQRSCapable:
+	Ondra\App\Shared\Application\CQRSCapable:
 		setup:
-			- setBusProvider(@\Ondra\App\System\Application\BusProvider)
+			- setBusProvider(@\Ondra\App\Shared\Application\BusProvider)

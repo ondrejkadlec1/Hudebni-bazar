@@ -1,13 +1,14 @@
 <?php
 
-namespace Ondra\App\Offers\UI\Http\Web\forms;
+namespace Ondra\App\Adverts\UI\Http\Web\forms;
 
-use Ondra\App\Offers\Application\Command\CreateOfferCommandRequest;
+use Ondra\App\Adverts\Application\Command\CreateAdvertCommandRequest;
+use Ondra\App\Adverts\Application\Query\Messages\GetCategoriesQuery;
 use Ondra\App\Shared\Application\BusProvider;
 use Ondra\App\Shared\UI\Http\Web\forms\FormFactory;
 use Nette\Application\UI\Form;
 use Nette\Http\Request;
-class OfferFormFactory extends FormFactory
+class AdvertFormFactory extends FormFactory
 {
     protected BusProvider $busProvider;
     private Request $httpRequest;
@@ -19,6 +20,11 @@ class OfferFormFactory extends FormFactory
 
     public function create(): Form
     {
+        $response = $this->sendQuery(new GetCategoriesQuery());
+        $categories = $response->getCategories();
+        $subcategories = $response->getSubcategories();
+        $subsubcategories = $response->getSubsubcategories();
+
         $states = [1 =>'Nový', 2=> 'Zánovní', 3=> 'Používaný', 4=> 'Opotřebený', 5=> 'Poškozený', 6=> 'Nefunkční'];
 
         $form = new Form;
@@ -34,6 +40,16 @@ class OfferFormFactory extends FormFactory
             ->setDefaultValue(1)
             ->addRule($form::Range, 'Kolik že toho chceš prodat?', [1, 10000000000])
             ->setRequired("!!");
+        $form->addSelect('categoryId', 'Kategorie', $categories)
+            ->setPrompt('Zvolte kategorii')
+            ->setRequired("Kam to patří?");
+        $form->addSelect('subcategoryId', 'Podkategorie', $subcategories)
+            ->setPrompt('Zvolte kategorii')
+            ->setRequired("Kam to patří?");
+        $form->addSelect('subsubcategoryId', 'Další zařazení', $subsubcategories)
+            ->setPrompt('Zvolte kategorii')
+            ->setRequired("Kam to patří?");
+        $form->addText('brand', 'Značka');
         $form->addMultiUpload('images', 'Nahrát obrázky')
             ->addRule($form::MaxLength, 'Maximální počet souborů je 10.', 10)
             ->addRule($form::Image, 'Soubory musí být .jpg, nemo .png');
@@ -43,13 +59,13 @@ class OfferFormFactory extends FormFactory
     }
     public function formSubmitted(Form $form, \stdClass $data): void
     {
-        $files = $this->httpRequest->getFiles();
-
-        if(!isset($data->details)){
-            $data->details = "";
+        $imageFiles = [];
+        if($this->httpRequest->getFiles()['images'][0]!==null){
+            $imageFiles = $this->httpRequest->getFiles()['images'];
         }
+
         try {
-            $this->sendCommand(new CreateOfferCommandRequest($data->name, $data->stateId, $data->price, $data->quantity, $data->details, $files['images']));
+            $this->sendCommand(new CreateAdvertCommandRequest($data->name, $data->stateId, $data->price, $data->subsubcategoryId, $data->quantity, $data->details, $imageFiles));
         }
         catch(\Exception $exception){
             $form->addError($exception->getMessage());

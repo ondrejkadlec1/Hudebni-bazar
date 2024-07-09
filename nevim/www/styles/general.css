@@ -13,16 +13,23 @@ li a{
     display: inline-block;
 }
 .windowBackground{
-    background: #38383D;
+    background: #000000;
     opacity: 0.5;
     width: 100%;
-    height: 100vh;
+    height: 200vh;
     display: none;
     position: fixed;
     top: 0;
     left: 0;
 }
-.block{
-    background: #FFFFFF;
+.block {
+    background: #BAF88F;
     border-radius: 8px;
     padding: 10px;
+    min-height: 80vh;
+}
+.block h1{
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}

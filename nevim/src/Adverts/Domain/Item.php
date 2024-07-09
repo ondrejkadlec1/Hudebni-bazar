@@ -1,6 +1,6 @@
 <?php
 
-namespace Ondra\App\Offers\Domain;
+namespace Ondra\App\Adverts\Domain;
 
 class Item
 {
@@ -8,15 +8,17 @@ class Item
     private string $name;
     private string $details;
     private int $stateId;
-    private array $imageNames;
+    private array $itemImages;
+    private int $subsubcategoryId;
 
-    public function __construct($id, $name, $stateId, $details, $imageNames)
+    public function __construct(string $id, string $name, int $stateId, string $details, array $itemImages, int $subsubcategoryId)
     {
         $this->id = $id;
         $this->name = $name;
         $this->details = $details;
         $this->stateId = $stateId;
-        $this->imageNames = $imageNames;
+        $this->itemImages = $itemImages;
+        $this->subsubcategoryId = $subsubcategoryId;
     }
 
     /**
@@ -54,7 +56,14 @@ class Item
     {
         return $this->stateId;
     }
-
+    public function setSubsubcategoryId(int $subsubcategoryId): void
+    {
+        $this->subsubcategoryId = $subsubcategoryId;
+    }
+    public function getSubsubcategoryId(): int
+    {
+        return $this->subsubcategoryId;
+    }
     public function setStateId(string $stateId): void
     {
         $this->stateId = $stateId;
@@ -63,19 +72,19 @@ class Item
     {
         return $this->id;
     }
-    public function getImageNames(): array
+    public function getItemImages(): array
     {
-        return $this->imageNames;
+        return $this->itemImages;
     }
-    public function addImageNames(array $imageNames): void
+    public function addItemImages(array $itemImages): void
     {
-        foreach ($imageNames as $imageName){
-            $this->imageNames[] = $imageName;
+        foreach ($itemImages as $itemImage){
+            $this->itemImages[] = $itemImage;
         }
     }
-    public function removeImageNames(array $imagesToRemove): void
+    public function removeItemImages(array $imagesToRemove): void
     {
-        foreach ($this->imageNames as $imageName){
+        foreach ($this->itemImages as $imageName){
             if(in_array($imageName, $imagesToRemove)){
                 unset($imageName);
             }

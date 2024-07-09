@@ -21,8 +21,16 @@ header .navbar a:hover{
     background: #fdc500;
 }
 header .navbar li.sign{
-    margin-left: 65%;
     width: 8%;
+}
+header .navbar li.sign.profile{
+    margin-left: 62%;
+}
+header .navbar li.sign.out{
+    margin-left: 4px;
+}
+header .navbar li.sign.in{
+    margin-left: 71%;
 }
 header .navbar li.sign a{
     border-radius: 24px;

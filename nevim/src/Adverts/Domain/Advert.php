@@ -1,5 +1,5 @@
 <?php
-namespace Ondra\App\Offers\Domain;
+namespace Ondra\App\Adverts\Domain;
 
 use Nette\Utils\DateTime;
 
@@ -18,7 +18,7 @@ class Advert
         $this->price = $price;
         $this->quantity = $quantity;
     }
-    public function getId(): ?int
+    public function getId(): string
     {
         return $this->id;
     }

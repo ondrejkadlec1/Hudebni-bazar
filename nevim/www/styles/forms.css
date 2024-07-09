@@ -1,6 +1,6 @@
-#frm-postForm{
+#frm-advertForm{
     display: none;
-    position: fixed;
+    position: absolute;
     width: 50%;
     left: 21.5%;
     min-height: 50vh;
@@ -10,7 +10,7 @@
     border-radius: 8px;
     top: 45px;
 }
-form input, form textarea{
+form input, form textarea, form select{
     display: block;
     margin: 10px;
     line-height: 28px;
@@ -27,11 +27,20 @@ label{
     font-size: 24px;
     display: block;
 }
-#frm-postForm-title{
+#frm-advertForm-name{
     width: 60%;
 }
-#frm-postForm-content{
+#frm-advertForm-details{
     width: 80%;
+}
+#frm-advertForm-price{
+    width: 30%;
+}
+#frm-advertForm-price{
+    display: inline;
+}
+#frm-advertForm-quantity{
+    width: 15%;
 }
 form h2{
     font-weight: bold;
@@ -40,7 +49,7 @@ form h2{
     padding-bottom: 8px;
     margin-bottom: 20px;
 }
-#frm-postForm-btn, #frm-signInForm-btn, #frm-signUpForm-btn{
+#frm-advertForm-btn, #frm-signInForm-btn, #frm-signUpForm-btn{
     width: 150px;
     height: 40px;
     font-size: 18px;

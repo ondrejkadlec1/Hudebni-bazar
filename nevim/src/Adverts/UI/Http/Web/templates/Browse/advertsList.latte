@@ -1,29 +1,33 @@
 <div class="clearfix">
-    {foreach $offers as $offer}
-        <a href={plink :Offers:Detail:show $offer['id']} class="offer">
+    {foreach $adverts as $advert}
+        <a href={plink :Adverts:Detail:show $advert->getId()} class="advert">
             <div class='info'>
-                <div class='expendable'>
-                    <h1>{$offer['name']}</h1>
-                    <span class='price'>{$offer['price']} kč</span>
-                    <span class='state'>{$offer['state']}</span>
-                    <span class='seller'>od {$offer['seller']}</span>
+                <div class='hideable'>
+                    <h1>{$advert->getName()}</h1>
+                    <span class='price'>{$advert->getPrice()} kč</span>
+                    <span class='state'>{$advert->getState()}</span>
+                    <span class='subsubcategory'>{$advert->getSubsubcategory()}</span>
+                    {if $advert->getBrand()!==null}
+                        <span class='brand'>{$advert->getBrand()}</span>
+                    {/if}
+                    <span class='seller'>od {$advert->getSellerName()}</span>
                     <div class='detail'>
-                        {if !empty($offer['details'])}
-                            <p>{$offer['details']}</p>
+                        {if !empty($advert->getDetails())}
+                            <p>{$advert->getDetails()}</p>
                         {else}
                         <p>Nejsou tu žádné podrobnosti.</p>
                         {/if}
                     </div>
                 </div>
                 <div class='timeline'>
-                    <span class='created-at'>Vytvořeno: {$offer['createdAt']}</span>
-                    {if isset($offer['updatedAt'])}
-                        <span class='updated-at'>Upraveno: {$offer['updatedAt']}</span>
+                    <span class='created-at'>Vytvořeno: {$advert->getCreatedAt()}</span>
+                    {if $advert->getLastUpdate()!==null}
+                        <span class='updated-at'>Upraveno: {$advert->getLastUpdate()}</span>
                     {/if}
                 </div>
             </div>
-            {if isset($offer['imageLink'])}
-                <img src={$offer['imageLink']}>
+            {if $advert->getMainImageName()!==null}
+                <img src='/image/{$advert->getMainImageName()}/'>
                 {else}
                     <img src="/images/unknown.jpg">
             {/if}

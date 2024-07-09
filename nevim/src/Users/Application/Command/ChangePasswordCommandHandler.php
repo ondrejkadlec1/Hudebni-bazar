@@ -1,23 +1,24 @@
 <?php
 
-namespace Ondra\App\System\Application\Command;
+namespace Ondra\App\Users\Application\Command;
 
-use Ondra\App\System\Application\Repositories\UserRepository;
+use Ondra\App\Shared\Application\Autowired;
+use Ondra\App\Users\Infrastructure\IUserRepository;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-class ChangePasswordCommandHandler
-
-
+#[AsMessageHandler]
+class ChangePasswordCommandHandler implements Autowired
 {
-private UserRepository $repository;
+private IUserRepository $repository;
 
     /**
-     * @param UserRepository $repository
+     * @param IUserRepository $repository
      */
-    public function __construct(UserRepository $repository)
+    public function __construct(IUserRepository $repository)
     {
         $this->repository = $repository;
     }
-    public function __invoke(ChangePasswordCommandRequest $command){
+    public function __invoke(ChangePasswordCommandRequest $command): void{
         $this->repository->changePassword($command->id, $command->newHashedPassword);
     }
 }

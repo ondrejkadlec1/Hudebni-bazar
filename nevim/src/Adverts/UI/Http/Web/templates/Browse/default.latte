@@ -6,26 +6,29 @@
 
 {block content}
 
-{control offersList}
+{control advertsList}
 
-        <div class="newOffer">Nabídnout</div>
+        <div class="newAdvert">Nabídnout</div>
 
-        <form n:name=offerForm id="frm-offerForm">
+        <form n:name=advertForm id="frm-advertForm">
             <h2>Nová nabídka</h2>
-                <label>Název<input n:name=name autofocus id="frm-offerForm-name"></label>
-                <label for='frm-offerForm-stateId'>Stav</label>
-                <select n:name=stateId id="frm-offerForm-stateId"></select>
+                <label>Název<input n:name=name autofocus id="frm-advertForm-name"></label>
+                <label for='frm-advertForm-stateId'>Stav</label>
+                <select n:name=stateId id="frm-advertForm-stateId"></select>
+                <select n:name=categoryId></select>
+                <select n:name=subcategoryId></select>
+                <select n:name=subsubcategoryId></select>
                 <label>Cena
                     <div>
-                        <input n:name=price id="frm-offerForm-price">kč
+                        <input n:name=price id="frm-advertForm-price">kč
                     </div>
                 </label>
-                <label for='frm-offerForm-details'>Podrobnosti</label>
-                <textarea n:name=details id="frm-offerForm-details"></textarea>
-                <label>Počet<input n:name=quantity id="frm-offerForm-quantity"></label>
-                <label for="frm-offerForm-files">Nahrát soubory</label>
-                <input n:name=images id="frm-offerForm-files", value="Nahrát">
-                <input n:name=send id="frm-offerForm-btn" value="Zveřejnit">
+                <label for='frm-advertForm-details'>Podrobnosti</label>
+                <textarea n:name=details id="frm-advertForm-details"></textarea>
+                <label>Počet<input n:name=quantity id="frm-advertForm-quantity"></label>
+                <label for="frm-advertForm-files">Nahrát soubory</label>
+                <input n:name=images id="frm-advertForm-files", value="Nahrát">
+                <input n:name=send id="frm-advertForm-btn" value="Zveřejnit">
 
                 <ul class="errors" n:ifcontent>
                             <li n:foreach="$form->getOwnErrors() as $error">{$error}</li>

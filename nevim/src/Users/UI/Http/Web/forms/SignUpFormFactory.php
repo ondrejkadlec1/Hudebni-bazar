@@ -1,14 +1,15 @@
 <?php
 
-namespace Ondra\App\System\UI\Http\Web\forms;
+namespace Ondra\App\Users\UI\Http\Web\forms;
 
 use Nette\Application\UI\Form;
 use Nette\Security\AuthenticationException;
 use Nette\Security\Passwords;
 use Nette\Utils\Validators;
-use Ondra\App\System\Application\BusProvider;
-use Ondra\App\System\Application\Command\CreateUserCommandRequest;
+use Ondra\App\Shared\Application\BusProvider;
+use Ondra\App\Users\Application\Command\CreateUserCommandRequest;
 use Nette\Security\User;
+use Ondra\App\Shared\UI\Http\Web\forms\FormFactory;
 class SignUpFormFactory extends FormFactory
 {
 

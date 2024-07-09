@@ -1,7 +1,19 @@
 services:
-	- Ondra\App\System\UI\Http\Web\RouterFactory::createRouter
-	- Ondra\App\System\Application\Model\UserAuthenticator
-	- Ondra\App\System\Application\Model\SignInFormFactory
+
+	- Ondra\App\Shared\UI\Http\Web\RouterFactory::createRouter
+	- Ondra\App\Users\Application\security\UserAuthenticator
+	- Ondra\App\Users\UI\Http\Web\forms\SignInFormFactory
+	- Ondra\App\Users\UI\Http\Web\forms\ChangePwdFormFactory
+	- Ondra\App\Users\Infrastructure\DatabaseUserRepository
+	- Ondra\App\Adverts\Infrastructure\DatabaseAdvertRepository
+	- Ondra\App\Adverts\Infrastructure\DatabaseCategoryRepository
+	- Ondra\App\Users\Application\Command\CreateUserCommandHandler
+	- Ondra\App\Users\Application\Command\ChangePasswordCommandHandler
+	- Ondra\App\Adverts\Application\Command\CreateAdvertCommandHandler
+	- Ondra\App\Adverts\Application\Query\Handlers\GetAdvertQueryHandler
+	- Ondra\App\Adverts\Application\Query\Handlers\GetAdvertsQueryHandler
+	- Ondra\App\Adverts\Application\Query\Handlers\GetItemImageQueryHandler
+	- Ondra\App\Adverts\Application\Query\Handlers\GetCategoriesQueryHandler
 
 	security.passwords: Nette\Security\Passwords(::PASSWORD_BCRYPT, [cost: 10])
 
@@ -12,5 +24,5 @@ search:
 	facades:
 		in: %appDir%
 		implements:
-			- Ondra\App\System\Application\Autowired
+			- Ondra\App\Shared\Application\Autowired
 

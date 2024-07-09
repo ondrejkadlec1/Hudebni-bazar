@@ -1,6 +1,6 @@
 <?php
 
-namespace Ondra\App\Adverts\Application\Query;
+namespace Ondra\App\Adverts\Application\Query\Messages;
 use Ondra\App\Shared\Application\Query\Query;
 
 class GetAdvertsResponse implements Query

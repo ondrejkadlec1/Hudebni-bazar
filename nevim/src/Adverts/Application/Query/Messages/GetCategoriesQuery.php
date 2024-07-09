@@ -2,7 +2,9 @@
 
 namespace Ondra\App\Adverts\Application\Query\Messages;
 
-class GetCategoriesQuery
+use Ondra\App\Shared\Application\Query\Query;
+
+class GetCategoriesQuery implements Query
 {
 
 }

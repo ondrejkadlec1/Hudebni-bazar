@@ -1,12 +1,12 @@
 <?php
 
-namespace Ondra\App\Offers\UI\Http\Web;
+namespace Ondra\App\Adverts\UI\Http\Web;
 
 use Nette\Application\UI\Control;
-use Ondra\App\Offers\Application\Query\GetOffersQuery;
+use Ondra\App\Adverts\Application\Query\Messages\GetAdvertsQuery;
 use Ondra\App\Shared\Application\BusProvider;
 
-class OffersListControl extends Control
+class AdvertsListControl extends Control
 {
     private BusProvider $busProvider;
     /**
@@ -19,24 +19,7 @@ class OffersListControl extends Control
 
     public function render(): void
     {
-        foreach($this->busProvider->sendQuery(new GetOffersQuery())->offers as $offer){
-            $offerInfo = [
-            'id' => $offer->getId(),
-            'name' => $offer->getProduct()->getName(),
-            'price' => $offer->getPrice(),
-            'state' => $offer->getProduct()->getState(),
-            'createdAt' => (string)$offer->getCreatedAt(),
-            'seller' => $offer->getSeller()->getUsername(),
-            'details' => $offer->getProduct()->getDetails(),
-            ];
-            if($offer->getUpdatedAt()!==null){
-                $offerInfo['lastUpdate'] = (string)$offer->getUpdatedAt()->__toString();
-            }
-            if($offer->getProduct()->getImages()!==null){
-                $offerInfo['imageLink'] = '/image/' . $offer->getProduct()->getImages()[0] . '/';
-            }
-            $this->template->offers[] = $offerInfo;
-        }
-        $this->template->render(__DIR__ . "/templates/Browse/offersList.latte");
+        $this->template->adverts = $this->busProvider->sendQuery(new GetAdvertsQuery(new \stdClass))->getDtos();
+        $this->template->render(__DIR__ . "/templates/Browse/advertsList.latte");
     }
 }

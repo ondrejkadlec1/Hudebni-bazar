@@ -1,6 +1,6 @@
 <?php
 
-namespace Ondra\App\System\UI\Http\Web;
+namespace Ondra\App\Shared\UI\Http\Web;
 
 use Nette\Application\UI\Presenter;
 

@@ -21,14 +21,15 @@
 	<header>
 		<nav>
 			<ul class="navbar">
-				<li><a n:href="Home:default">Domů</a></li>
-				<li><a n:href="Posts:show">Příspěvky</a></li>
+				<li><a n:href=":Shared:Home:default">[Naše logo]</a></li>
+				<li><a n:href=":Offers:Browse:default">Nabídky</a></li>
 				 {if $user->isLoggedIn()}
-					 {if isset($backlink)}<li class="sign"><a n:href="Sign:out $backlink">Odhhlásit</a></li>
-					 				{else}<li class="sign"><a n:href="Sign:out">Odhhlásit</a></li>
+					 <li class="sign profile"><a n:href=":Users:Profile:default">Profil</a></li>
+					 {if isset($backlink)}<li class="sign out"><a n:href=":Users:Sign:out $backlink">Odhhlásit</a></li>
+					 				{else}<li class="sign out"><a n:href=":Users:Sign:out">Odhhlásit</a></li>
 					 {/if}
-				{elseif isset($backlink)}<li class="sign"><a n:href="Sign:in backlink: $backlink">Přihlásit</a></li>
-					 				{else}<li class="sign"><a n:href="Sign:in">Přihlásit</a></li>
+				{elseif isset($backlink)}<li class="sign in"><a n:href=":Users:Sign:in backlink: $backlink">Přihlásit</a></li>
+					 				{else}<li class="sign in"><a n:href=":Users:Sign:in">Přihlásit</a></li>
 				 {/if}
 			</ul>
 		</nav>
@@ -44,9 +45,9 @@
 	<footer>
 		<nav>
 			<ul class="navbar">
-				<li><a n:href="Home:default">Domů</a></li>
-				<li><a n:href="Posts:show">Příspěvky</a></li>
-				<li><a n:href="About:default">O nás</a></li>
+				<li><a n:href=":Shared:Home:default">Domů</a></li>
+				<li><a n:href=":Offers:Browse:default">Nabídky</a></li>
+				<li><a n:href=":Shared:About:default">O této stránce</a></li>
 			</ul>
 		</nav>
 		<p class="copyright">©Copyright 2023 Redenhorst</p>

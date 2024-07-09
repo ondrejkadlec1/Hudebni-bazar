@@ -5,6 +5,7 @@ use Nette\Security\User;
 use Ondra\App\Adverts\Application\IAdvertRepository;
 use Ondra\App\Adverts\Domain\Advert;
 use Ondra\App\Adverts\Domain\Item;
+use Ondra\App\Adverts\Domain\ItemImage;
 use Ondra\App\Adverts\Domain\Seller;
 use Ondra\App\Shared\Application\Autowired;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -16,16 +17,23 @@ final class CreateAdvertCommandHandler implements Autowired
     private User $user;
     public function __construct(IAdvertRepository $advertRepository, User $user)
     {
-        $this->AdvertRepository = $AdvertRepository;
+        $this->advertRepository = $advertRepository;
         $this->user = $user;
     }
 
     public function __invoke(CreateAdvertCommandRequest $command): void
-    {   $dto = $command->dto;
-        $product = new Item(uniqid(), $dto->name, $dto->stateId, $dto->details);
-        $product->setImages($dto->images);
-        $seller = new Seller($this->user->getId());
+    {
+        $dto = $command->getDto();
 
-        $this->AdvertRepository->save(new Advert(uniqid(),  $seller, $dto->price, $dto->quantity));
+        $itemImages = [];
+        foreach ($dto->getImages() as $file){
+            $itemImage = new ItemImage($file);
+            $itemImages[] = $itemImage;
+            $file->move($_ENV['ITEM_IMAGES_DIRECTORY'] . $itemImage->getName());
+        }
+        $item = new Item(uniqid(), $dto->getName(), $dto->getStateId(), $dto->getDetails(), $itemImages, $dto->getSubsubcategoryId());
+
+        $seller = new Seller($this->user->getId());
+        $this->advertRepository->save(new Advert(uniqid(), $item,  $seller, $dto->getPrice(), $dto->getQuantity()));
     }
 }

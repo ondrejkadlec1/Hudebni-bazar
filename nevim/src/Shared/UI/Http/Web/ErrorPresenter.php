@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ondra\App\System\UI\Http\Web;
+namespace Ondra\App\Shared\UI\Http\Web;
 
 use Nette\Application\BadRequestException;
 use Nette\Application\Helpers;
