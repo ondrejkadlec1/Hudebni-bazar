@@ -1,6 +1,8 @@
-<div class="clearfix">
+<ul class="clearfix">
+
     {foreach $adverts as $advert}
-        <a href={plink :Adverts:Detail:show $advert->getId()} class="advert">
+    <li class="advert">
+        <a href={plink :Adverts:Detail:show $advert->getId()}>
             <div class='info'>
                 <div class='hideable'>
                     <h1>{$advert->getName()}</h1>
@@ -10,12 +12,12 @@
                     {if $advert->getBrand()!==null}
                         <span class='brand'>{$advert->getBrand()}</span>
                     {/if}
-                    <span class='seller'>od {$advert->getSellerName()}</span>
+                    <a href={plink :Adverts:Seller:profile $advert->getSellerId()} class='seller'>od {$advert->getSellerName()}</a>
                     <div class='detail'>
                         {if !empty($advert->getDetails())}
                             <p>{$advert->getDetails()}</p>
                         {else}
-                        <p>Nejsou tu žádné podrobnosti.</p>
+                            <p>Nejsou tu žádné podrobnosti.</p>
                         {/if}
                     </div>
                 </div>
@@ -32,5 +34,6 @@
                     <img src="/images/unknown.jpg">
             {/if}
         </a>
+    </li>
     {/foreach}
-</div>
+</ul>
