@@ -2,25 +2,27 @@
 
 namespace Ondra\App\Adverts\Application\Query\Messages;
 
+use Ondra\App\Adverts\Application\Query\DTOs\SearchCriteria;
 use Ondra\App\Shared\Application\Query\Query;
 
 class GetAdvertsQuery implements Query
 {
- private \stdClass $criteria;
+ private SearchCriteria $criteria;
 
     /**
-     * @param \stdClass $criteria
+     * @param SearchCriteria $criteria
      */
-    public function __construct(\stdClass $criteria)
+    public function __construct(SearchCriteria $criteria)
     {
         $this->criteria = $criteria;
     }
 
     /**
-     * @return \stdClass
+     * @return SearchCriteria
      */
-    public function getCriteria(): \stdClass
+    public function getCriteria(): SearchCriteria
     {
         return $this->criteria;
     }
+
 }
