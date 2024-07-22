@@ -1,0 +1,11 @@
+{layout __WWW_DIR__ . '/templates/mainLayout.latte'}
+
+{block title}
+    {$category}
+{/block}
+{block content}
+    <h1>{$category}</h1>
+
+    {control advertsList}
+
+{/block}
