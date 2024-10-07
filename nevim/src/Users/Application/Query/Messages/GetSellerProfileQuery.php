@@ -1,26 +1,14 @@
 <?php
 
-namespace Ondra\App\Adverts\Application\Query\Messages;
+declare(strict_types=1);
+
+namespace Ondra\App\Users\Application\Query\Messages;
 
 use Ondra\App\Shared\Application\Query\Query;
 
-class GetSellerProfileQuery implements Query
+final readonly class GetSellerProfileQuery implements Query
 {
-    private int $id;
-
-    /**
-     * @param int $id
-     */
-    public function __construct(int $id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
+	public function __construct(public string $id)
+	{
+	}
 }

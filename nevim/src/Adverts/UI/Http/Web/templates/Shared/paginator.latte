@@ -1,0 +1,23 @@
+<ul class="paginator">
+    {if !$paginator->isFirst()}
+        <li><a href={plink this page: $paginator->getPage() - 1}>Předchozí</a></li>
+        <li><a href={plink this page: 1}>1</a></li>
+        {if $paginator->getPage() > 3}
+            <li>…</li>
+        {/if}
+        {if $paginator->getPage() > 2}
+            <li><a href={plink this page: $paginator->getPage() - 1}>{$paginator->getPage() - 1}</a></li>
+        {/if}
+    {/if}
+    <li>{$paginator->getPage()}</li>
+    {if !$paginator->isLast()}
+        <li><a href={plink this page: $paginator->getPage() + 1}>{$paginator->getPage() + 1}</a></li>
+        {if $paginator->getLastPage() - $paginator->getPage() > 2}
+                    <li>…</li>
+        {/if}
+        {if $paginator->getLastPage() - $paginator->getPage() > 1}
+            <li><a href={plink this page: $paginator->getLastPage()}>{$paginator->getLastPage()}</a></li>
+        {/if}
+        <li><a href={plink this page: $paginator->getPage() + 1}>Další</a></li>
+    {/if}
+</ul>

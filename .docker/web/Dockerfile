@@ -1,4 +1,4 @@
-FROM php:8.1-apache
+FROM php:8.2-apache
 
 MAINTAINER Vladimir Senflok <vladimir.senflok@brasty.com>
 

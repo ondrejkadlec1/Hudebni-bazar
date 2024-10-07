@@ -1,27 +1,15 @@
 <?php
 
-namespace Ondra\App\Adverts\Application\Query\Messages;
+declare(strict_types=1);
 
-use Ondra\App\Adverts\Application\Query\DTOs\SellerProfileDTO;
+namespace Ondra\App\Users\Application\Query\Messages;
+
 use Ondra\App\Shared\Application\Query\Query;
+use Ondra\App\Users\Application\Query\DTOs\SellerProfileDTO;
 
-class GetSellerProfileResponse implements Query
+final readonly class GetSellerProfileResponse implements Query
 {
-    private SellerProfileDTO $dto;
-
-    /**
-     * @param SellerProfileDTO $dto
-     */
-    public function __construct(SellerProfileDTO $dto)
-    {
-        $this->dto = $dto;
-    }
-
-    /**
-     * @return SellerProfileDTO
-     */
-    public function getDto(): SellerProfileDTO
-    {
-        return $this->dto;
-    }
+	public function __construct(public SellerProfileDTO $dto)
+	{
+	}
 }

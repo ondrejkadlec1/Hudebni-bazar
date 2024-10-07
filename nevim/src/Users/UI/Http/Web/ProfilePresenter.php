@@ -1,26 +1,35 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ondra\App\Users\UI\Http\Web;
 
-use Nette\Application\UI\Presenter;
+use Nette\Application\UI\Form;
 use Nette\Security\User;
+use Ondra\App\Shared\UI\Http\Web\FrontendPresenter;
+use Ondra\App\Shared\UI\Http\Web\UsersOnly;
+use Ondra\App\Users\Application\Query\Messages\GetSellerProfileQuery;
 use Ondra\App\Users\UI\Http\Web\forms\ChangePwdFormFactory;
 
-class ProfilePresenter extends Presenter
+final class ProfilePresenter extends FrontendPresenter
 {
-    public function __construct(private readonly User $user, private readonly ChangePwdFormFactory $factory)
-    {
-    }
+	use UsersOnly;
 
-    public function renderDefault() {
-        $this->template->data = $this->user->getIdentity()->getData();
-    }
-    public function createComponentChangePwdForm() {
-        $form = $this->factory->create();
-        $form->onSuccess[] = function () {
-            $this->flashMessage('Heslo bylo změněno');
-            $this->redirect('Profile:default');
-        };
-        return $form;
-    }
+	public function __construct(private readonly User $user, private readonly ChangePwdFormFactory $factory)
+	{
+	}
+
+	public function renderDefault(): void
+	{
+		$this->template->info = $this->sendQuery(new GetSellerProfileQuery($this->user->getId()))->dto;
+	}
+	public function createComponentChangePwdForm(): Form
+	{
+		$form = $this->factory->create();
+		$form->onSuccess[] = function () {
+			$this->flashMessage('Heslo bylo změněno');
+			$this->redirect('Profile:default');
+		};
+		return $form;
+	}
 }

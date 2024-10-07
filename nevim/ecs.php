@@ -24,6 +24,8 @@ return static function (ECSConfig $ecsConfig): void {
 		SetList::STRICT,
 	]);
 
+    $ecsConfig->paths([__DIR__ . '/src']);
+
 	$ecsConfig->rule(NotOperatorWithSuccessorSpaceFixer::class);
 
 	$ecsConfig->indentation('tab');

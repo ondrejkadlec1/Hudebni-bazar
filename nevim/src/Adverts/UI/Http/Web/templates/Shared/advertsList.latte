@@ -1,35 +1,34 @@
 <ul class="clearfix">
-
     {foreach $adverts as $advert}
     <li class="advert">
-        <a href={plink :Adverts:Detail:show $advert->getId()}>
+        <a href={plink :Adverts:Detail:show $advert->id}>
             <div class='info'>
                 <div class='hideable'>
-                    <h1>{$advert->getName()}</h1>
-                    <span class='price'>{$advert->getPrice()} kč</span>
-                    <span class='state'>{$advert->getState()}</span>
-                    <span class='subsubcategory'>{$advert->getSubsubcategory()}</span>
-                    {if $advert->getBrand()!==null}
-                        <span class='brand'>{$advert->getBrand()}</span>
+                    <h1>{$advert->name}</h1>
+                    <span class='price'>{$advert->price} kč</span>
+                    <span class='state'>{$advert->state}</span>
+                    <span class='subsubcategory'>{$advert->subsubcategory}</span>
+                    {if $advert->brand}
+                        <span class='brand'>{$advert->brand}</span>
                     {/if}
-                    <a href={plink :Adverts:Seller:profile $advert->getSellerId()} class='seller'>od {$advert->getSellerName()}</a>
+                    <span><a href={plink :Users:Seller:default $advert->sellerId} class='seller'>od {$advert->sellerName}</a></span>
                     <div class='detail'>
-                        {if !empty($advert->getDetails())}
-                            <p>{$advert->getDetails()}</p>
+                        {if !empty($advert->details)}
+                            <p>{$advert->details}</p>
                         {else}
                             <p>Nejsou tu žádné podrobnosti.</p>
                         {/if}
                     </div>
                 </div>
                 <div class='timeline'>
-                    <span class='created-at'>Vytvořeno: {$advert->getCreatedAt()}</span>
-                    {if $advert->getLastUpdate()!==null}
-                        <span class='updated-at'>Upraveno: {$advert->getLastUpdate()}</span>
+                    <span class='created-at'>Vytvořeno: {$advert->createdAt}</span>
+                    {if $advert->lastUpdate}
+                        <span class='updated-at'>Upraveno: {$advert->lastUpdate}</span>
                     {/if}
                 </div>
             </div>
-            {if $advert->getMainImageName()!==null}
-                <img src='/image/{$advert->getMainImageName()}/'>
+            {if $advert->mainImageName}
+                <img src='/image/{$advert->mainImageName}/'>
                 {else}
                     <img src="/images/unknown.jpg">
             {/if}

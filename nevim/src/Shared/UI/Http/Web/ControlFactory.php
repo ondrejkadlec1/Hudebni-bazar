@@ -1,10 +1,20 @@
 <?php
 
-namespace Ondra\App\Users\UI\Http\Web;
+declare(strict_types=1);
+
+namespace Ondra\App\Shared\UI\Http\Web;
 
 use Ondra\App\Shared\Application\BusProvider;
 
-class ControlFactory
+abstract class ControlFactory
 {
-    protected BusProvider $busProvider;
+	protected BusProvider $busProvider;
+
+	/**
+	 * @param BusProvider $busProvider
+	 */
+	public function __construct(BusProvider $busProvider)
+	{
+		$this->busProvider = $busProvider;
+	}
 }

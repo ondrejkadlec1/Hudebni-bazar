@@ -1,28 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ondra\App\Adverts\Application\Query\Handlers;
 
-use Ondra\App\Adverts\Application\IAdvertRepository;
-use Ondra\App\Adverts\Application\Query\Messages\GetAdvertQuery;
-use Ondra\App\Adverts\Application\Query\Messages\GetAdvertResponse;
+use Ondra\App\Adverts\Application\IAdvertReadRepository;
+use Ondra\App\Adverts\Application\Query\Messages\Request\GetAdvertQuery;
+use Ondra\App\Adverts\Application\Query\Messages\Response\GetAdvertResponse;
 use Ondra\App\Shared\Application\Autowired;
-use Ondra\App\Shared\Application\Query\Query;
+use Ondra\App\Shared\Application\Exceptions\MissingContentException;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
 class GetAdvertQueryHandler implements Autowired
 {
-    private IAdvertRepository $repository;
-
-    /**
-     * @param IAdvertRepository $repository
-     */
-    public function __construct(IAdvertRepository $repository)
-    {
-        $this->repository = $repository;
-    }
-    public function __invoke(GetAdvertQuery $query): GetAdvertResponse{
-        $dto = $this->repository->getDetail($query->getId());
-        return new GetAdvertResponse($dto);
-    }
+	public function __construct(private readonly IAdvertReadRepository $repository)
+	{
+	}
+	public function __invoke(GetAdvertQuery $query): GetAdvertResponse
+	{
+		$dto = $this->repository->getDetail($query->id);
+		if (! isset($dto)) {
+			throw new MissingContentException('advert does not exist', 0);
+		}
+		return new GetAdvertResponse($dto);
+	}
 }

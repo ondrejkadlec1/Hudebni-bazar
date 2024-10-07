@@ -1,25 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ondra\App\Adverts\UI\Http\Web;
 
 use Nette\Application\UI\Control;
-use Ondra\App\Adverts\Application\Query\Messages\GetAdvertsQuery;
+use Ondra\App\Adverts\Application\Query\DTOs\SearchCriteria;
+use Ondra\App\Adverts\Application\Query\Messages\Request\GetAdvertsQuery;
 use Ondra\App\Shared\Application\BusProvider;
 
 class AdvertsListControl extends Control
 {
-    private BusProvider $busProvider;
-    /**
-     * @param BusProvider $busProvider
-     */
-    public function __construct(BusProvider $busProvider)
-    {
-        $this->busProvider = $busProvider;
-    }
-
-    public function render(): void
-    {
-        $this->template->adverts = $this->busProvider->sendQuery(new GetAdvertsQuery(new \stdClass))->getDtos();
-        $this->template->render(__DIR__ . "/templates/Browse/advertsList.latte");
-    }
+	public function __construct(private readonly BusProvider $busProvider, private readonly SearchCriteria $criteria)
+	{
+	}
+	public function render(): void
+	{
+		$response = $this->busProvider->sendQuery(new GetAdvertsQuery($this->criteria));
+		$this->template->adverts = $response->dtos;
+		$this->template->render(__DIR__ . "/templates/Shared/advertsList.latte");
+	}
 }

@@ -1,35 +1,42 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Ondra\App\Users\Application\security;
 
 use Nette\Security\AuthenticationException;
 use Nette\Security\Authenticator;
+use Nette\Security\IdentityHandler;
+use Nette\Security\IIdentity;
 use Nette\Security\Passwords;
 use Nette\Security\SimpleIdentity;
-use Ondra\App\Users\Infrastructure\IUserRepository;
+use Ondra\App\Users\Application\IUserReadRepository;
 
-class UserAuthenticator implements Authenticator
+final class UserAuthenticator implements Authenticator, IdentityHandler
 {
-    public function __construct(
-        private IUserRepository $repository,
-        private Passwords       $passwords
-    ){
-    }
-    public function authenticate(string $username, string $password): SimpleIdentity {
-        $row = $this->repository->getUserByUsername($username);
+	public function __construct(
+		private readonly IUserReadRepository $repository,
+		private readonly Passwords $passwords,
+	) {
+	}
+	public function authenticate(string $user, string $password): SimpleIdentity
+	{
+		$passwordHash = $this->repository->getPasswordHash($user);
+		if (! $passwordHash) {
+			throw new AuthenticationException('user does not exist', 0);
+		}
+		if (! $this->passwords->verify($password, $passwordHash)) {
+			throw new AuthenticationException('wrong password', 1);
+		}
+		return $this->repository->getIdentityByUsername($user);
+	}
+	function sleepIdentity(IIdentity $identity): IIdentity
+	{
+		return new SimpleIdentity($this->repository->getAuthtoken($identity->getId()));
+	}
 
-        if(!isset($row->password)){
-            throw new AuthenticationException('Takový uživatel tady ani není.');
-        }
-        if (!$this->passwords->verify($password, $row->password)){
-            throw new AuthenticationException('Špatné heslo.');
-        }
-        return new SimpleIdentity($row->id, null, ['username' => $row->username]);
-    }
-    public function reauthenticate(string $id, string $oldPassword): void {
-        $row = $this->repository->getUserById($id);
-
-        if (!$this->passwords->verify($oldPassword, $row->password)) {
-            throw new AuthenticationException("Špatné heslo");
-        }
-    }
+	function wakeupIdentity(IIdentity $identity): ?IIdentity
+	{
+		return $this->repository->getIdentityByAuthtoken($identity->getId());
+	}
 }

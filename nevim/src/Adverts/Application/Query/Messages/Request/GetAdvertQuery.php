@@ -1,27 +1,15 @@
 <?php
 
-namespace Ondra\App\Adverts\Application\Query\Messages;
+declare(strict_types=1);
+
+namespace Ondra\App\Adverts\Application\Query\Messages\Request;
 
 use Ondra\App\Shared\Application\Query\Query;
 
-class GetAdvertQuery implements Query
+final readonly class GetAdvertQuery implements Query
 {
-    private int $id;
 
-    /**
-     * @param int $id
-     */
-
-    public function __construct(int $id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
+	public function __construct(public string $id)
+	{
+	}
 }

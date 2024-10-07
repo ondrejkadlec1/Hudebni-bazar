@@ -12,7 +12,7 @@
 		"GPL-3.0"
 	],
 	"require": {
-		"php": ">= 8.1",
+		"php": ">= 8.2",
 		"nette/application": "^3.1",
 		"nette/bootstrap": "^3.2",
 		"nette/caching": "^3.2",

@@ -1,52 +1,58 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ondra\App\Users\UI\Http\Web;
 
-use Nette\Application\UI\Presenter;
-use Nette\Application\Attributes\Persistent;
-use Nette\Security\User;
+use Nette\Application\UI\Form;
+use Ondra\App\Shared\UI\Http\Web\FrontendPresenter;
+use Ondra\App\Shared\UI\Http\Web\GoToPrevious;
 use Ondra\App\Users\UI\Http\Web\forms\SignInFormFactory;
 use Ondra\App\Users\UI\Http\Web\forms\SignUpFormFactory;
 
-final class SignPresenter extends Presenter
+final class SignPresenter extends FrontendPresenter
 {
-    #[Persistent]
-    public $backlink;
-    public function __construct(
-        public SignInFormFactory $inFactory,
-        public SignUpFormFactory $upFactory,
-        public User $user
-    ){
-    }
+	use GoToPrevious;
 
-    protected function beforeRender()
-    {
-        parent::beforeRender();
-        $this->backlink = $this->getParameter('backlink');
+	public function __construct(private readonly SignInFormFactory $inFactory, private readonly SignUpFormFactory $upFactory)
+	{
+	}
 
-        if($this->user->isloggedIn())
-            if(isset($this->backlink)){
-                $this->restoreRequest($this->backlink);
-            }
-            else{
-                $this->redirect(':Shared:Home:default');
-            }
-    }
-    public function actionOut($backlink){
-        $this->user->logout(true);
-        if(isset($backlink)){
-            $this->restoreRequest($backlink);
-        }
-        else{
-            $this->redirect(':Shared:Home:default');
-        }
-    }
-    public function createComponentSignInForm(){
-        return $this->inFactory->create();
-    }
+	public function redirectUser(): void
+	{
+		if ($this->user->isloggedIn()) {
+			$this->flashMessage('Pro tuto akci se musíte odhlásit.');
+			$this->goToPrevious();
+		}
+	}
+	public function actionOut(): void
+	{
+		$this->user->logout();
+		$this->goToPrevious();
+	}
+	public function renderIn(): void
+	{
+		$this->redirectUser();
+	}
+	public function renderUp(): void
+	{
+		$this->redirectUser();
+	}
+	public function createComponentSignInForm(): Form
+	{
+		$form = $this->inFactory->create();
+		$form->onSuccess[] = function (): void {
+			$this->goToPrevious();
+		};
+		return $form;
+	}
 
-    public function createComponentSignUpForm(){
-        return $this->upFactory->create();
-    }
-
+	public function createComponentSignUpForm(): Form
+	{
+		$form = $this->upFactory->create();
+		$form->onSuccess[] = function (): void {
+			$this->goToPrevious();
+		};
+		return $form;
+	}
 }

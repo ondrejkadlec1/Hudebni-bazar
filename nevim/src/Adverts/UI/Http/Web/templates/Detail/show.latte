@@ -1,38 +1,44 @@
 {layout __WWW_DIR__ . '/templates/mainLayout.latte'}
 {block title}
-    {$advert->getName()}
+    {$advert->name}
 {/block}
 {block content}
     <article class="block clearfix" >
-        <h1>{$advert->getName()}</h1>
+        <h1>{$advert->name}</h1>
         <div class='info'>
-            <span class='price'>{$advert->getPrice()} kč</span>
-            <span class='state'>{$advert->getState()}</span>
-            {if $advert->getBrand()!==null}
-                <span class='brand'>{$advert->getBrand()}</span>
+            <span class='price'>{$advert->price} kč</span>
+            <span class='state'>{$advert->state}</span>
+            {if $advert->brand}
+                <span class='brand'>{$advert->brand}</span>
             {/if}
-            od <span class='seller'>{$advert->getSellerName()}</span>
+            od <span class='seller'>{$advert->sellerName}</span>
         </div>
         <div class='detail'>
-            {if !empty($advert->getDetails())}
-                <p>{$advert->getDetails()}</p>
+            {if $advert->details}
+                <p>{$advert->details}</p>
                 {else}
                     <p>Nejsou tu žádné podrobnosti.</p>
             {/if}
         </div>
         <div class='timeline'>
-            <span class='created-at'>Vytvořeno: {$advert->getCreatedAt()}</span>
-                {if $advert->getLastUpdate()!==null}
-                    <span class='updated-at'>Upraveno: {$advert->getLastUpdate()}</span>
+            <span class='created-at'>Vytvořeno: {$advert->createdAt}</span>
+                {if $advert->lastUpdate}
+                    <span class='updated-at'>Upraveno: {$advert->lastUpdate}</span>
                 {/if}
         </div>
-        {if $advert->getMainImageName()!==null}
-            <img class="mainImage" src='/images/{$advert->getMainImageName()}/'>
+        {if $advert->mainImageName}
+            <img class="mainImage" src='/images/{$advert->mainImageName}/'>
+            {else}
+                <img src="/images/unknown.jpg">
+        {/if}
+        {if $imageNames}
             {foreach $imageNames as $imageName}
                 <img class="thumb" src='/images/{$imageName}/'>
             {/foreach}
-            {else}
-                <img src="/images/unknown.jpg">
+        {/if}
+        {if $advert->sellerId == $userId}
+            <a href={plink :Adverts:Advert:update id: $advert->id}>Upravit</a>
+            <a href={plink :Adverts:Advert:delete id: $advert->id}>Smazat</a>
         {/if}
     </article>
 {/block}

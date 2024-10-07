@@ -1,15 +1,25 @@
 <?php
 
-namespace Ondra\App\Adverts\UI\Http\Web;
+declare(strict_types=1);
 
-use Ondra\App\Adverts\Application\Query\Messages\GetSellerProfileQuery;
+namespace Ondra\App\Users\UI\Http\Web;
+
+use Ondra\App\Adverts\UI\Http\Web\Browsing;
+use Ondra\App\Shared\Application\Exceptions\MissingContentException;
 use Ondra\App\Shared\UI\Http\Web\FrontendPresenter;
+use Ondra\App\Users\Application\Query\Messages\GetSellerProfileQuery;
 
-class SellerPresenter extends FrontendPresenter
+final class SellerPresenter extends FrontendPresenter
 {
-    use Navigation;
-    public function renderProfile(int $id){
-        $this->template->profile = $this->sendQuery(new GetSellerProfileQuery($id))->getDto();
-    }
-
+	use Browsing;
+	public function renderDefault(string $sellerId): void
+	{
+		try {
+			$this->template->profile = $this->sendQuery(new GetSellerProfileQuery($sellerId))->dto;
+		} catch (\Exception $e) {
+			if ($e->getPrevious() instanceof MissingContentException) {
+				$this->error('Hledaný prodejce neexistuje.', 404);
+			}
+		}
+	}
 }

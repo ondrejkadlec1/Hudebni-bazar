@@ -27,8 +27,9 @@ final class BusProvider
 	 * @phpstan-param T $query
 	 * @phpstan-return T
 	 */
-	public function sendQuery(Query $query): Query
-	{
+	public function sendQuery(
+		Query $query,
+	): Query {
 		return $this->queryBus->query($query);
 	}
 }
