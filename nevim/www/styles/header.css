@@ -42,3 +42,6 @@ header .navbar li.sign a:hover{
     color: #FFFFFF;
     background: #fdc500;
 }
+.categories-bar, .subcategories-bar, .subsubcategories-bar{
+    display: none;
+}

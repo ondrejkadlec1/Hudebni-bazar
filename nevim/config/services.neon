@@ -4,16 +4,25 @@ services:
 	- Ondra\App\Users\Application\security\UserAuthenticator
 	- Ondra\App\Users\UI\Http\Web\forms\SignInFormFactory
 	- Ondra\App\Users\UI\Http\Web\forms\ChangePwdFormFactory
-	- Ondra\App\Users\Infrastructure\DatabaseUserRepository
-	- Ondra\App\Adverts\Infrastructure\DatabaseAdvertRepository
+	- Ondra\App\Users\Infrastructure\DatabaseUserReadRepository
+	- Ondra\App\Users\Infrastructure\DatabaseUserWriteRepository
+	- Ondra\App\Adverts\Infrastructure\DatabaseAdvertReadRepository
+	- Ondra\App\Adverts\Infrastructure\DatabaseAdvertWriteRepository
 	- Ondra\App\Adverts\Infrastructure\DatabaseCategoryRepository
-	- Ondra\App\Users\Application\Command\CreateUserCommandHandler
-	- Ondra\App\Users\Application\Command\ChangePasswordCommandHandler
-	- Ondra\App\Adverts\Application\Command\CreateAdvertCommandHandler
+	- Ondra\App\Users\Application\Command\Handlers\CreateUserCommandHandler
+	- Ondra\App\Users\Application\Command\Handlers\ChangePasswordCommandHandler
+	- Ondra\App\Users\Application\Query\Handlers\GetSellerProfileQueryHandler
+	- Ondra\App\Adverts\Application\Command\Handlers\CreateAdvertCommandHandler
+	- Ondra\App\Adverts\Application\Command\Handlers\UpdateAdvertCommandHandler
+	- Ondra\App\Adverts\Application\Command\Handlers\DeleteAdvertCommandHandler
 	- Ondra\App\Adverts\Application\Query\Handlers\GetAdvertQueryHandler
+	- Ondra\App\Adverts\Application\Query\Handlers\GetAdvertsCountQueryHandler
+	- Ondra\App\Adverts\Application\Query\Handlers\GetCategoriesQueryHandler
+	- Ondra\App\Adverts\Application\Query\Handlers\GetListNameQueryHandler
 	- Ondra\App\Adverts\Application\Query\Handlers\GetAdvertsQueryHandler
 	- Ondra\App\Adverts\Application\Query\Handlers\GetItemImageQueryHandler
 	- Ondra\App\Adverts\Application\Query\Handlers\GetCategoriesQueryHandler
+	- Ondra\App\Shared\Application\Roles\RoleAssigner
 
 	security.passwords: Nette\Security\Passwords(::PASSWORD_BCRYPT, [cost: 10])
 

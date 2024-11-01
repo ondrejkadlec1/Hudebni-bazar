@@ -20,7 +20,7 @@ trait Paginated
 				$page = 1;
 			}
 			$this->paginator = new Paginator();
-			$this->paginator->setItemsPerPage((int) $_ENV["ITEMS_PER_PAGE"]);
+			$this->paginator->setItemsPerPage(12);
 			$this->paginator->setPage($page);
 			$this->offset = $this->paginator->getOffset();
 			$this->limit = $this->paginator->getItemsPerPage();

@@ -1,44 +1,4 @@
-{layout __WWW_DIR__ . '/templates/mainLayout.latte'}
-
+{layout 'browseLayout.latte'}
 {block title}
     Nabídky
-{/block}
-
-{block content}
-
-{control advertsList}
-
-        <div class="newAdvert">Nabídnout</div>
-
-        <form n:name=advertForm id="frm-advertForm">
-            <h2>Nová nabídka</h2>
-                <label>Název<input n:name=name autofocus id="frm-advertForm-name"></label>
-                <label for='frm-advertForm-stateId'>Stav</label>
-                <select n:name=stateId id="frm-advertForm-stateId"></select>
-                <select n:name=categoryId></select>
-                <select n:name=subcategoryId></select>
-                <select n:name=subsubcategoryId></select>
-                <label>Cena
-                    <div>
-                        <input n:name=price id="frm-advertForm-price">kč
-                    </div>
-                </label>
-                <label for='frm-advertForm-details'>Podrobnosti</label>
-                <textarea n:name=details id="frm-advertForm-details"></textarea>
-                <label>Počet<input n:name=quantity id="frm-advertForm-quantity"></label>
-                <label for="frm-advertForm-files">Nahrát soubory</label>
-                <input n:name=images id="frm-advertForm-files", value="Nahrát">
-                <input n:name=send id="frm-advertForm-btn" value="Zveřejnit">
-
-                <ul class="errors" n:ifcontent>
-                            <li n:foreach="$form->getOwnErrors() as $error">{$error}</li>
-                        </ul>
-        </form>
-
-
-{/block}
-{block scripts}
-    <script type="text/javascript" src="https://nevim.local/scripts/postShow.js"></script>
-    <script src="https://unpkg.com/nette-forms@3/src/assets/netteForms.js"></script>
-
 {/block}
