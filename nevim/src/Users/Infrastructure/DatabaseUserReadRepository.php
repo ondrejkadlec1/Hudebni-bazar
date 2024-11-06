@@ -56,10 +56,9 @@ final class DatabaseUserReadRepository implements IUserReadRepository
 	}
 	public function getSellerProfile(string $id): ?SellerProfileDTO
 	{
-		$data = $this->explorer->fetch('SELECT username, is_seller FROM users WHERE id = ?', $id);
+		$data = $this->explorer->fetch('SELECT username, is_seller, users_info.*, FROM users LEFT JOIN users_info ON users.id = users_info.id WHERE id = ?', $id);
 		if ($data->is_seller) {
-			$detail = $this->explorer->fetch('SELECT * FROM users_info WHERE id = ?', $id);
-			return new SellerProfileDTO($data->username, $detail->description);
+			return new SellerProfileDTO($data->username, $data->description);
 		}
 		return null;
 	}

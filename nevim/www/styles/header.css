@@ -20,17 +20,18 @@ header .navbar li a{
 header .navbar a:hover{
     background: #fdc500;
 }
+/*sign*/
 header .navbar li.sign{
     width: 8%;
 }
+header .navbar li.sign.in{
+    margin-left: 40%;
+}
 header .navbar li.sign.profile{
-    margin-left: 62%;
+    margin-left: 30%;
 }
 header .navbar li.sign.out{
     margin-left: 4px;
-}
-header .navbar li.sign.in{
-    margin-left: 71%;
 }
 header .navbar li.sign a{
     border-radius: 24px;
@@ -42,6 +43,43 @@ header .navbar li.sign a:hover{
     color: #FFFFFF;
     background: #fdc500;
 }
+/*search*/
+li#search{
+    width: fit-content;
+    margin: 0;
+}
+/*categories*/
 .categories-bar, .subcategories-bar, .subsubcategories-bar{
     display: none;
+}
+.categories-bar a{
+    box-sizing: border-box;
+    padding: 15px;
+}
+.categories-bar li{
+    height: 48px;
+}
+.categories-bar{
+    z-index: 2;
+}
+.subcategories-bar, .subcategories-bar{
+    z-index: 1;
+    width: inherit;
+    position: fixed;
+}
+.categories-bar > li{
+    float: left;
+    width: 16.666%;
+    background: #38383D;
+    color: #FFFFFF;
+}
+.subcategories-bar{
+    background: #007700;
+}
+.subsubcategories-bar{
+    z-index: 0;
+    position: relative;
+    top: -48px;
+    left: 100%;
+    background: black;
 }

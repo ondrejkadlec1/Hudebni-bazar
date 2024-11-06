@@ -6,7 +6,7 @@ class AdvertsSeeder extends AbstractSeed
 {
     public function run() : void
     {
-        $this->execute("insert into public.adverts (id, price, quantity, created_at, updated_at, item_id, seller_id)
+        $this->execute("insert into public.adverts (id, price, quantity, created_at, updated_at, id, seller_id)
         values  (28, 7000, 1, '2024-07-04 12:23:27.000000', null, '6686943f9ea0c', '6686943fc48c8'),
         (22, 5000, 1, '2024-07-03 19:21:47.000000', null, '6685a4cbd5765', '668682c59c0f4'),
         (26, 99999, 1000, '2024-07-03 21:30:40.000000', null, '6685c30006038', '668682c59c0f4'),

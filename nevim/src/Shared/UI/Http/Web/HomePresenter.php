@@ -8,6 +8,6 @@ use Nette\Application\UI\Presenter;
 use Nette\Database\Explorer;
 use Nette\Database\Connection;
 
-final class HomePresenter extends Presenter
+final class HomePresenter extends FrontendPresenter
 {
 }

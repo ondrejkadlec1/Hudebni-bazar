@@ -56,3 +56,9 @@ form h2{
     border: none;
     border-radius: 5px;
 }
+#frm-searchForm input{
+    margin: 0;
+    float: left;
+    position: relative;
+    top: 8px;
+}

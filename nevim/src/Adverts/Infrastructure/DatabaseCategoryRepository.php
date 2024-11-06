@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Ondra\App\Adverts\Infrastructure;
 
+use Nette\Database\Connection;
 use Nette\Database\Explorer;
 use Ondra\App\Adverts\Application\ICategoryRepository;
 
 final class DatabaseCategoryRepository implements ICategoryRepository
 {
-	public function __construct(private readonly Explorer $explorer)
+	public function __construct(private readonly Explorer $explorer, private readonly Connection $connection)
 	{
 	}
 
@@ -20,34 +21,36 @@ final class DatabaseCategoryRepository implements ICategoryRepository
 
 	public function getSubcategories(): array
 	{
+        $records = $this->connection->query("SELECT categories.id AS category,
+            subcategories.id AS subcategory_id, subcategories.name subcategory_name 
+            FROM categories LEFT JOIN subcategories ON categories.id = subcategories.category_id");
         $subcategories = [];
-		$categories = $this->explorer->table('categories')->select('id');
-		foreach ($categories as $category) {
-			$subcategories[$category->id] = $this->explorer->table('subcategories')->where(
-				'category_id',
-				$category->id,
-			)->fetchPairs(
-				'id',
-				'name',
-			);
-		}
-		return $subcategories;
+        foreach ($records as $record){
+            if ($record->subcategory_id){
+                $subcategories[$record->category][(int) $record->subcategory_id] = $record->subcategory_name;
+            }
+            else {
+                $subcategories[$record->category] = [];
+            }
+        }
+        return $subcategories;
 	}
 
 	public function getSubsubcategories(): array
 	{
+        $records = $this->connection->query("SELECT subcategories.id AS subcategory,
+            subsubcategories.id AS subsubcategory_id, subsubcategories.name subsubcategory_name 
+            FROM subcategories LEFT JOIN subsubcategories ON subcategories.id = subsubcategories.subcategory_id");
         $subsubcategories = [];
-		$subcategories = $this->explorer->table('subcategories')->select('id');
-		foreach ($subcategories as $subcategory) {
-			$subsubcategories[$subcategory->id] = $this->explorer->table('subsubcategories')->where(
-				'subcategory_id',
-				$subcategory->id,
-			)->fetchPairs(
-				'id',
-				'name',
-			);
-		}
-		return $subsubcategories;
+        foreach ($records as $record){
+            if ($record->subsubcategory_id) {
+                $subsubcategories[$record->subcategory][(int)$record->subsubcategory_id] = $record->subsubcategory_name;
+            }
+            else {
+                $subsubcategories[$record->subcategory] = [];
+            }
+        }
+        return $subsubcategories;
 	}
 
 	public function getCategoryName(int $id): ?string

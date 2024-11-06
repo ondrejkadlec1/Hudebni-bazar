@@ -21,11 +21,10 @@ final class DatabaseAdvertWriteRepository implements IAdvertWriteRepository
 
 	public function getById(string $id): ?Advert
 	{
-		$advertData = $this->explorer->fetch("SELECT * from adverts WHERE id = ?", $id);
-		if (isset($advertData)) {
-			$itemData = $this->explorer->fetch("SELECT * from items WHERE id = ?", $advertData->item_id);
-			$imagesData = $this->explorer->table('item_images')->where('item_id = ?', $advertData->item_id);
-			$sellerData = $this->explorer->fetch("SELECT id, username FROM users WHERE id = ?", $advertData->seller_id);
+		$data = $this->explorer->fetch("SELECT adverts.*, name, state_id, details, brand, subsubcategory_id
+            FROM adverts LEFT JOIN items ON adverts.id = items.id WHERE id = ?", $id);
+		if (isset($data)) {
+			$imagesData = $this->explorer->table('item_images')->where('item_id = ?', $data->item_id);
 
 			$images = [];
 			if ($imagesData) {
@@ -34,30 +33,26 @@ final class DatabaseAdvertWriteRepository implements IAdvertWriteRepository
 				}
 			}
 
-            if (isset($itemData)) {
-                $item = new Item(
-                    $itemData->id,
-                    $itemData->name,
-                    $itemData->details,
-                    $itemData->state_id,
-                    $images,
-                    $itemData->subsubcategory_id,
-                    $itemData->brand,
-                );
-            }
+            $item = new Item(
+                $data->id,
+                $data->name,
+                $data->details,
+                $data->state_id,
+                $images,
+                $data->subsubcategory_id,
+                $data->brand,
+            );
 
-            if (isset($sellerData)) {
-                $seller = new Seller(
-                    $sellerData->id,
-                );
-            }
+            $seller = new Seller(
+                $data->id,
+            );
 
 			return new Advert(
-				$advertData->id,
+				$data->id,
 				$item,
 				$seller,
-				$advertData->price,
-				$advertData->quantity,
+				$data->price,
+				$data->quantity,
 			);
 		}
 		return null;
@@ -87,7 +82,7 @@ final class DatabaseAdvertWriteRepository implements IAdvertWriteRepository
 		} else {
 			$itemQuery = "INSERT INTO items (id, name, state_id, details, subsubcategory_id, brand) values(?, ?, ?, ?, ?, ?)";
 			$itemImagesQuery = "INSERT INTO item_images (id, item_id, extension, created_at) values (?, ?, ?, ?)";
-			$advertQuery = "INSERT INTO adverts (item_id, seller_id, price, quantity, created_at) values (?, ?, ?, ?, ?)";
+			$advertQuery = "INSERT INTO adverts (id, seller_id, price, quantity, created_at) values (?, ?, ?, ?, ?)";
 
 			$this->connection->query(
 				$itemQuery,
@@ -113,7 +108,7 @@ final class DatabaseAdvertWriteRepository implements IAdvertWriteRepository
 	}
 	public function delete(string $id): void
 	{
-		$itemId = $this->explorer->fetch('SELECT item_id FROM adverts WHERE id = ?', $id) ?->item_id;
+		$itemId = $this->explorer->fetch('SELECT id FROM adverts WHERE id = ?', $id) ?->item_id;
 		$this->connection->query("DELETE FROM item_images WHERE item_id = ?", $itemId);
 		$this->connection->query("DELETE FROM adverts WHERE id = ?", $id);
 		$this->connection->query("DELETE FROM items WHERE id = ?", $itemId);

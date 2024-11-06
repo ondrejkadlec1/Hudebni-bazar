@@ -24,7 +24,7 @@ abstract class FrontendPresenter extends Presenter implements CQRSCapable
 	public function createComponentSearchForm(): Form
 	{
 		$form = new Form();
-		$form->addText('expression', 'Hledat')->addRule($form::MinLength, 'Alespoň 3 znaky.', 3);
+		$form->addText('expression')->addRule($form::MinLength, 'Alespoň 3 znaky.', 3);
 		$form->addSubmit('search', "Hledat");
 		$form->onSuccess[] = [$this, 'search'];
 		return $form;

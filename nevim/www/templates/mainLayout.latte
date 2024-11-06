@@ -24,6 +24,12 @@
 				<li><a n:href=":Shared:Home:default">[Naše logo]</a></li>
 				<li class="show-categories"><a n:href=":Adverts:Browse:default">Nabídky</a></li>
 				<li><a n:href=":Adverts:Advert:default">Prodat</a></li>
+				<li id="search">
+				    <form n:name=searchForm id="frm-searchForm" class="clearfix">
+                        <input n:name=expression>
+                        <input n:name=search value="Hledat">
+                    </form>
+				</li>
 				 {if $user->isLoggedIn()}
 					 <li class="sign profile"><a n:href=":Users:Profile:default">Profil</a></li>
 					 {if isset($backlink)}<li class="sign out"><a n:href=":Users:Sign:out $backlink">Odhhlásit</a></li>
@@ -38,15 +44,15 @@
 		    <ul class="categories-bar">
 		    {foreach $categories as $categoryId => $categoryName}
 		        <li class="category">
-		            <a n:href="Browse:category categoryId: $categoryId">{$categoryName}</a>
+		            <a n:href=":Adverts:Browse:category categoryId: $categoryId">{$categoryName}</a>
 		            <ul class="subcategories-bar">
 		                {foreach $subcategories[$categoryId] as $subcategoryId => $subcategoryName}
 		                    <li class="subcategory">
-		                        <a n:href="Browse:subcategory subcategoryId: $subcategoryId">{$subcategoryName}</a>
+		                        <a n:href=":Adverts:Browse:subcategory subcategoryId: $subcategoryId">{$subcategoryName}</a>
 		                        <ul class="subsubcategories-bar">
                                 	{foreach $subsubcategories[$subcategoryId] as $subsubcategoryId => $subsubcategoryName}
                                 		<li class="subsubcategory">
-                                		    <a n:href="Browse:subsubcategory subsubcategoryId: $subsubcategoryId">{$subsubcategoryName}</a>
+                                		    <a n:href=":Adverts:Browse:subsubcategory subsubcategoryId: $subsubcategoryId">{$subsubcategoryName}</a>
                                 	    </li>
                                     {/foreach}
                                 </ul>
@@ -58,8 +64,6 @@
 		    </ul>
 		</nav>
 	</header>
-
-	{include bar}
 
 	<section class="content">
 		<div n:foreach="$flashes as $flash" class="flash">{$flash->message}</div>

@@ -18,6 +18,9 @@
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 /*adverts*/
+.advertsList{
+    min-height: 100vh;
+}
 .advert{
     float: left;
     width: 30%;
@@ -29,16 +32,18 @@
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 .advert img{
+    margin-top: -16px;
     float: left;
     width: 50%;
     min-height: 42vh;
     object-fit: cover;
 }
 .advert .info{
+    margin-top: -16px;
     box-sizing: border-box;
     float: left;
     width: 50%;
-    padding: 10px 10px 10px 5px;
+    padding: 10px;
 }
 
 .advert h1, .about h2{
@@ -60,6 +65,7 @@
     margin-top: 8px;
 }
 .hideable{
+    margin-top: -16px;
     height: 35vh;
     overflow: hidden;
     margin-bottom: 5px;
@@ -73,6 +79,7 @@
     color: #38383D;
 }
 .timeline{
+    height: 24px;
     font-size: 12px;
     color: #38383D;
 }
@@ -87,35 +94,23 @@
     display: grid;
 }
 .thumb{
-    width: 123;
+    width: 123px;
     height: 123px;
     float: left;
     margin-left: 10px;
     margin-bottom: 10px;
     object-fit: cover;
 }
-/*new offer*/
-.newAdvert{
-    font-size: 28px;
-    font-weight: bold;
-    background: #53862E;
-    color: #FFFFFF;
-    border-radius: 8px;
-    padding: 10px;
-    position: fixed;
-    top: 116px;
-    left: 87%;
-    cursor: pointer;
-    max-width: 10%;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+/*paginator*/
+.paginator{
+    width: max-content;
+    margin: 0 auto 35px auto;
 }
-.newAdvert:hover{
-    color: #FFFFFF;
-    background: #fdc500;
+.paginator li{
+    float: left;
+    margin-left: 5px;
 }
 /*about*/
 .about{
     width: 99%;
 }
-
-
