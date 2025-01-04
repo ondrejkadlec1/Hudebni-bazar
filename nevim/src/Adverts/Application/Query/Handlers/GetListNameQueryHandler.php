@@ -37,8 +37,8 @@ class GetListNameQueryHandler implements Autowired
 					0,
 				);
 		}
-		if (! $name) {
-			throw new MissingContentException('category does not exist', 1);
+		if (!$name) {
+			throw new MissingContentException('category with id ' . $query->id . ' does not exist', 1);
 		}
 		return new GetListNameResponse($name);
 	}

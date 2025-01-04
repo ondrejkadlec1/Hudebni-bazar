@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Ondra\App\Users\UI\Http\Web;
 
 use Nette\Application\UI\Form;
+use Ondra\App\Adverts\UI\Http\Web\Browsing;
+use Ondra\App\Adverts\UI\Http\Web\Paginated;
 use Ondra\App\Shared\UI\Http\Web\FrontendPresenter;
 use Ondra\App\Shared\UI\Http\Web\GoToPrevious;
 use Ondra\App\Users\UI\Http\Web\forms\SignInFormFactory;

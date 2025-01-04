@@ -1,14 +1,7 @@
 #frm-advertForm{
-    display: none;
-    position: absolute;
     width: 50%;
-    left: 21.5%;
+    margin-left: 21.5%;
     min-height: 50vh;
-    background: #FFFFFF;
-    z-index: 1;
-    padding: 50px;
-    border-radius: 8px;
-    top: 45px;
 }
 form input, form textarea, form select{
     display: block;
@@ -61,4 +54,10 @@ form h2{
     float: left;
     position: relative;
     top: 8px;
+}
+#frm-filterForm label, #frm-filterForm input{
+    display: inline;
+}
+#frm-filterForm #frm-filterForm-max, #frm-filterForm-min, #frm-filterForm-brand {
+    width: 10%;
 }

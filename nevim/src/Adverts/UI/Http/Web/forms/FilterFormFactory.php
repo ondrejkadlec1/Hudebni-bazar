@@ -21,7 +21,7 @@ class FilterFormFactory
 		$form = new Form();
 		$form->addInteger('max', 'Nejvyšší cena');
 		$form->addInteger('min', 'Nejnižší cena');
-		$form->addMultiSelect('stateId', 'Stav', $states);
+		$form->addCheckboxList('stateId', 'Stav', $states);
 		$form->addText('brand', 'Značka')->setNullable();
 		$form->addSubmit('filter', 'filtrovat');
 		return $form;

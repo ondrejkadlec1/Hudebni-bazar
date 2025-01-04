@@ -21,20 +21,20 @@ final class DatabaseAdvertWriteRepository implements IAdvertWriteRepository
 
 	public function getById(string $id): ?Advert
 	{
-		$data = $this->explorer->fetch("SELECT adverts.*, name, state_id, details, brand, subsubcategory_id
-            FROM adverts LEFT JOIN items ON adverts.id = items.id WHERE id = ?", $id);
+		$data = $this->explorer->fetch("SELECT adverts.*, name, state_id, details, brand, subsubcategory_id, items.id AS item_id
+            FROM adverts LEFT JOIN items ON adverts.id = items.id WHERE adverts.id = ?", $id);
 		if (isset($data)) {
 			$imagesData = $this->explorer->table('item_images')->where('item_id = ?', $data->item_id);
 
 			$images = [];
 			if ($imagesData) {
-				foreach ($imagesData as $data) {
-					$images[] = $data->id . '.' . $data->extension;
+				foreach ($imagesData as $imData) {
+					$images[] = $imData->id . '.' . $imData->extension;
 				}
 			}
 
             $item = new Item(
-                $data->id,
+                $data->item_id,
                 $data->name,
                 $data->details,
                 $data->state_id,
@@ -44,7 +44,7 @@ final class DatabaseAdvertWriteRepository implements IAdvertWriteRepository
             );
 
             $seller = new Seller(
-                $data->id,
+                $data->seller_id,
             );
 
 			return new Advert(
@@ -59,58 +59,64 @@ final class DatabaseAdvertWriteRepository implements IAdvertWriteRepository
 	}
 	public function save(Advert $advert): void
 	{
-		$item = $advert->getItem();
-		$seller = $advert->getSeller();
-		$date = function () {
-			return date(DATE_ATOM);
-		};
+        $item = $advert->getItem();
+        $seller = $advert->getSeller();
+        $date = function () {
+            return date(DATE_ATOM);
+        };
+        $this->connection->beginTransaction();
+        if ($this->explorer->fetch("SELECT id FROM adverts WHERE id = ?", $advert->getId())) {
+            $itemQuery = "UPDATE items SET name = ?, state_id = ?, details = ?, subsubcategory_id = ?, brand = ? WHERE id = ?";
+            $advertQuery = "UPDATE adverts SET price = ?, quantity = ?, updated_at = ? WHERE id = ?";
+            $this->connection->query($advertQuery, $advert->getPrice(), $advert->getQuantity(), $date(), $advert->getId());
+            $this->connection->query(
+                $itemQuery,
+                $item->getName(),
+                $item->getStateId(),
+                $item->getDetails(),
+                $item->getSubsubcategoryId(),
+                $item->getBrand(),
+                $item->getId(),
+            );
+        }
+        else {
+            $itemQuery = "INSERT INTO items (id, name, state_id, details, subsubcategory_id, brand) values(?, ?, ?, ?, ?, ?)";
+            $advertQuery = "INSERT INTO adverts (id, seller_id, price, quantity, created_at) values (?, ?, ?, ?, ?)";
 
-		if ($this->explorer->fetch("SELECT id FROM adverts WHERE id = ?", $advert->getId())) {
-			$itemQuery = "UPDATE items SET name = ?, state_id = ?, details = ?, subsubcategory_id = ?, brand = ? WHERE id = ?";
-			$advertQuery = "UPDATE adverts SET price = ?, quantity = ?, updated_at = ? WHERE id = ?";
-
-			$this->connection->query(
-				$itemQuery,
-				$item->getName(),
-				$item->getStateId(),
-				$item->getDetails(),
-				$item->getSubsubcategoryId(),
-				$item->getBrand(),
-				$item->getId(),
-			);
-			$this->connection->query($advertQuery, $advert->getPrice(), $advert->getQuantity(), $date(), $advert->getId());
-		} else {
-			$itemQuery = "INSERT INTO items (id, name, state_id, details, subsubcategory_id, brand) values(?, ?, ?, ?, ?, ?)";
-			$itemImagesQuery = "INSERT INTO item_images (id, item_id, extension, created_at) values (?, ?, ?, ?)";
-			$advertQuery = "INSERT INTO adverts (id, seller_id, price, quantity, created_at) values (?, ?, ?, ?, ?)";
-
-			$this->connection->query(
-				$itemQuery,
-				$item->getId(),
-				$item->getName(),
-				$item->getStateId(),
-				$item->getDetails(),
-				$item->getSubsubcategoryId(),
-				$item->getBrand(),
-			);
-			$this->connection->query(
-				$advertQuery,
-				$item->getId(),
-				$seller->getId(),
-				$advert->getPrice(),
-				$advert->getQuantity(),
-				$date(),
-			);
-			foreach ($item->getItemImages() as $image) {
-				$this->connection->query($itemImagesQuery, $image->getId(), $item->getId(), $image->getExtension(), $date());
-			}
-		}
+            $this->connection->query(
+                $itemQuery,
+                $item->getId(),
+                $item->getName(),
+                $item->getStateId(),
+                $item->getDetails(),
+                $item->getSubsubcategoryId(),
+                $item->getBrand(),
+            );
+            $this->connection->query(
+                $advertQuery,
+                $item->getId(),
+                $seller->getId(),
+                $advert->getPrice(),
+                $advert->getQuantity(),
+                $date(),
+            );
+        }
+        $itemImagesQuery = "INSERT INTO item_images ?";
+        $itemImagesData = [];
+        foreach ($item->getItemImages() as $image) {
+            $itemImagesData[] = ['id' => $image->getId(), 'item_id' => $item->getId(), 'extension' => $image->getExtension(), 'created_at' => $date()];
+        }
+        if (!empty($itemImagesData)) {
+            $this->connection->query($itemImagesQuery, $itemImagesData);
+        }
+        $this->connection->commit();
 	}
 	public function delete(string $id): void
 	{
-		$itemId = $this->explorer->fetch('SELECT id FROM adverts WHERE id = ?', $id) ?->item_id;
-		$this->connection->query("DELETE FROM item_images WHERE item_id = ?", $itemId);
-		$this->connection->query("DELETE FROM adverts WHERE id = ?", $id);
-		$this->connection->query("DELETE FROM items WHERE id = ?", $itemId);
+        $this->connection->beginTransaction();
+        $this->connection->query("DELETE FROM item_images WHERE item_id = ?", $id);
+        $this->connection->query("DELETE FROM adverts WHERE id = ?", $id);
+        $this->connection->query("DELETE FROM items WHERE id = ?", $id);
+        $this->connection->commit();
 	}
 }

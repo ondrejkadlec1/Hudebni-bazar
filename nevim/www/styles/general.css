@@ -25,9 +25,10 @@ li a{
     background: #BAF88F;
     border-radius: 8px;
     padding: 10px;
-    min-height: 80vh;
+    min-height: 20vh;
+    margin-bottom: 30px;
 }
-.block h1{
+h1{
     font-size: 40px;
     font-weight: bold;
     margin-bottom: 25px;

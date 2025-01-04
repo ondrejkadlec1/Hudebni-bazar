@@ -21,7 +21,7 @@
 	<header>
 		<nav>
 			<ul class="navbar">
-				<li><a n:href=":Shared:Home:default">[Naše logo]</a></li>
+				<li><a n:href=":Adverts:Home:default">[Naše logo]</a></li>
 				<li class="show-categories"><a n:href=":Adverts:Browse:default">Nabídky</a></li>
 				<li><a n:href=":Adverts:Advert:default">Prodat</a></li>
 				<li id="search">
@@ -64,7 +64,11 @@
 		    </ul>
 		</nav>
 	</header>
-
+    {ifset bar}
+        <section class="bar">
+            {include bar}
+        </section>
+    {/ifset}
 	<section class="content">
 		<div n:foreach="$flashes as $flash" class="flash">{$flash->message}</div>
 	{include content}
@@ -75,7 +79,7 @@
 	<footer>
 		<nav>
 			<ul class="navbar">
-				<li><a n:href=":Shared:Home:default">Domů</a></li>
+				<li><a n:href=":Adverts:Home:default">Domů</a></li>
 				<li><a n:href=":Adverts:Browse:default">Nabídky</a></li>
 				<li><a n:href=":Shared:About:default">O této stránce</a></li>
 			</ul>
@@ -85,11 +89,6 @@
 
 	<script type="text/javascript" src="https://nevim.local/scripts/jquery.js"></script>
 	<script type="text/javascript" src="https://nevim.local/scripts/script.js"></script>
-
-	{block scripts}
-
-	{/block}
-
 
 
 

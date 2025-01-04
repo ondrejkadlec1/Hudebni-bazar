@@ -14,7 +14,7 @@ final class RouterFactory
 	public static function createRouter(): RouteList
 	{
 		$router = new RouteList();
-		$router->addRoute('', 'Shared:Home:default');
+		$router->addRoute('', 'Adverts:Home:default');
         $router->addRoute('image/<imageName>', 'Adverts:Browse:image');
         $router->addRoute('images/<imageName>', 'Adverts:Detail:images');
 		$router->addRoute('[<module>/]<presenter>/<action>[/<id>]', 'Home:default');

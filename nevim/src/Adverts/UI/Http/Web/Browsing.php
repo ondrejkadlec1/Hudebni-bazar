@@ -57,6 +57,6 @@ trait Browsing
 		$form->onSuccess[] = function (array $data): void {
 			$this->redirect("this", $data);
 		};
-		return $form;
+        return $form;
 	}
 }

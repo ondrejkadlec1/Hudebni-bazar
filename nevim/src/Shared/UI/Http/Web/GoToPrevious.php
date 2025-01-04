@@ -21,7 +21,7 @@ trait GoToPrevious
 		if (isset($this->backlink)) {
 			$this->restoreRequest($this->backlink);
 		} else {
-			$this->redirect(':Shared:Home:default');
+			$this->redirect(':Adverts:Home:default');
 		}
 	}
 }

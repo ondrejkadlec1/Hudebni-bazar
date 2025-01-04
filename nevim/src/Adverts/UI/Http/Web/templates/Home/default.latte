@@ -1,0 +1,20 @@
+{layout __WWW_DIR__ . '/templates/mainLayout.latte'}
+
+{block title}
+Home
+{/block}
+
+{block content}
+    <h1>Nejnovější nabídky</h1>
+    {control advertsListNewest}
+    <a class="showAll" n:href=":Adverts:browse:default">Všechny nabídky</a>
+    <h1>Nabídky v kategorii {$recCategoryName}</h1>
+    {control advertsListCategory}
+    <a class="showAll" n:href=":Adverts:browse:category $recCategoryId">Všechny nabídky</a>
+    <h1>Nabídky od prodejce {$recSellerName}</h1>
+    {control advertsListSeller}
+    <a class="showAll" n:href=":Users:seller:default $recSellerId">Všechny nabídky</a>
+    <h1>Nové zboží</h1>
+    {control advertsListStateNew}
+    <a class="showAll" n:href=":Adverts:browse:default stateId: [1]">Všechny nabídky</a>
+{/block}

@@ -3,19 +3,21 @@
 {block title}
     Profil
 {/block}
-
 {block content}
-<section class="block">
-    <h1>Informace o účtu</h1>
-    <table>
-         <tr>
-            <th>Uživatelské jméno:</th>
-            <td>{$info->username}</td>
-         </tr>
-            <th>Popis</th>
-            <td>{$info->description}</td>
-        <tr>
-            <th><a n:href="changePwd">Změnit heslo</a></th>
-        </tr>
-     </table>
-</section>
+    <section class="block">
+        <h1>Informace o účtu</h1>
+        <table>
+             <tr>
+                <th>Uživatelské jméno:</th>
+                <td>{$info->username}</td>
+             </tr>
+                <th>Popis</th>
+                <td>{$info->description}</td>
+            <tr>
+                <th><a n:href="changePwd">Změnit heslo</a></th>
+            </tr>
+         </table>
+    </section>
+    {control advertsList}
+    {control paginator}
+{/block}

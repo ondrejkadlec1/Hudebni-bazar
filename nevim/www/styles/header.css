@@ -83,3 +83,7 @@ li#search{
     left: 100%;
     background: black;
 }
+.bar {
+    margin-top: 50px;
+    padding-left: 10px;
+}

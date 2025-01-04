@@ -35,6 +35,7 @@ class AdvertPresenter extends FrontendPresenter
                 $this->error('Hledaná nabídka (už) neexistuje.', 404);
             }
 		}
+        $this->flashMessage("Úspěšně smazáno");
 		$this->redirect(":Users:Profile:default");
 	}
 	public function renderUpdate(string $id): void
@@ -93,14 +94,20 @@ class AdvertPresenter extends FrontendPresenter
 			} catch (\Exception $e) {
                 if ($e->getPrevious() instanceof PermissionException) {
                     if ($e->getPrevious()->getCode() === 0) {
-                        $this->error('Pro tuto akci se musíte přihlásit.', 403);
+                        $this->error('Pro tuto akci se musíte přihlásit.', 401);
                     }
                     if ($e->getPrevious()->getCode() === 1) {
                         $this->error('Tuto nabídku nesmíte upravovat, protože není vaše.', 403);
                     }
                 }
+                if ($e->getPrevious() instanceof MissingContentException) {
+                    $this->error('Tato nabídka neexistuje.', 404);
+                }
+                else {
+                    throw $e->getPrevious();
+                }
 			}
-			$this->flashMessage('Přidáno');
+			$this->flashMessage('Úspěšně uloženo');
 			$this->redirect(":Users:Profile:default");
 		};
 		return $form;

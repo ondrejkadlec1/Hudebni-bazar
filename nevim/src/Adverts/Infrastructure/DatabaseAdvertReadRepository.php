@@ -161,8 +161,8 @@ final class DatabaseAdvertReadRepository implements IAdvertReadRepository
                 item_images.id AS image_id, extension, 
                 username 
                 FROM " . self::TABLE_JOIN .
-                " WHERE ? ORDER BY " . $this->generateOrderBy($criteria),
-            $this->generateWhere($criteria)
+                " WHERE ? ORDER BY " . $this->generateOrderBy($criteria) . " LIMIT ? OFFSET ?",
+            $this->generateWhere($criteria), $criteria->limit, $criteria->offset
         );
 		$dtos = [];
 

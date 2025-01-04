@@ -1,8 +1,10 @@
 {layout __WWW_DIR__ . '/templates/mainLayout.latte'}
 {block bar}
-    {control filterForm}
+    {import ../Shared/filterForm.latte}
+    {include filterForm}
 {/block}
 {block content}
+    {include heading}
     {control advertsList}
     {control paginator}
 {/block}

@@ -11,7 +11,10 @@ use Ondra\App\Shared\Application\BusProvider;
 
 class AdvertsListControl extends Control
 {
-	public function __construct(private readonly BusProvider $busProvider, private readonly SearchCriteria $criteria)
+	public function __construct(
+        private readonly BusProvider $busProvider,
+        private readonly SearchCriteria $criteria,
+    )
 	{
 	}
 	public function render(): void

@@ -16,9 +16,9 @@ final class DatabaseUserReadRepository implements IUserReadRepository
 	{
 	}
 
-	public function getAuthtoken(string $id): string
+	public function getAuthtoken(string $id): ?string
 	{
-		return $this->explorer->fetch('SELECT authtoken FROM users WHERE id = ?', $id)->authtoken;
+		return $this->explorer->fetch('SELECT authtoken FROM users WHERE id = ?', $id) ?->authtoken;
 	}
 	private function createIdentity(Row $identityData): SimpleIdentity
 	{
@@ -34,7 +34,7 @@ final class DatabaseUserReadRepository implements IUserReadRepository
 	}
 	public function getPasswordHash(string $username): ?string
 	{
-		return $this->explorer->fetch('SELECT password FROM users WHERE username = ?', $username)->password;
+		return $this->explorer->fetch('SELECT password FROM users WHERE username = ?', $username) ?->password;
 	}
 	public function getIdentityByAuthtoken(string $authtoken): ?SimpleIdentity
 	{
@@ -46,20 +46,31 @@ final class DatabaseUserReadRepository implements IUserReadRepository
 			? $this->createIdentity($identityData)
 			: null;
 	}
-	public function getIdentityByUsername(string $username): SimpleIdentity
+	public function getIdentityByUsername(string $username): ?SimpleIdentity
 	{
 		$identityData = $this->explorer->fetch(
 			'SELECT id, username, email, is_seller FROM users WHERE username = ?',
 			$username,
 		);
-		return $this->createIdentity($identityData);
+        return $identityData
+            ? $this->createIdentity($identityData)
+            : null;
 	}
 	public function getSellerProfile(string $id): ?SellerProfileDTO
 	{
-		$data = $this->explorer->fetch('SELECT username, is_seller, users_info.*, FROM users LEFT JOIN users_info ON users.id = users_info.id WHERE id = ?', $id);
+		$data = $this->explorer->fetch('SELECT username, is_seller, users_info.* FROM users LEFT JOIN users_info ON users.id = users_info.id WHERE users.id = ?', $id);
 		if ($data->is_seller) {
 			return new SellerProfileDTO($data->username, $data->description);
 		}
 		return null;
 	}
+    public function getSellerName(string $id): ?string
+    {
+        $data = $this->explorer->fetch('SELECT username, is_seller FROM users WHERE users.id = ?', $id);
+        if ($data->is_seller) {
+            return $data->username;
+        }
+        return null;
+    }
 }
+

@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Ondra\App\Users\UI\Http\Web;
 
-use Ondra\App\Adverts\UI\Http\Web\Browsing;
+use Ondra\App\Adverts\UI\Http\Web\Paginated;
 use Ondra\App\Shared\Application\Exceptions\MissingContentException;
 use Ondra\App\Shared\UI\Http\Web\FrontendPresenter;
 use Ondra\App\Users\Application\Query\Messages\GetSellerProfileQuery;
 
 final class SellerPresenter extends FrontendPresenter
 {
-	use Browsing;
+    use Paginated;
 	public function renderDefault(string $sellerId): void
 	{
 		try {

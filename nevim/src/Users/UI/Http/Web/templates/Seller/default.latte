@@ -1,0 +1,20 @@
+{layout __WWW_DIR__ . '/templates/mainLayout.latte'}
+
+{block title}
+    {$profile->username}
+{/block}
+{block bar}
+    {import '/var/www/html/src/Adverts/UI/Http/Web/templates/Shared/filterForm.latte'}
+    {include filterForm}
+{/block}
+{block content}
+    <h1>{$profile->username}</h1>
+    <section class="block">
+        <p>
+            {$profile->description}
+        </p>
+    </section>
+    <h2>Nabídky uživatele {$profile->username}</h2>
+    {control advertsList}
+    {control paginator}
+{/block}
