@@ -6,7 +6,6 @@ namespace Ondra\App\Adverts\Infrastructure;
 
 use Nette\Database\Explorer;
 use Nette\Database\Connection;
-use Nette\Database\Table\Selection;
 use Ondra\App\Adverts\Application\IAdvertReadRepository;
 use Ondra\App\Adverts\Application\Query\DTOs\AdvertDetailDTO;
 use Ondra\App\Adverts\Application\Query\DTOs\AdvertOverviewDTO;
@@ -21,68 +20,63 @@ final class DatabaseAdvertReadRepository implements IAdvertReadRepository
                 LEFT JOIN subsubcategories ON items.subsubcategory_id = subsubcategories.id
                 LEFT JOIN subcategories ON subsubcategories.subcategory_id = subcategories.id
                 LEFT JOIN categories ON subcategories.category_id = categories.id
-                LEFT JOIN (SELECT extension, id, item_images.item_id AS item_id FROM item_images RIGHT JOIN
-                    (SELECT MIN(created_at) AS date, item_id FROM item_images GROUP BY item_id) AS i
-                        ON i.date = item_images.created_at and i.item_id = item_images.item_id) AS item_images
-                    ON items.id = item_images.item_id';
+                LEFT JOIN (SELECT id AS image_id, extension, rank, item_id FROM item_images WHERE rank = 0) as i ON items.id = i.item_id';
 	public function __construct(private readonly Explorer $explorer, private readonly Connection $connection)
 	{
 	}
 	public function getDetail(string $id): ?AdvertDetailDTO
-	{
-		$data = $this->connection->fetch("SELECT adverts.*, 
+    {
+        $data = $this->connection->fetch("SELECT adverts.*, 
                 items.name AS name, state_id, details, brand, subsubcategory_id, 
                 states.name AS state, 
                 subsubcategories.name AS subsubcategory_name, subcategory_id, 
                 subcategories.name AS subcategory_name, category_id,
                 categories.name AS category_name,
-                item_images.id AS image_id, extension,
+                rank AS rank, extension, image_id,
                 username FROM "
-                . self::TABLE_JOIN .
-                " WHERE adverts.id = ?", $id);
+            . self::TABLE_JOIN .
+            " WHERE adverts.id = ?", $id);
 
-		if (isset($data)) {
-			$imagesData = $this->explorer->table('item_images')->select('id, extension')->where(
-				'item_id = ?',
-				$data->id,
-			)->order('created_at ASC');
-
-			$imageNames = [];
-			foreach ($imagesData as $image) {
-				$imageNames[] = $image->id . '.' . $image->extension;
-			}
+        if (isset($data)) {
+            $imageNames = [];
+            $imageIds = [];
+            $mainImageName = null;
             if (isset($data->image_id)) {
-                $mainImageName = $data->image_id . '.' . $data->extension;
-            } else {
-                $mainImageName = null;
-            }
-            unset($imageNames[0]);
+                $mainImageName = $id . '_' . $data->image_id . '.' . $data->extension;
 
-            return new AdvertDetailDTO(
-                $data->id,
-                $data->name,
-                $data->price,
-                $data->quantity,
-                $data->state_id,
-                $data->state,
-                $data->username,
-                $data->seller_id,
-                $data->details,
-                (string) $data->created_at,
-                $imageNames,
-                $data->category_id,
-                $data->subcategory_id,
-                $data->subsubcategory_id,
-                $data->category_name,
-                $data->subcategory_name,
-                $data->subsubcategory_name,
-                $data->brand,
-                (string) $data->updated_at,
-                $mainImageName,
-            );
-		}
-		return null;
-	}
+                $imagesData = $this->explorer->table('item_images')->select('rank, extension, id')->where(
+                    'item_id', $id)->order('rank ASC');
+                foreach ($imagesData as $image) {
+                    $imageIds[] = $image->id;
+                    $imageNames[] = $id . '_' . $image->id . '.' . $image->extension;
+                }
+            }
+                return new AdvertDetailDTO(
+                    $data->id,
+                    $data->name,
+                    $data->price,
+                    $data->quantity,
+                    $data->state_id,
+                    $data->state,
+                    $data->username,
+                    $data->seller_id,
+                    $data->details,
+                    (string)$data->created_at,
+                    $imageNames,
+                    $imageIds,
+                    $data->category_id,
+                    $data->subcategory_id,
+                    $data->subsubcategory_id,
+                    $data->category_name,
+                    $data->subcategory_name,
+                    $data->subsubcategory_name,
+                    $data->brand,
+                    (string)$data->updated_at,
+                    $mainImageName,
+                );
+        }
+        return null;
+    }
 	public function generateWhere(SearchCriteria $criteria): array
 	{
 		$where = [];
@@ -113,7 +107,7 @@ final class DatabaseAdvertReadRepository implements IAdvertReadRepository
             $words = explode(" ", $criteria->expression);
             foreach ($words as $word) {
                 $word = '%' . $word . '%';
-                $where[] = $this->connection::literal('items.name ILIKE ? OR details     ILIKE ?', $word, $word);
+                $where[] = $this->connection::literal('items.name ILIKE ? OR details ILIKE ?', $word, $word);
             }
         }
 		return $where;
@@ -158,7 +152,7 @@ final class DatabaseAdvertReadRepository implements IAdvertReadRepository
                 items.name AS name, details, brand, subsubcategory_id, 
                 states.name AS state, 
                 subsubcategories.name AS subsubcategory_name, subcategory_id,
-                item_images.id AS image_id, extension, 
+                extension, image_id,
                 username 
                 FROM " . self::TABLE_JOIN .
                 " WHERE ? ORDER BY " . $this->generateOrderBy($criteria) . " LIMIT ? OFFSET ?",
@@ -168,7 +162,7 @@ final class DatabaseAdvertReadRepository implements IAdvertReadRepository
 
 		foreach ($dataArray as $data) {
 			if (isset($data->image_id)) {
-				$imageName = $data->image_id . '.' . $data->extension;
+				$imageName = $data->id . '_' . $data->image_id . '.' . $data->extension;
 			} else {
 				$imageName = null;
 			}

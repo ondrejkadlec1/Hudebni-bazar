@@ -12,8 +12,8 @@ latte:
 
 tracy:
 	maxLength: 500
-	maxDepth: 2
-	showLocation: false
+	maxDepth: 10
+	showLocation: true
 	showBar: true
 
 session:

@@ -18,11 +18,11 @@ class AdvertFormFactory extends FormFactory
 		$subsubcategories = $response->subsubcategories;
 
 		$states = [
-			1 => 'Nový',
+			1 => 'Nové',
 			2 => 'Zánovní',
-			3 => 'Používaný',
-			4 => 'Opotřebený',
-			5 => 'Poškozený',
+			3 => 'Používané',
+			4 => 'Opotřebené',
+			5 => 'Poškozené',
 			6 => 'Nefunkční',
 		];
 
@@ -37,7 +37,7 @@ class AdvertFormFactory extends FormFactory
 		$form->addText('details', 'Podrobnosti');
 		$form->addInteger('quantity', 'počet')
 			->setDefaultValue(1)
-			->addRule($form::Range, 'Kolik že toho chceš prodat?', [1, 10000000000])
+			->addRule($form::Range, 'Kolik že toho chceš prodat?', [1, 1000000])
 			->setRequired("!!");
 		$form->addSelect('categoryId', 'Kategorie', $categories)
 			->setPrompt('Zvolte kategorii')
@@ -50,9 +50,10 @@ class AdvertFormFactory extends FormFactory
 			->setRequired("Kam to patří?");
 		$form->addText('brand', 'Značka');
 		$form->addMultiUpload('images', 'Nahrát obrázky')
-			->addRule($form::MaxLength, 'Maximální počet souborů je 10.', 10)
+			->addRule($form::MaxLength, 'Maximální počet souborů je' . $_ENV['MAX_IMAGES_PER_ADVERT'] . '.', $_ENV['MAX_IMAGES_PER_ADVERT'])
 			->addRule($form::Image, 'Soubory musí být .jpg, nemo .png');
 		$form->addSubmit('send', 'Zveřejnit');
+        $form->addText('keepImages', 'keepImages');
 		return $form;
 	}
 }

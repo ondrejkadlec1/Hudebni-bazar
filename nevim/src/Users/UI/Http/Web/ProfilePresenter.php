@@ -26,7 +26,6 @@ final class ProfilePresenter extends FrontendPresenter
 
 	public function renderDefault(): void
 	{
-
 		$this->template->info = $this->sendQuery(new GetSellerProfileQuery($this->user->getId()))->dto;
 	}
 	public function createComponentChangePwdForm(): Form

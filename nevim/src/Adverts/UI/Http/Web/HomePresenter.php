@@ -28,7 +28,6 @@ final class HomePresenter extends FrontendPresenter
     }
     public function createComponentAdvertsListCategory(): AdvertsListControl
     {
-
         return $this->factory->create(new SearchCriteria(limit: 3, categoryId: $this->recCategoryId));
     }
     public function createComponentAdvertsListNewest(): AdvertsListControl

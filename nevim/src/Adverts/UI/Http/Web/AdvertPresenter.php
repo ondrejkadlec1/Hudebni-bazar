@@ -38,10 +38,17 @@ class AdvertPresenter extends FrontendPresenter
         $this->flashMessage("Úspěšně smazáno");
 		$this->redirect(":Users:Profile:default");
 	}
+    public function renderDefault(): void
+    {
+        $this->template->imageNames = [];
+    }
 	public function renderUpdate(string $id): void
 	{
 		$existingAdvert = $this->sendQuery(new GetAdvertQuery($id))->dto;
-		$this->getComponent('advertForm')->setDefaults([
+        $this->template->imageNames = $existingAdvert->imageNames;
+        $this->template->imageIds = $existingAdvert->imageIds;
+        $form = $this->getComponent('advertForm');
+		$form->setDefaults([
 			'name' => $existingAdvert->name,
 			'stateId' => $existingAdvert->stateId,
 			'price' => $existingAdvert->price,
@@ -51,17 +58,29 @@ class AdvertPresenter extends FrontendPresenter
 			'subcategoryId' => $existingAdvert->subcategoryId,
 			'subsubcategoryId' => $existingAdvert->subsubcategoryId,
 			'brand' => $existingAdvert->brand,
+            'keepImages' => '[]'
 		]);
+
 	}
 	public function createComponentAdvertForm(): Form
 	{
+        // TODO: validate images
 		$form = $this->formFactory->create();
 		$form->onSuccess[] = function (Form $form, \stdClass $data): void {
 			$id = $this->getParameter('id');
-			$imageFiles = [];
+            $imagesTemplate = json_decode($data->keepImages);
+            $images = [];
+            $uploadedCounter = 0;
 			if ($this->httpRequest->getFiles()['images'][0] !== null) {
-				$imageFiles = $this->httpRequest->getFiles()['images'];
-			}
+                $imageFiles = $this->httpRequest->getFiles()['images'];
+            }
+            foreach ($imagesTemplate as $key => $imageId) {
+                $images[$key] = ($imageId === 'uploaded') ? array_shift($imageFiles) : (int) $imageId;
+                $uploadedCounter = $uploadedCounter + 1;
+            }
+//                if (count($imagesTemplate) != count($images) or count($imageFiles) != $uploadedCounter) {
+//                    $this->error('Odeslána neplatná data.', 400);
+//                }
 			try {
 				if (isset($id)) {
 					$this->sendCommand(
@@ -73,7 +92,7 @@ class AdvertPresenter extends FrontendPresenter
 							$data->subsubcategoryId,
 							$data->quantity,
 							$data->details,
-							$imageFiles,
+							$images,
 							$data->brand,
 						),
 					);
@@ -86,7 +105,7 @@ class AdvertPresenter extends FrontendPresenter
 							$data->subsubcategoryId,
 							$data->quantity,
 							$data->details,
-							$imageFiles,
+							$images,
 							$data->brand,
 						),
 					);

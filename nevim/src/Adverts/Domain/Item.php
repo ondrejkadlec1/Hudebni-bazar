@@ -77,17 +77,9 @@ class Item
 		return $this->itemImages;
 	}
 
-	public function addItemImages(array $itemImages): void
+	public function setItemImages(array $itemImages): void
 	{
-        $this->itemImages = array_merge($this->itemImages, $itemImages);
+        $this->itemImages = array_slice($itemImages, 0, (int) $_ENV['MAX_IMAGES_PER_ADVERT']);
 	}
 
-	public function removeItemImages(array $imagesToRemove): void
-	{
-		foreach ($this->itemImages as $imageName) {
-			if (in_array($imageName, $imagesToRemove, true)) {
-				unset($imageName);
-			}
-		}
-	}
 }

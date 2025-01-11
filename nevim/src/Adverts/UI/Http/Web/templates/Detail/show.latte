@@ -27,13 +27,13 @@
                 {/if}
         </div>
         {if $advert->mainImageName}
-            <img class="mainImage" src='/images/{$advert->mainImageName}/'>
+            <img class="mainImage" src='/image/{$advert->mainImageName}/'>
             {else}
                 <img src="/images/unknown.jpg">
         {/if}
         {if $imageNames}
             {foreach $imageNames as $imageName}
-                <img class="thumb" src='/images/{$imageName}/'>
+                <img class="thumb" src='/image/{$imageName}/'>
             {/foreach}
         {/if}
         {if $advert->sellerId == $userId}

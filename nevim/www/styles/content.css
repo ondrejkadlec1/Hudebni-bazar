@@ -114,3 +114,27 @@
 .about{
     width: 99%;
 }
+#sortable{
+    /*display: grid;*/
+}
+#sortable li{
+    float: left;
+}
+.delete {
+    background: #38383D;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    position: relative;
+    top: -5px;
+    left: -5px;
+    overflow: hidden;
+    text-align: center;
+    box-sizing: border-box;
+    padding-top: 8px;
+    font-size: 15px;
+    color: #FFFFFF;
+}
+.delete:hover {
+    cursor: pointer;
+}

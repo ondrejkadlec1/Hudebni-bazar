@@ -82,5 +82,4 @@ $(document).ready(function(){
         hideBackground();
         form.hide();
     });
-
 });

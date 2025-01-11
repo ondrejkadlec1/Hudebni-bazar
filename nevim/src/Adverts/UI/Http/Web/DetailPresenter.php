@@ -22,13 +22,11 @@ class DetailPresenter extends FrontendPresenter
             else throw $e;
 		}
 		$this->template->advert = $queryResponse->dto;
-		$this->template->imageNames = $queryResponse->dto->imageNames;
+        $otherImages = $queryResponse->dto->imageNames;
+        if (!empty($otherImages)) {
+            unset($otherImages[0]);
+            }
+		$this->template->imageNames = $otherImages;
 		$this->template->userId = $this->user->getId();
-	}
-	public function actionImages(string $imageName)
-	{
-		$response = $this->sendQuery(new GetItemImageQuery($imageName));
-		$this->getHttpResponse()->setHeader('Content-Type', $response->mimeType);
-		$this->sendResponse($response->fileResponse);
 	}
 }

@@ -1,8 +1,10 @@
+{define advertForm}
 <form n:name=advertForm id="frm-advertForm">
             <h2>Nová nabídka</h2>
                 <label>Název<input n:name=name autofocus id="frm-advertForm-name"></label>
                 <label for='frm-advertForm-stateId'>Stav</label>
                 <select n:name=stateId id="frm-advertForm-stateId"></select>
+                <h3>Kategorie</h3>
                 <select n:name=categoryId></select>
                 <select n:name=subcategoryId></select>
                 <select n:name=subsubcategoryId></select>
@@ -16,9 +18,18 @@
                 <label>Počet<input n:name=quantity id="frm-advertForm-quantity"></label>
                 <label for="frm-advertForm-files">Nahrát soubory</label>
                 <input n:name=images id="frm-advertForm-files", value="Nahrát">
+                <ul id="sortable" class="previews clearfix">
+                {foreach $imageNames as $index => $imageName}
+                    <li class="existing" data-id="{$imageIds[$index]}">
+                        <img src="/image/{$imageName}/" class="thumb">
+                        <div class="delete">X</div>
+                    </li>
+                {/foreach}
+                </ul>
                 <input n:name=send id="frm-advertForm-btn" value="Zveřejnit">
-
                 <ul class="errors" n:ifcontent>
-                            <li n:foreach="$form->getOwnErrors() as $error">{$error}</li>
-                        </ul>
+                    <li n:foreach="$form->getOwnErrors() as $error">{$error}</li>
+                </ul>
+                <input n:name=keepImages id="frm-advertForm-keepImages" style="display: none">
         </form>
+{/define}

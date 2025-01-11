@@ -18,6 +18,7 @@ final readonly class AdvertDetailDTO
         public string $details,
         public string $createdAt,
         public array $imageNames,
+        public array $imageIds,
         public int $categoryId,
         public int $subcategoryId,
         public int $subsubcategoryId,

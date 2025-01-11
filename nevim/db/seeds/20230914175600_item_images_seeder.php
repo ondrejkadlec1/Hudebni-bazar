@@ -6,7 +6,7 @@ class ItemImagesSeeder extends AbstractSeed
 {
     public function run() : void
     {
-        $this->execute("insert into public.item_images (id, item_id, extension, created_at)
+        $this->execute("insert into public.item_images (rank, item_id, extension, created_at)
         values  ('6686943fc48c8', '6686943f9ea0c', 'jpeg', '2024-07-05 19:43:34.000000'),
         ('668682c59c0f4', '668682c58243e', 'jpeg', '2024-07-05 19:43:33.000000'),
         ('668682c5b1185', '668682c58243e', 'png', '2024-07-05 19:43:34.000000'),
