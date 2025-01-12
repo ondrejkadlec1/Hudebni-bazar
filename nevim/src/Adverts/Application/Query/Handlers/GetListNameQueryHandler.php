@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Ondra\App\Adverts\Application\Query\Handlers;
 
-use Ondra\App\Adverts\Application\ICategoryRepository;
+use Ondra\App\Adverts\Application\IAuxiliaryRepository;
 use Ondra\App\Adverts\Application\Query\Messages\Request\GetListNameQuery;
 use Ondra\App\Adverts\Application\Query\Messages\Response\GetListNameResponse;
 use Ondra\App\Shared\Application\Autowired;
@@ -15,7 +15,7 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 class GetListNameQueryHandler implements Autowired
 {
-	public function __construct(private readonly ICategoryRepository $repository)
+	public function __construct(private readonly IAuxiliaryRepository $repository)
 	{
 	}
 

@@ -22,7 +22,7 @@ final class DatabaseAdvertWriteRepository implements IAdvertWriteRepository
 
 	public function getById(string $id): ?Advert
 	{
-		$data = $this->explorer->fetch("SELECT adverts.*, name, state_id, details, brand, subsubcategory_id, items.id AS item_id
+		$data = $this->explorer->fetch("SELECT adverts.*, name, state_id, details, brand, lowest_category_id, items.id AS item_id
             FROM adverts LEFT JOIN items ON adverts.id = items.id WHERE adverts.id = ?", $id);
 		if (isset($data)) {
 			$imagesData = $this->explorer->table('item_images')->where('item_id = ?', $data->item_id)->order('rank ASC');
@@ -40,7 +40,7 @@ final class DatabaseAdvertWriteRepository implements IAdvertWriteRepository
                 $data->details,
                 $data->state_id,
                 $images,
-                $data->subsubcategory_id,
+                $data->lowest_category_id,
                 $data->brand,
             );
 
@@ -67,7 +67,7 @@ final class DatabaseAdvertWriteRepository implements IAdvertWriteRepository
         };
         $this->connection->beginTransaction();
         if ($this->explorer->fetch("SELECT id FROM adverts WHERE id = ?", $advert->getId())) {
-            $itemQuery = "UPDATE items SET name = ?, state_id = ?, details = ?, subsubcategory_id = ?, brand = ? WHERE id = ?";
+            $itemQuery = "UPDATE items SET name = ?, state_id = ?, details = ?, lowest_category_id = ?, brand = ? WHERE id = ?";
             $advertQuery = "UPDATE adverts SET price = ?, quantity = ?, updated_at = ? WHERE id = ?";
             $this->connection->query($advertQuery, $advert->getPrice(), $advert->getQuantity(), $date(), $advert->getId());
             $this->connection->query(
@@ -81,7 +81,7 @@ final class DatabaseAdvertWriteRepository implements IAdvertWriteRepository
             );
         }
         else {
-            $itemQuery = "INSERT INTO items (id, name, state_id, details, subsubcategory_id, brand) values(?, ?, ?, ?, ?, ?)";
+            $itemQuery = "INSERT INTO items (id, name, state_id, details, lowest_category_id, brand) values(?, ?, ?, ?, ?, ?)";
             $advertQuery = "INSERT INTO adverts (id, seller_id, price, quantity, created_at) values (?, ?, ?, ?, ?)";
 
             $this->connection->query(
@@ -132,7 +132,7 @@ final class DatabaseAdvertWriteRepository implements IAdvertWriteRepository
 	public function delete(string $id): void
 	{
         $this->connection->beginTransaction();
-        $toDelete = $this->connection->query("SELECT id, extension FROM item_images WHERE item_id = ?", $item->getId());
+        $toDelete = $this->connection->query("SELECT id, extension FROM item_images WHERE item_id = ?", $id);
         $this->connection->query("DELETE FROM item_images WHERE item_id = ?", $id);
         $this->connection->query("DELETE FROM adverts WHERE id = ?", $id);
         $this->connection->query("DELETE FROM items WHERE id = ?", $id);

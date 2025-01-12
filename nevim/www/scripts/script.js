@@ -1,11 +1,11 @@
 $(document).ready(function(){
 
     // navbar
-    var groupBar = $(document).find(".categories-bar", ".subcategories-bar", ".subsubcategories-bar");
-    var categoriesButton = $(document).find(".show-categories");
-    var subcategoriesButton = $(document).find(".category");
-    var subsubcategoriesButton = $(document).find(".subcategory");
-    var filterSelectBox = $(document).find("#frm-filterForm").find("select");
+    const groupBar = $(document).find(".categories-bar", ".subcategories-bar", ".subsubcategories-bar");
+    const categoriesButton = $(document).find(".show-categories");
+    const subcategoriesButton = $(document).find(".category");
+    const subsubcategoriesButton = $(document).find(".subcategory");
+    const filterSelectBox = $(document).find("#frm-filterForm").find("select");
     function showElement(myElement){
         myElement.stop();
         myElement.slideDown(200, function(){});
@@ -54,7 +54,7 @@ $(document).ready(function(){
         }
     );
     // form
-    var windowBackground = $(document).find(".windowBackground");
+    const windowBackground = $(document).find(".windowBackground");
     function showBackground(){
         windowBackground.show();
         $('html, body').css({
@@ -69,13 +69,12 @@ $(document).ready(function(){
         });
     }
 
-    var newAdvert = $(document).find(".newAdvert");
-    var form = $(document).find("#frm-advertForm");
+    const newAdvert = $(document).find(".newAdvert");
+    const form = $(document).find("#frm-advertForm");
 
     newAdvert.on('click', function (){
         showBackground();
         form.show();
-
     });
 
     windowBackground.on('click', function (){

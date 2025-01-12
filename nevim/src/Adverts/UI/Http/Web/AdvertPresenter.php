@@ -10,6 +10,7 @@ use Ondra\App\Adverts\Application\Command\Messages\CreateAdvertCommandRequest;
 use Ondra\App\Adverts\Application\Command\Messages\DeleteAdvertCommandRequest;
 use Ondra\App\Adverts\Application\Command\Messages\UpdateAdvertCommandRequest;
 use Ondra\App\Adverts\Application\Query\Messages\Request\GetAdvertQuery;
+use Ondra\App\Adverts\Application\Query\Messages\Request\GetSubordinateCategoriesQuery;
 use Ondra\App\Adverts\UI\Http\Web\forms\AdvertFormFactory;
 use Ondra\App\Shared\Application\Exceptions\MissingContentException;
 use Ondra\App\Shared\Application\Exceptions\PermissionException;
@@ -47,16 +48,24 @@ class AdvertPresenter extends FrontendPresenter
 		$existingAdvert = $this->sendQuery(new GetAdvertQuery($id))->dto;
         $this->template->imageNames = $existingAdvert->imageNames;
         $this->template->imageIds = $existingAdvert->imageIds;
+        $categoryIds = array_keys($existingAdvert->categories);
+        $categoryId = $categoryIds[0];
+        $subcategoryId = $categoryIds[1] ?? null;
+        $subsubcategoryId = $categoryIds[2] ?? null;
         $form = $this->getComponent('advertForm');
+        $form->getComponent('subcategoryId')->setItems($this->sendQuery(new GetSubordinateCategoriesQuery($categoryId))->subordinate);
+        if (isset($subcategoryId)) {
+            $form->getComponent('subsubcategoryId')->setItems($this->sendQuery(new GetSubordinateCategoriesQuery($subcategoryId))->subordinate);
+        }
 		$form->setDefaults([
 			'name' => $existingAdvert->name,
 			'stateId' => $existingAdvert->stateId,
 			'price' => $existingAdvert->price,
 			'details' => $existingAdvert->details,
 			'quantity' => $existingAdvert->quantity,
-			'categoryId' => $existingAdvert->categoryId,
-			'subcategoryId' => $existingAdvert->subcategoryId,
-			'subsubcategoryId' => $existingAdvert->subsubcategoryId,
+			'categoryId' => $categoryId,
+			'subcategoryId' => $subcategoryId,
+			'subsubcategoryId' => $subsubcategoryId,
 			'brand' => $existingAdvert->brand,
             'keepImages' => '[]'
 		]);
@@ -64,23 +73,31 @@ class AdvertPresenter extends FrontendPresenter
 	}
 	public function createComponentAdvertForm(): Form
 	{
-        // TODO: validate images
 		$form = $this->formFactory->create();
 		$form->onSuccess[] = function (Form $form, \stdClass $data): void {
 			$id = $this->getParameter('id');
-            $imagesTemplate = json_decode($data->keepImages);
+            $imageMask = json_decode($data->keepImages);
             $images = [];
-            $uploadedCounter = 0;
+
+            $imageFiles = [];
 			if ($this->httpRequest->getFiles()['images'][0] !== null) {
                 $imageFiles = $this->httpRequest->getFiles()['images'];
             }
-            foreach ($imagesTemplate as $key => $imageId) {
+            foreach ($imageMask as $key => $imageId) {
                 $images[$key] = ($imageId === 'uploaded') ? array_shift($imageFiles) : (int) $imageId;
-                $uploadedCounter = $uploadedCounter + 1;
             }
-//                if (count($imagesTemplate) != count($images) or count($imageFiles) != $uploadedCounter) {
-//                    $this->error('Odeslána neplatná data.', 400);
-//                }
+            if (count($imageMask) != count($images) or !empty($imageFiles)) {
+                $this->error('Odeslána neplatná data.', 400);
+            }
+            if (isset($data->subsubcategoryId)) {
+                $lowestCategoryId = $data->subsubcategoryId;
+            }
+            elseif (isset($data->subcategoryId)) {
+                $lowestCategoryId = $data->subcategoryId;
+            }
+            else {
+                $lowestCategoryId = $data->categoryId;
+            }
 			try {
 				if (isset($id)) {
 					$this->sendCommand(
@@ -89,7 +106,7 @@ class AdvertPresenter extends FrontendPresenter
 							$data->name,
 							$data->stateId,
 							$data->price,
-							$data->subsubcategoryId,
+							$lowestCategoryId,
 							$data->quantity,
 							$data->details,
 							$images,
@@ -102,7 +119,7 @@ class AdvertPresenter extends FrontendPresenter
 							$data->name,
 							$data->stateId,
 							$data->price,
-							$data->subsubcategoryId,
+                            $lowestCategoryId,
 							$data->quantity,
 							$data->details,
 							$images,
@@ -131,4 +148,8 @@ class AdvertPresenter extends FrontendPresenter
 		};
 		return $form;
 	}
+
+    public function actionCategories(string $superordinate): void {
+        $this->sendJson($this->sendQuery(new GetSubordinateCategoriesQuery((int) ($superordinate)))->subordinate);
+    }
 }

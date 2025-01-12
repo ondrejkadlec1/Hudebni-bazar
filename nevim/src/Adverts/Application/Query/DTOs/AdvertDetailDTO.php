@@ -19,12 +19,7 @@ final readonly class AdvertDetailDTO
         public string $createdAt,
         public array $imageNames,
         public array $imageIds,
-        public int $categoryId,
-        public int $subcategoryId,
-        public int $subsubcategoryId,
-        public string $categoryName,
-        public string $subcategoryName,
-        public string $subsubcategoryName,
+        public array $categories,
         public ?string $brand,
         public ?string $lastUpdate,
         public ?string $mainImageName)

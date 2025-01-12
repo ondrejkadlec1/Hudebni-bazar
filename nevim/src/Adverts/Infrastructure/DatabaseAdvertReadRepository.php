@@ -17,21 +17,24 @@ final class DatabaseAdvertReadRepository implements IAdvertReadRepository
                 LEFT JOIN items ON adverts.id = items.id 
                 LEFT JOIN states ON items.state_id = states.id
                 LEFT JOIN users ON adverts.seller_id = users.id
-                LEFT JOIN subsubcategories ON items.subsubcategory_id = subsubcategories.id
-                LEFT JOIN subcategories ON subsubcategories.subcategory_id = subcategories.id
-                LEFT JOIN categories ON subcategories.category_id = categories.id
-                LEFT JOIN (SELECT id AS image_id, extension, rank, item_id FROM item_images WHERE rank = 0) as i ON items.id = i.item_id';
+                LEFT JOIN superordinate_category AS sc1 ON sc1.lower_id = lowest_category_id
+                LEFT JOIN superordinate_category AS sc2 ON sc2.lower_id = sc1.higher_id
+                LEFT JOIN categories AS lowest_category ON lowest_category.id = lowest_category_id
+                LEFT JOIN categories AS middle_category ON middle_category.id = sc1.higher_id
+                LEFT JOIN categories AS upper_category ON upper_category.id = sc2.higher_id
+                LEFT JOIN (SELECT id AS image_id, extension, rank, item_id FROM item_images WHERE rank = 0) as i ON items.id = i.item_id
+                ';
 	public function __construct(private readonly Explorer $explorer, private readonly Connection $connection)
 	{
 	}
 	public function getDetail(string $id): ?AdvertDetailDTO
     {
         $data = $this->connection->fetch("SELECT adverts.*, 
-                items.name AS name, state_id, details, brand, subsubcategory_id, 
+                items.name AS name, state_id, details, brand, lowest_category_id, 
                 states.name AS state, 
-                subsubcategories.name AS subsubcategory_name, subcategory_id, 
-                subcategories.name AS subcategory_name, category_id,
-                categories.name AS category_name,
+                lowest_category.name AS lowest_category_name, sc1.higher_id AS middle_category_id, 
+                middle_category.name AS middle_category_name, sc2.higher_id AS upper_category_id,
+                upper_category.name AS upper_category_name,
                 rank AS rank, extension, image_id,
                 username FROM "
             . self::TABLE_JOIN .
@@ -51,6 +54,14 @@ final class DatabaseAdvertReadRepository implements IAdvertReadRepository
                     $imageNames[] = $id . '_' . $image->id . '.' . $image->extension;
                 }
             }
+            if (isset($data->upper_category_id)) {
+                $categories[$data->upper_category_id] = $data->upper_category_name;
+            }
+            if (isset($data->middle_category_id)) {
+                $categories[$data->middle_category_id] = $data->middle_category_name;
+            }
+            $categories[$data->lowest_category_id] = $data->lowest_category_name;
+
                 return new AdvertDetailDTO(
                     $data->id,
                     $data->name,
@@ -64,12 +75,7 @@ final class DatabaseAdvertReadRepository implements IAdvertReadRepository
                     (string)$data->created_at,
                     $imageNames,
                     $imageIds,
-                    $data->category_id,
-                    $data->subcategory_id,
-                    $data->subsubcategory_id,
-                    $data->category_name,
-                    $data->subcategory_name,
-                    $data->subsubcategory_name,
+                    $categories,
                     $data->brand,
                     (string)$data->updated_at,
                     $mainImageName,
@@ -88,11 +94,9 @@ final class DatabaseAdvertReadRepository implements IAdvertReadRepository
             $where["brand"] = $criteria->brands;
         }
         if ($criteria->subsubcategoryId) {
-            $where["subsubcategory_id"] = $criteria->subsubcategoryId;
-        } elseif ($criteria->subcategoryId) {
-            $where["subcategories.id"] = $criteria->subcategoryId;
-        } elseif ($criteria->categoryId) {
-            $where["categories.id"] = $criteria->categoryId;
+            $where["lowest_category.id"] = $criteria->subsubcategoryId;
+            $where["middle_category.id"] = $criteria->subcategoryId;
+            $where["upper_category.id"] = $criteria->categoryId;
         }
         if ($criteria->sellerId) {
             $where["seller_id"] = $criteria->sellerId;
@@ -149,9 +153,9 @@ final class DatabaseAdvertReadRepository implements IAdvertReadRepository
 	public function getOverviews(SearchCriteria $criteria): array
 	{
 		$dataArray = $this->connection->query("SELECT adverts.*, 
-                items.name AS name, details, brand, subsubcategory_id, 
+                items.name AS name, details, brand, 
+                lowest_category.name AS subsubcategory_name, 
                 states.name AS state, 
-                subsubcategories.name AS subsubcategory_name, subcategory_id,
                 extension, image_id,
                 username 
                 FROM " . self::TABLE_JOIN .

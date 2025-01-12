@@ -5,17 +5,14 @@ declare(strict_types=1);
 namespace Ondra\App\Adverts\UI\Http\Web\forms;
 
 use Nette\Application\UI\Form;
-use Ondra\App\Adverts\Application\Query\Messages\Request\GetCategoriesQuery;
+use Ondra\App\Adverts\Application\Query\Messages\Request\GetSubordinateCategoriesQuery;
 use Ondra\App\Shared\UI\Http\Web\forms\FormFactory;
 
 class AdvertFormFactory extends FormFactory
 {
 	public function create(): Form
 	{
-		$response = $this->sendQuery(new GetCategoriesQuery());
-		$categories = $response->categories;
-		$subcategories = $response->subcategories;
-		$subsubcategories = $response->subsubcategories;
+		$allCategories = $this->sendQuery(new GetSubordinateCategoriesQuery())->subordinate;
 
 		$states = [
 			1 => 'Nové',
@@ -39,21 +36,24 @@ class AdvertFormFactory extends FormFactory
 			->setDefaultValue(1)
 			->addRule($form::Range, 'Kolik že toho chceš prodat?', [1, 1000000])
 			->setRequired("!!");
-		$form->addSelect('categoryId', 'Kategorie', $categories)
+		$category = $form->addSelect('categoryId', 'Kategorie', $allCategories)
 			->setPrompt('Zvolte kategorii')
 			->setRequired("Kam to patří?");
-		$form->addSelect('subcategoryId', 'Podkategorie', $subcategories)
-			->setPrompt('Zvolte kategorii')
-			->setRequired("Kam to patří?");
-		$form->addSelect('subsubcategoryId', 'Další zařazení', $subsubcategories)
-			->setPrompt('Zvolte kategorii')
-			->setRequired("Kam to patří?");
+		$subcategory = $form->addSelect('subcategoryId', 'Podkategorie')
+			->setPrompt('Zvolte kategorii');
+		$subsubcategory = $form->addSelect('subsubcategoryId', 'Další zařazení')
+			->setPrompt('Zvolte kategorii');
 		$form->addText('brand', 'Značka');
 		$form->addMultiUpload('images', 'Nahrát obrázky')
 			->addRule($form::MaxLength, 'Maximální počet souborů je' . $_ENV['MAX_IMAGES_PER_ADVERT'] . '.', $_ENV['MAX_IMAGES_PER_ADVERT'])
 			->addRule($form::Image, 'Soubory musí být .jpg, nemo .png');
 		$form->addSubmit('send', 'Zveřejnit');
         $form->addText('keepImages', 'keepImages');
+
+        $form->onValidate[] = fn () =>
+            $subcategory->setItems($this->sendQuery(new GetSubordinateCategoriesQuery($category->getValue()))->subordinate);
+        $form->onValidate[] = fn () =>
+            $subsubcategory->setItems($this->sendQuery(new GetSubordinateCategoriesQuery($subcategory->getValue()))->subordinate);
 		return $form;
 	}
 }

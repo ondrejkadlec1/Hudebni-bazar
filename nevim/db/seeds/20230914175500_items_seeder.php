@@ -6,7 +6,7 @@ class ItemsSeeder extends AbstractSeed
 {
     public function run() : void
     {
-        $this->execute("insert into public.items (name, state_id, details, id, subsubcategory_id, brand)
+        $this->execute("insert into public.items (name, state_id, details, id, lowest_category_id, brand)
         values  ('Sextant', 1, '', '6695264cc1897', 16, null),
         ('Agama', 2, 'Je to hezké mít ji doma. Pořád jenom spí a u toho dělá velký rámus. Dopoučila bych ji dospívajícím dětem protože je to skvělý hudební nástroj a hodně se na ní naučí.', '66aa21c96bf8a', 25, 'Cort'),
         ('Vydra', 6, 'Nefunkční vydra', '66aa7482b7102', 12, 'vydrex'),

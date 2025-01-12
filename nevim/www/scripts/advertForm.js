@@ -1,25 +1,26 @@
 $(document).ready(function(){
-    let keepImages = $('#frm-advertForm-keepImages');
+    const keepImages = $('#frm-advertForm-keepImages');
+    const imagesList = $('#sortable');
     let uploadedFiles = [];
-    let fileForm = document.getElementById('frm-advertForm-files');
-    $('#sortable').sortable({
+    const fileForm = document.getElementById('frm-advertForm-files');
+    imagesList.sortable({
         update: function () {
-            updateOldOrder(keepImages, $('#sortable'));
-            uploadedFiles = updateFilesOrder(uploadedFiles, $('#sortable'));
+            updateOldOrder(keepImages, imagesList);
+            uploadedFiles = updateFilesOrder(uploadedFiles, imagesList);
             updateFiles(uploadedFiles, fileForm);
         }
     });
-    updateOldOrder(keepImages, $('#sortable'));
+    updateOldOrder(keepImages, imagesList);
 
     $('#frm-advertForm-files').change(function (event) {
         const firstIndex = uploadedFiles.length
         const newFiles = Array.from(this.files);
-        let imagesArray = Array.from(JSON.parse(keepImages.attr('value')));
+        const imagesArray = Array.from(JSON.parse(keepImages.attr('value')));
         // display
         newFiles.forEach(function (file, index){
-            let reader = new FileReader();
+            const reader = new FileReader();
             reader.onload = function (event) {
-                $('#sortable').append(`<li class="uploaded ui-sortable-handle" data-order=${firstIndex + index}><img src="${event.target.result}" class="thumb"><div class="delete">X</div></li>`);
+                imagesList.append(`<li class="uploaded ui-sortable-handle" data-order=${firstIndex + index}><img src="${event.target.result}" class="thumb"><div class="delete">X</div></li>`);
             };
             reader.readAsDataURL(file);
             imagesArray.push('uploaded');
@@ -42,7 +43,7 @@ $(document).ready(function(){
             });
         }
         $(this).parent().remove();
-        updateOldOrder(keepImages, $('#sortable'));
+        updateOldOrder(keepImages, imagesList);
     });
 });
 
@@ -53,7 +54,7 @@ function updateFiles(uploadedFiles, fileInput) {
 }
 
 function updateFilesOrder (uploadedFiles, list) {
-    let newUploadedFiles = [];
+    const newUploadedFiles = [];
     list.children('.uploaded').each(function () {
         newUploadedFiles.push(uploadedFiles[parseInt($(this).attr('data-order'), 10)]);
         $(this).attr('data-order', newUploadedFiles.length - 1);
@@ -62,7 +63,7 @@ function updateFilesOrder (uploadedFiles, list) {
 }
 
 function updateOldOrder(imagesStorage, list) {
-    let imagesArray = [];
+    const imagesArray = [];
     list.children().each(function () {
         if ($(this).hasClass('uploaded')) {
             imagesArray.push('uploaded');
