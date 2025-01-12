@@ -75,4 +75,8 @@ final class DatabaseAuxiliaryRepository implements IAuxiliaryRepository
 	{
 		return $this->explorer->table('categories')->where('id', $id)->select('name')->fetch() ?->name;
     }
+    public function getStates(): array
+    {
+        return $this->explorer->table('states')->order('id')->fetchPairs('id', 'name');
+    }
 }

@@ -5,19 +5,13 @@ declare(strict_types=1);
 namespace Ondra\App\Adverts\UI\Http\Web\forms;
 
 use Nette\Application\UI\Form;
+use Ondra\App\Adverts\Application\Query\Messages\Request\GetStatesQuery;
 
 class FilterFormFactory
 {
 	public function create(): Form
 	{
-		$states = [
-			1 => 'Nový',
-			2 => 'Zánovní',
-			3 => 'Používaný',
-			4 => 'Opotřebený',
-			5 => 'Poškozený',
-			6 => 'Nefunkční',
-		];
+        $states = $this->sendQuery(new GetStatesQuery())->states;
 		$form = new Form();
 		$form->addInteger('max', 'Nejvyšší cena');
 		$form->addInteger('min', 'Nejnižší cena');

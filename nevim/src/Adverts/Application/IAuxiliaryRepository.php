@@ -11,4 +11,5 @@ interface IAuxiliaryRepository
     public function getSubsubcategories(): array;
     public function getSubordinateCategories(?int $superordinateId = null): array;
 	public function getCategoryName(int $id): ?string;
+    public function getStates(): array;
 }

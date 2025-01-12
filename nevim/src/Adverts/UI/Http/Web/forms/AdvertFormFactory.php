@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ondra\App\Adverts\UI\Http\Web\forms;
 
 use Nette\Application\UI\Form;
+use Ondra\App\Adverts\Application\Query\Messages\Request\GetStatesQuery;
 use Ondra\App\Adverts\Application\Query\Messages\Request\GetSubordinateCategoriesQuery;
 use Ondra\App\Shared\UI\Http\Web\forms\FormFactory;
 
@@ -14,14 +15,7 @@ class AdvertFormFactory extends FormFactory
 	{
 		$allCategories = $this->sendQuery(new GetSubordinateCategoriesQuery())->subordinate;
 
-		$states = [
-			1 => 'Nové',
-			2 => 'Zánovní',
-			3 => 'Používané',
-			4 => 'Opotřebené',
-			5 => 'Poškozené',
-			6 => 'Nefunkční',
-		];
+		$states = $this->sendQuery(new GetStatesQuery())->states;
 
 		$form = new Form();
 		$form->addText('name', 'Název')
@@ -44,9 +38,10 @@ class AdvertFormFactory extends FormFactory
 		$subsubcategory = $form->addSelect('subsubcategoryId', 'Další zařazení')
 			->setPrompt('Zvolte kategorii');
 		$form->addText('brand', 'Značka');
+//        TODO: use some database of brands or completely remove brands
 		$form->addMultiUpload('images', 'Nahrát obrázky')
 			->addRule($form::MaxLength, 'Maximální počet souborů je' . $_ENV['MAX_IMAGES_PER_ADVERT'] . '.', $_ENV['MAX_IMAGES_PER_ADVERT'])
-			->addRule($form::Image, 'Soubory musí být .jpg, nemo .png');
+			->addRule($form::Image, 'Soubory musí být .jpg, nebo .png');
 		$form->addSubmit('send', 'Zveřejnit');
         $form->addText('keepImages', 'keepImages');
 
