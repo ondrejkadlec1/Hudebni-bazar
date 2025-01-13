@@ -12,15 +12,11 @@ use Ondra\App\Shared\UI\Http\Web\FrontendPresenter;
 class BrowsePresenter extends FrontendPresenter
 {
 	use Paginated;
-	private ?int $categoryId = null;
-	private ?int $subcategoryId = null;
-	private ?int $subsubcategoryId = null;
 	public function renderCategory(int $categoryId): void
 	{
-		$this->categoryId = $categoryId;
 		try {
 			$this->template->category = $this->sendQuery(
-				new GetListNameQuery($this->categoryId, GetListNameQuery::$isCategory),
+				new GetListNameQuery($categoryId),
 			)->name;
 		} catch (\Exception $e) {
 			if ($e->getPrevious() instanceof MissingContentException) {
@@ -30,33 +26,6 @@ class BrowsePresenter extends FrontendPresenter
 	}
 	public function renderDefault(?string $search = null): void
 	{
-	}
-
-	public function renderSubcategory(int $subcategoryId): void
-	{
-		$this->subcategoryId = $subcategoryId;
-		try {
-			$this->template->subcategory = $this->sendQuery(
-				new GetListNameQuery($this->subcategoryId, GetListNameQuery::$isSubcategory),
-			)->name;
-		} catch (\Exception $e) {
-			if ($e->getPrevious() instanceof MissingContentException) {
-				$this->error('Hledaná podkategorie neexistuje', 404);
-			}
-		}
-	}
-	public function renderSubsubcategory(int $subsubcategoryId): void
-	{
-		$this->subsubcategoryId = $subsubcategoryId;
-		try {
-			$this->template->subsubcategory = $this->sendQuery(
-				new GetListNameQuery($this->subsubcategoryId, GetListNameQuery::$isSubsubcategory),
-			)->name;
-		} catch (\Exception $e) {
-			if ($e->getPrevious() instanceof MissingContentException) {
-				$this->error('Hledaná podpodkategorie neexistuje', 404);
-			}
-		}
 	}
 
 	public function actionImage(string $imageName): void

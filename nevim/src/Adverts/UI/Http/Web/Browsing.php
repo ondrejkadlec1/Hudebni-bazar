@@ -35,8 +35,6 @@ trait Browsing
 				orderBy: $this->orderBy,
 				direction: $this->direction,
 				categoryId: (int) $this->getParameter('categoryId'),
-				subcategoryId: (int) $this->getParameter('subcategoryId'),
-				subsubcategoryId: (int) $this->getParameter('subsubcategoryId'),
 				sellerId: $this->getParameter('sellerId'),
 				maxPrice: (int) $this->getParameter('max'),
 				minPrice: (int) $this->getParameter('min'),
@@ -53,7 +51,21 @@ trait Browsing
 	}
 	public function createComponentFilterForm(): Form
 	{
+        $defaults = [];
+        if ($this->getParameter('max') !== null){
+            $defaults['max'] = $this->getParameter('max');
+        }
+        if ($this->getParameter('min') !== null){
+            $defaults['min'] = $this->getParameter('min');
+        }
+        if ($this->getParameter('brand') !== null){
+            $defaults['brand'] = $this->getParameter('brand');
+        }
+        if ($this->getParameter('stateId') !== null){
+            $defaults['stateId'] = $this->getParameter('stateId');
+        }
 		$form = $this->filterFormFactory->create();
+        $form->setDefaults($defaults);
 		$form->onSuccess[] = function (array $data): void {
 			$this->redirect("this", $data);
 		};

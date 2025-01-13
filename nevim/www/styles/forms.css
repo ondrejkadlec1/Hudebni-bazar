@@ -56,8 +56,13 @@ form h2{
     top: 8px;
 }
 #frm-filterForm label, #frm-filterForm input{
-    display: inline;
+    display: inline-block;
 }
-#frm-filterForm #frm-filterForm-max, #frm-filterForm-min, #frm-filterForm-brand {
-    width: 10%;
+#frm-filterForm br{
+    display: none;
+}
+#frm-filterForm-stateId label {
+    width: 34px;
+    height: 34px;
+    overflow: hidden;
 }

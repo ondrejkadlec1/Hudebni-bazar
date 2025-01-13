@@ -21,22 +21,7 @@ class GetListNameQueryHandler implements Autowired
 
 	public function __invoke(GetListNameQuery $query): GetListNameResponse
 	{
-		switch ($query->type) {
-			case "category":
-				$name = $this->repository->getCategoryName($query->id);
-				break;
-			case "subcategory":
-				$name = $this->repository->getSubcategoryName($query->id);
-				break;
-			case "subsubcategory":
-				$name = $this->repository->getSubsubcategoryName($query->id);
-				break;
-			default:
-				throw new InvalidValueException(
-					'Invalid value in type: ' . $query->type . ". Use predefined constants only.",
-					0,
-				);
-		}
+		$name = $this->repository->getCategoryName($query->id);
 		if (!$name) {
 			throw new MissingContentException('category with id ' . $query->id . ' does not exist', 1);
 		}

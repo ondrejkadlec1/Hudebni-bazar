@@ -16,8 +16,6 @@ final class SearchCriteria
         public readonly string $orderBy = 'date',
         public readonly string $direction = 'desc',
         public readonly ?int $categoryId = null,
-        public readonly ?int $subcategoryId = null,
-        public readonly ?int $subsubcategoryId = null,
         public readonly ?string $sellerId = null,
         public readonly ?int $maxPrice = null,
         public readonly ?int $minPrice = null,

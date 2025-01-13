@@ -48,11 +48,11 @@
 		            <ul class="subcategories-bar">
 		                {foreach $subcategories[$categoryId] as $subcategoryId => $subcategoryName}
 		                    <li class="subcategory">
-		                        <a n:href=":Adverts:Browse:subcategory subcategoryId: $subcategoryId">{$subcategoryName}</a>
+		                        <a n:href=":Adverts:Browse:category categoryId: $subcategoryId">{$subcategoryName}</a>
 		                        <ul class="subsubcategories-bar">
                                 	{foreach $subsubcategories[$subcategoryId] as $subsubcategoryId => $subsubcategoryName}
                                 		<li class="subsubcategory">
-                                		    <a n:href=":Adverts:Browse:subsubcategory subsubcategoryId: $subsubcategoryId">{$subsubcategoryName}</a>
+                                		    <a n:href=":Adverts:Browse:category categoryId: $subsubcategoryId">{$subsubcategoryName}</a>
                                 	    </li>
                                     {/foreach}
                                 </ul>

@@ -93,10 +93,8 @@ final class DatabaseAdvertReadRepository implements IAdvertReadRepository
         if ($criteria->brands) {
             $where["brand"] = $criteria->brands;
         }
-        if ($criteria->subsubcategoryId) {
-            $where["lowest_category.id"] = $criteria->subsubcategoryId;
-            $where["middle_category.id"] = $criteria->subcategoryId;
-            $where["upper_category.id"] = $criteria->categoryId;
+        if ($criteria->categoryId) {
+            $where[] = $this->connection::literal('lowest_category.id = ? OR middle_category.id = ? OR upper_category.id = ?', $criteria->categoryId, $criteria->categoryId, $criteria->categoryId);
         }
         if ($criteria->sellerId) {
             $where["seller_id"] = $criteria->sellerId;

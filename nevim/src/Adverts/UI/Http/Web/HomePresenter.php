@@ -23,7 +23,7 @@ final class HomePresenter extends FrontendPresenter
     {
         $this->template->recCategoryId = $this->recCategoryId;
         $this->template->recSellerId = $this->recSellerId;
-        $this->template->recCategoryName = $this->sendQuery(new GetListNameQuery($this->recCategoryId, GetListNameQuery::$isCategory))->name;
+        $this->template->recCategoryName = $this->sendQuery(new GetListNameQuery($this->recCategoryId))->name;
         $this->template->recSellerName = $this->sendQuery(new GetSellerNameQuery($this->recSellerId))->name;
     }
     public function createComponentAdvertsListCategory(): AdvertsListControl
