@@ -10,9 +10,11 @@ use Ondra\App\Adverts\Application\IAdvertReadRepository;
 use Ondra\App\Adverts\Application\Query\DTOs\AdvertDetailDTO;
 use Ondra\App\Adverts\Application\Query\DTOs\AdvertOverviewDTO;
 use Ondra\App\Adverts\Application\Query\DTOs\SearchCriteria;
+use Ondra\App\Shared\Infrastructure\CET;
 
 final class DatabaseAdvertReadRepository implements IAdvertReadRepository
 {
+    use CET;
     private const TABLE_JOIN = 'adverts 
                 LEFT JOIN items ON adverts.id = items.id 
                 LEFT JOIN states ON items.state_id = states.id
@@ -72,12 +74,12 @@ final class DatabaseAdvertReadRepository implements IAdvertReadRepository
                     $data->username,
                     $data->seller_id,
                     $data->details,
-                    (string)$data->created_at,
+                    $this->toCET($data->created_at),
                     $imageNames,
                     $imageIds,
                     $categories,
                     $data->brand,
-                    (string)$data->updated_at,
+                    $this->toCET($data->updated_at),
                     $mainImageName,
                 );
         }
@@ -178,9 +180,9 @@ final class DatabaseAdvertReadRepository implements IAdvertReadRepository
 				$data->seller_id,
 				$data->details,
 				$data->subsubcategory_name,
-                (string) $data->created_at,
+                $this->toCET($data->created_at),
 				$data->brand,
-                (string) $data->updated_at,
+                $this->toCET($data->updated_at),
 				$imageName,
 			);
 		}

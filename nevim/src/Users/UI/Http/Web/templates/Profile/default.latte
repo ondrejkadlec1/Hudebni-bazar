@@ -1,7 +1,7 @@
 {layout __WWW_DIR__ . '/templates/mainLayout.latte'}
 
 {block title}
-    Profil
+    Můj profil
 {/block}
 {block content}
     <section class="block">
@@ -9,11 +9,19 @@
         <table>
              <tr>
                 <th>Uživatelské jméno:</th>
-                <td>{$info->username}</td>
+                <td>{$profile->username}</td>
              </tr>
-                <th>Popis</th>
-                <td>{$info->description}</td>
+             <tr>
+                <th>Vytvořeno:</th>
+                <td>{$profile->createdAt}</td>
+             </tr>
+             {if $isSeller}
+             <tr>
+                <th>Popis:</th>
+                <td>{$description}</td>
+             </tr>
             <tr>
+            {/if}
                 <th><a n:href="changePwd">Změnit heslo</a></th>
             </tr>
          </table>

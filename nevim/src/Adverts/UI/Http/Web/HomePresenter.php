@@ -17,7 +17,7 @@ final class HomePresenter extends FrontendPresenter
     {
         # TODO: implement recommendations
         $this->recSellerId = '668682c5b1185';
-        $this->recCategoryId = 48;
+        $this->recCategoryId = 40;
     }
     public function renderDefault(): void
     {
@@ -28,7 +28,7 @@ final class HomePresenter extends FrontendPresenter
     }
     public function createComponentAdvertsListCategory(): AdvertsListControl
     {
-        return $this->factory->create(new SearchCriteria(limit: 3, subsubcategoryId: 40));
+        return $this->factory->create(new SearchCriteria(limit: 3, categoryId: $this->recCategoryId));
     }
     public function createComponentAdvertsListNewest(): AdvertsListControl
     {

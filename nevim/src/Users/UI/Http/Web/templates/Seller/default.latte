@@ -11,10 +11,13 @@
     <h1>{$profile->username}</h1>
     <section class="block">
         <p>
-            {$profile->description}
+            {$description}
+        </p>
+        <p>
+            Vytovřeno: {$profile->createdAt}
         </p>
     </section>
-    <h2>Nabídky uživatele {$profile->username}</h2>
+    <h2>Nabídky prodejce {$profile->username}</h2>
     {control advertsList}
     {control paginator}
 {/block}
