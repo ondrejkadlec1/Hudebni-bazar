@@ -15,7 +15,7 @@ use Ondra\App\Users\Application\Query\DTOs\SellerProfileDTO;
 
 final class DatabaseUserReadRepository implements IUserReadRepository
 {
-    use CET;
+	use CET;
 	public function __construct(private readonly Explorer $explorer)
 	{
 	}
@@ -43,7 +43,7 @@ final class DatabaseUserReadRepository implements IUserReadRepository
 			'SELECT users.id AS id, sellers.id AS seller_id FROM users LEFT JOIN sellers ON users.id = sellers.id WHERE authtoken = ?',
 			$authtoken,
 		);
-		return $identityData
+		return $identityData !== null
 			? $this->createIdentity($identityData)
 			: null;
 	}
@@ -53,37 +53,45 @@ final class DatabaseUserReadRepository implements IUserReadRepository
 			'SELECT users.id AS id, sellers.id AS seller_id FROM users LEFT JOIN sellers ON users.id = sellers.id WHERE username = ?',
 			$username,
 		);
-        return $identityData
-            ? $this->createIdentity($identityData)
-            : null;
+		return $identityData !== null
+			? $this->createIdentity($identityData)
+			: null;
 	}
 	public function getSellerProfile(string $id): ?SellerProfileDTO
 	{
-		$data = $this->explorer->fetch('SELECT username, created_at, sellers.id AS seller_id, description FROM users LEFT JOIN sellers ON users.id = sellers.id WHERE users.id = ?', $id);
+		$data = $this->explorer->fetch(
+			'SELECT username, created_at, sellers.id AS seller_id, description FROM users LEFT JOIN sellers ON users.id = sellers.id WHERE users.id = ?',
+			$id,
+		);
 		if (isset($data->seller_id)) {
 			return new SellerProfileDTO($data->description, new ProfileDTO($data->username, $this->toCET($data->created_at)));
 		}
 		return null;
 	}
-    public function getAnyProfile(string $id): ?IProfileDTO
-    {
-        $data = $this->explorer->fetch('SELECT username, created_at, sellers.id AS seller_id, description FROM users LEFT JOIN sellers ON users.id = sellers.id WHERE users.id = ?', $id);
-        if (isset($data->username)) {
-            $user = new ProfileDTO($data->username, $this->toCET($data->created_at));
-            if (isset($data->seller_id)) {
-                return new SellerProfileDTO($data->description, $user);
-            }
-            return $user;
-        }
-        return null;
-    }
-    public function getSellerName(string $id): ?string
-    {
-        $data = $this->explorer->fetch('SELECT username, sellers.id AS seller_id FROM users LEFT JOIN sellers ON users.id = sellers.id WHERE users.id = ?', $id);
-        if (isset($data->seller_id)) {
-            return $data->username;
-        }
-        return null;
-    }
+	public function getAnyProfile(string $id): ?IProfileDTO
+	{
+		$data = $this->explorer->fetch(
+			'SELECT username, created_at, sellers.id AS seller_id, description FROM users LEFT JOIN sellers ON users.id = sellers.id WHERE users.id = ?',
+			$id,
+		);
+		if (isset($data->username)) {
+			$user = new ProfileDTO($data->username, $this->toCET($data->created_at));
+			if (isset($data->seller_id)) {
+				return new SellerProfileDTO($data->description, $user);
+			}
+			return $user;
+		}
+		return null;
+	}
+	public function getSellerName(string $id): ?string
+	{
+		$data = $this->explorer->fetch(
+			'SELECT username, sellers.id AS seller_id FROM users LEFT JOIN sellers ON users.id = sellers.id WHERE users.id = ?',
+			$id,
+		);
+		if (isset($data->seller_id)) {
+			return $data->username;
+		}
+		return null;
+	}
 }
-

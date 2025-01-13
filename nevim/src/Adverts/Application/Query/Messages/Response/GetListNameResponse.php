@@ -8,7 +8,7 @@ use Ondra\App\Shared\Application\Query\Query;
 
 final readonly class GetListNameResponse implements Query
 {
-    public function __construct(public string $name)
+	public function __construct(public string $name)
 	{
 	}
 }

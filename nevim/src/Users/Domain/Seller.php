@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Ondra\App\Users\Domain;
 
-class Seller
+final class Seller
 {
-	private Seller $seller;
-	private string $description;
+	private readonly Seller $seller;
+	private readonly string $description;
 }

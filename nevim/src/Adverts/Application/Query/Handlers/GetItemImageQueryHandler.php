@@ -11,13 +11,13 @@ use Ondra\App\Adverts\Application\Query\Messages\Response\GetItemImageResponse;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-class GetItemImageQueryHandler
+final class GetItemImageQueryHandler
 {
-	public function __invoke(GetItemImageQuery $query): GetItemImageResponse
-	{
-		$imagePath = $_ENV["ITEM_IMAGES_DIRECTORY"] . $query->name;
-		$fileResponse = new FileResponse($imagePath);
-		$mimeType = Image::typeToMimeType(Image::detectTypeFromFile($imagePath));
-		return new GetItemImageResponse($mimeType, $fileResponse);
-	}
+    public function __invoke(GetItemImageQuery $query): GetItemImageResponse
+   	{
+   		$imagePath = $_ENV["ITEM_IMAGES_DIRECTORY"] . $query->name;
+   		$fileResponse = new FileResponse($imagePath);
+   		$mimeType = Image::typeToMimeType(Image::detectTypeFromFile($imagePath));
+   		return new GetItemImageResponse($mimeType, $fileResponse);
+   	}
 }

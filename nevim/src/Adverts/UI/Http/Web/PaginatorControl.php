@@ -7,7 +7,7 @@ namespace Ondra\App\Adverts\UI\Http\Web;
 use Nette\Application\UI\Control;
 use Nette\Utils\Paginator;
 
-class PaginatorControl extends Control
+final class PaginatorControl extends Control
 {
 	public function __construct(private readonly Paginator $paginator)
 	{

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Ondra\App\Adverts\Application\Command\Handlers;
 
-use Nette\Http\FileUpload;
 use Nette\Security\User;
 use Ondra\App\Adverts\Application\Command\Messages\CreateAdvertCommandRequest;
 use Ondra\App\Adverts\Application\IAdvertWriteRepository;
@@ -24,7 +23,8 @@ final class CreateAdvertCommandHandler implements Autowired
 		private readonly IAdvertWriteRepository $advertRepository,
 		private readonly User $user,
 		private readonly RoleAssigner $roleAssigner,
-	) {}
+	) {
+	}
 
 	public function __invoke(CreateAdvertCommandRequest $command): void
 	{
@@ -32,14 +32,14 @@ final class CreateAdvertCommandHandler implements Autowired
 			throw new PermissionException('user is not signed in', 0);
 		}
 		$dto = $command->dto;
-        $id = uniqid();
+		$id = uniqid();
 		$itemImages = [];
 		foreach ($dto->images as $imageId => $file) {
-            $itemImages[] = new ItemImage($imageId, $file);
+			$itemImages[] = new ItemImage($imageId, $file);
 		}
-        bdump($itemImages);
+		bdump($itemImages);
 		$item = new Item(
-            $id,
+			$id,
 			$dto->name,
 			$dto->details,
 			$dto->stateId,

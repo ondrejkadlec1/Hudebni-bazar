@@ -6,7 +6,7 @@ namespace Ondra\App\Users\Application\security;
 
 use Nette\Security\Permission;
 
-class AuthorizatorFactory
+final class AuthorizatorFactory
 {
 	public static function create(): Permission
 	{
@@ -19,11 +19,11 @@ class AuthorizatorFactory
 		$acl->addResource('advert');
 		$acl->addResource('profile');
 
-		$advertOwnerAssertion = function (Permission $acl): bool {
-			$role = $acl->getQueriedRole();
-			$resource = $acl->getQueriedResource();
-			return $role->getId() === $resource->getSellerId();
-		};
+		$advertOwnerAssertion = static function (Permission $acl) : bool {
+      $role = $acl->getQueriedRole();
+      $resource = $acl->getQueriedResource();
+      return $role->getId() === $resource->getSellerId();
+  };
 
 		$acl->allow('seller', 'advert', ['update', 'delete'], $advertOwnerAssertion);
 		$acl->allow('seller', 'advert', 'create');

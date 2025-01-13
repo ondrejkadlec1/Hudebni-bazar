@@ -9,7 +9,10 @@ final class CreateTableStates extends AbstractMigration
 	public function change(): void
 	{
         $this->execute("create table states
-        (name text not null,
-        id serial primary key);");
+    (
+        name text not null,
+    id   serial
+        primary key
+);");
 	}
 }

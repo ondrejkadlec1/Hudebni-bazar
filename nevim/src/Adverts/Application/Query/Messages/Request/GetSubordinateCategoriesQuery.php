@@ -8,7 +8,7 @@ use Ondra\App\Shared\Application\Query\Query;
 
 final readonly class GetSubordinateCategoriesQuery implements Query
 {
-    public function __construct(public ?int $superordinate = null)
-    {
-    }
+	public function __construct(public ?int $superordinate = null)
+	{
+	}
 }

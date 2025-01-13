@@ -12,5 +12,4 @@ final readonly class GetAdvertsCountQuery implements Query
 	public function __construct(public SearchCriteria $criteria)
 	{
 	}
-
 }

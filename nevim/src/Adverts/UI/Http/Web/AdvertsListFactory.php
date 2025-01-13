@@ -7,7 +7,7 @@ namespace Ondra\App\Adverts\UI\Http\Web;
 use Ondra\App\Adverts\Application\Query\DTOs\SearchCriteria;
 use Ondra\App\Shared\UI\Http\Web\ControlFactory;
 
-class AdvertsListFactory extends ControlFactory
+final class AdvertsListFactory extends ControlFactory
 {
 	public function create(SearchCriteria $criteria): AdvertsListControl
 	{

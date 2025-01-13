@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Ondra\App\Users\Domain;
 
-class User
+final class User
 {
-	public function __construct(private string $username, private string $email, private string $password, private string $id)
+	public function __construct(private readonly string $username, private readonly string $email, private string $password, private readonly string $id)
 	{
 	}
 

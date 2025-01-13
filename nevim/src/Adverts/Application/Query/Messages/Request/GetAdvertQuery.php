@@ -8,7 +8,6 @@ use Ondra\App\Shared\Application\Query\Query;
 
 final readonly class GetAdvertQuery implements Query
 {
-
 	public function __construct(public string $id)
 	{
 	}

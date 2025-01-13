@@ -1,0 +1,143 @@
+<?php
+
+use Phinx\Seed\AbstractSeed;
+
+class UniversalSeeder extends AbstractSeed
+{
+    public function run() : void
+    {
+        $this->execute("insert into public.users (username, email, created_at, id, password, authtoken)
+values  ('tony', 'anthony987265@gmail.com', '2024-07-04 12:16:35.000000', '668682c59c0f4', '$2y$10$.VKMpixYvHTWIxTVjJJwMuqpl8QapirtdwV8gU/.TFpIyfOGBku06', 'erdujekqo85e1'),
+        ('jarda123', 'jarin128756@seznam.cz', '2024-07-04 19:43:19.000000', '668682c5b1185', '$2y$10$.VKMpixYvHTWIxTVjJJwMuqpl8QapirtdwV8gU/.TFpIyfOGBku06', '56987sdrtfewt'),
+        ('ondra', 'ondra9875224@seznam.cz', '2024-06-27 16:54:59.000000', '6686943fc48c8', '$2y$10$.VKMpixYvHTWIxTVjJJwMuqpl8QapirtdwV8gU/.TFpIyfOGBku06', '1t8d4er12tzui');");
+        $this->execute("insert into public.sellers (description, id)
+values  ('Nějaký popis prodejce, nebo tak něco.', '668682c59c0f4'),
+        ('Nějaký popis prodejce, nebo tak něco.', '668682c5b1185');");
+        $this->execute("insert into public.states (name, id)
+values  ('Nový', 1),
+        ('Perfektní', 2),
+        ('Dobrý', 3),
+        ('Funkční', 4),
+        ('Nefunkční', 5);");
+        $this->execute("insert into public.categories (name, id)
+values  ('Stratocaster', 75),
+        ('Telecaster', 76),
+        ('Lespaul', 77),
+        ('Španělské kytary', 78),
+        ('Klasické kytary', 79),
+        ('Hi-hat', 80),
+        ('Crash', 81),
+        ('Ride', 82),
+        ('Kopáky', 83),
+        ('Kotle', 84),
+        ('Virbly', 85),
+        ('Jazz bass', 86),
+        ('Precious bass', 87),
+        ('Lampová kytarová komba', 89),
+        ('Tranzistorová kytarová komba', 90),
+        ('Baskytarová komba', 91),
+        ('Hudební nosiče', 42),
+        ('Bicí', 38),
+        ('Klávesy', 39),
+        ('Zvuk', 40),
+        ('Pódiová technika', 41),
+        ('Ostatní', 43),
+        ('Baskytary', 44),
+        ('Kytary', 45),
+        ('Dechové nástroje', 46),
+        ('Smyčcové nástroje', 47),
+        ('Ostatní strunné nástroje', 48),
+        ('DJ', 49),
+        ('Kazety', 50),
+        ('Vynil', 51),
+        ('CD', 52),
+        ('Světla', 53),
+        ('Efekty', 54),
+        ('Reproduktory', 55),
+        ('Mikrofony', 56),
+        ('Sluchátka', 57),
+        ('Banja', 58),
+        ('Mandolíny', 59),
+        ('Violonccella', 60),
+        ('Housle', 61),
+        ('Violy', 62),
+        ('Kontrabasy', 63),
+        ('Žesťové', 64),
+        ('Dřevěné', 65),
+        ('Bubny', 66),
+        ('Bicí sety', 67),
+        ('Činely', 68),
+        ('Akustické Baskytary', 69),
+        ('Elektrické Baskytary', 70),
+        ('Elektroakustické kytary', 71),
+        ('Akustické kytary', 72),
+        ('Kytarová komba', 73),
+        ('Elektrické kytary', 74);");
+        $this->execute("insert into public.superordinate_category (higher_id, lower_id)
+values  (38, 66),
+        (38, 67),
+        (38, 68),
+        (40, 56),
+        (40, 57),
+        (41, 53),
+        (41, 54),
+        (41, 55),
+        (42, 50),
+        (42, 51),
+        (42, 52),
+        (44, 69),
+        (44, 70),
+        (45, 71),
+        (45, 72),
+        (45, 73),
+        (45, 74),
+        (46, 64),
+        (46, 65),
+        (47, 60),
+        (47, 61),
+        (47, 62),
+        (48, 58),
+        (48, 59),
+        (74, 75),
+        (74, 76),
+        (74, 77),
+        (72, 78),
+        (72, 79),
+        (73, 89),
+        (73, 90),
+        (44, 91),
+        (68, 80),
+        (68, 81),
+        (68, 82),
+        (66, 83),
+        (66, 84),
+        (66, 85),
+        (70, 86),
+        (70, 87),
+        (47, 63);");
+        $this->execute("insert into public.items (name, state_id, details, id, lowest_category_id, brand)
+values  ('Baskytara', 2, 'Použitá pětistrunná baskytara v perfektním stavu.', '678533f9126ed', 87, 'Fender'),
+        ('Jakýsi virbl', 1, '', '67840d17c01ae', 85, ''),
+        ('Elektrická kytara', 3, 'Kosmetická počkození.', '6783e03d3f63d', 75, 'Squier'),
+        ('FGM-148', 1, 'Od 18 let.', '67853bea2ef8a', 64, 'Lockheed Martin'),
+        ('Custom bicí', 3, 'Různé značky.', '67853b49495ff', 67, '');");
+        $this->execute("insert into public.item_images (rank, item_id, extension, created_at, id)
+values  (0, '678533f9126ed', 'jpeg', '2025-01-13 15:40:41.000000', 0),
+        (0, '67840d17c01ae', 'jpeg', '2025-01-12 18:42:31.000000', 0),
+        (1, '67840d17c01ae', 'jpeg', '2025-01-12 20:44:16.000000', 1),
+        (0, '6783e03d3f63d', 'jpeg', '2025-01-13 16:07:50.000000', 1),
+        (0, '67853bea2ef8a', 'jpeg', '2025-01-13 16:14:34.000000', 0),
+        (0, '67853b49495ff', 'jpeg', '2025-01-13 16:11:53.000000', 4),
+        (1, '67853b49495ff', 'webp', '2025-01-13 16:11:53.000000', 0),
+        (2, '67853b49495ff', 'jpeg', '2025-01-13 16:11:53.000000', 1),
+        (3, '67853b49495ff', 'jpeg', '2025-01-13 16:11:53.000000', 2),
+        (4, '67853b49495ff', 'webp', '2025-01-13 16:11:53.000000', 3);");
+        $this->execute("insert into public.adverts (price, quantity, created_at, updated_at, id, seller_id)
+values  (8500, 1, '2025-01-13 15:40:41.000000', '2025-01-13 16:00:37.000000', '678533f9126ed', '668682c5b1185'),
+        (3000, 1, '2025-01-12 15:31:09.000000', '2025-01-13 16:07:50.000000', '6783e03d3f63d', '668682c5b1185'),
+        (200000, 358, '2025-01-13 16:14:34.000000', null, '67853bea2ef8a', '668682c59c0f4'),
+        (1500, 1, '2025-01-12 18:42:31.000000', '2025-01-13 16:05:32.000000', '67840d17c01ae', '668682c59c0f4'),
+        (21000, 1, '2025-01-13 16:11:53.000000', '2025-01-13 16:35:02.000000', '67853b49495ff', '668682c5b1185');");
+    }
+
+}

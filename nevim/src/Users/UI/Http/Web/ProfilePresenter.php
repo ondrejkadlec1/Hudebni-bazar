@@ -17,26 +17,25 @@ use Ondra\App\Users\UI\Http\Web\forms\ChangePwdFormFactory;
 final class ProfilePresenter extends FrontendPresenter
 {
 	use UsersOnly;
-    use Paginated;
+	use Paginated;
 	public function __construct(
-        private readonly User $user,
-        private readonly ChangePwdFormFactory $factory,
-        private readonly AdvertsListFactory $advertsListFactory)
-	{
+		private readonly User $user,
+		private readonly ChangePwdFormFactory $factory,
+		private readonly AdvertsListFactory $advertsListFactory,
+	) {
 	}
 
 	public function renderDefault(): void
 	{
 		$result = $this->sendQuery(new GetMyProfileQuery())->dto;
-        if ($result instanceof SellerProfileDTO) {
-            $this->template->description = $result->description;
-            $this->template->isSeller = true;
-            $this->template->profile = $result->profile;
-        }
-        else {
-            $this->template->profile = $result;
-            $this->template->isSeller = false;
-        }
+		if ($result instanceof SellerProfileDTO) {
+			$this->template->description = $result->description;
+			$this->template->isSeller = true;
+			$this->template->profile = $result->profile;
+		} else {
+			$this->template->profile = $result;
+			$this->template->isSeller = false;
+		}
 	}
 	public function createComponentChangePwdForm(): Form
 	{

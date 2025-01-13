@@ -28,7 +28,9 @@ final class Error4xxPresenter extends Presenter
 	protected function checkHttpMethod(): void
 	{
 		// allow access via all HTTP methods and ensure the request is a forward (internal redirect)
-		if (! $this->getRequest()?->isMethod(Request::FORWARD)) {
+		if (! $this->getRequest()?->isMethod(
+			Request::FORWARD,
+		)) {
 			$this->error();
 		}
 	}

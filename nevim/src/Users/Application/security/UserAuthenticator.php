@@ -19,16 +19,16 @@ final class UserAuthenticator implements Authenticator, IdentityHandler
 		private readonly Passwords $passwords,
 	) {
 	}
-	public function authenticate(string $user, string $password): SimpleIdentity
+	public function authenticate(string $username, string $password): SimpleIdentity
 	{
-		$passwordHash = $this->repository->getPasswordHash($user);
+		$passwordHash = $this->repository->getPasswordHash($username);
 		if (! $passwordHash) {
 			throw new AuthenticationException('user does not exist', 0);
 		}
 		if (! $this->passwords->verify($password, $passwordHash)) {
 			throw new AuthenticationException('wrong password', 1);
 		}
-		return $this->repository->getIdentityByUsername($user);
+		return $this->repository->getIdentityByUsername($username);
 	}
 	function sleepIdentity(IIdentity $identity): IIdentity
 	{

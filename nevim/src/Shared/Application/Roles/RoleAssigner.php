@@ -10,18 +10,17 @@ use Nette\Security\Role;
 use Nette\Security\User;
 use Ondra\App\Users\Application\security\AuthorizatorFactory;
 
-class RoleAssigner
+final class RoleAssigner
 {
-	private Role|string $role;
-	private Permission $acl;
+	private readonly Role|string $role;
+	private readonly Permission $acl;
 	public function __construct(User $user)
 	{
 		$this->acl = AuthorizatorFactory::create();
-		switch ($user->getRoles()) {
-			case ['seller']: $this->role = new SellerRole($user->getId());
-				break;
-			default: $this->role = 'guest';
-		}
+		$this->role = match ($user->getRoles()) {
+      ['seller'] => new SellerRole($user->getId()),
+      default => 'guest',
+  };
 	}
 	public function isAllowed(Resource|string $resource, string $priviledge): bool
 	{

@@ -11,15 +11,13 @@ use Ondra\App\Shared\Application\Autowired;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-
-class GetAdvertsQueryHandler implements Autowired
+final class GetAdvertsQueryHandler implements Autowired
 {
-	public function __construct(private readonly IAdvertReadRepository $repository)
-	{
-	}
-
-	public function __invoke(GetAdvertsQuery $query): GetAdvertsResponse
-	{
-		return new GetAdvertsResponse($this->repository->getOverviews($query->criteria));
-	}
+    public function __construct(private readonly IAdvertReadRepository $repository)
+   	{
+   	}
+    public function __invoke(GetAdvertsQuery $query): GetAdvertsResponse
+   	{
+   		return new GetAdvertsResponse($this->repository->getOverviews($query->criteria));
+   	}
 }

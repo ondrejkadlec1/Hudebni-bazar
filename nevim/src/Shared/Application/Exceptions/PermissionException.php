@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ondra\App\Shared\Application\Exceptions;
 
-class PermissionException extends \Exception
+use Exception;
+final class PermissionException extends Exception
 {
 }

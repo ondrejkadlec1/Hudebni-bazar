@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Ondra\App\Adverts\UI\Http\Web;
 
+use Exception;
 use Ondra\App\Adverts\Application\Query\Messages\Request\GetItemImageQuery;
 use Ondra\App\Adverts\Application\Query\Messages\Request\GetListNameQuery;
 use Ondra\App\Shared\Application\Exceptions\MissingContentException;
 use Ondra\App\Shared\UI\Http\Web\FrontendPresenter;
 
-class BrowsePresenter extends FrontendPresenter
+final class BrowsePresenter extends FrontendPresenter
 {
 	use Paginated;
 	public function renderCategory(int $categoryId): void
@@ -18,7 +19,7 @@ class BrowsePresenter extends FrontendPresenter
 			$this->template->category = $this->sendQuery(
 				new GetListNameQuery($categoryId),
 			)->name;
-		} catch (\Exception $e) {
+		} catch (Exception $e) {
 			if ($e->getPrevious() instanceof MissingContentException) {
 				$this->error('Hledaná kategorie neexistuje', 404);
 			}

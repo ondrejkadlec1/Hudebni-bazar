@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Ondra\App\Adverts\Domain;
 
-class Advert
+final class Advert
 {
 	public function __construct(
-        private string $id,
-        private Item $item,
-        private Seller $seller,
-        private int $price,
-        private int $quantity)
-	{
+		private readonly string $id,
+		private readonly Item $item,
+		private readonly Seller $seller,
+		private int $price,
+		private int $quantity,
+	) {
 	}
 	public function getId(): string
 	{

@@ -15,8 +15,8 @@ final class RouterFactory
 	{
 		$router = new RouteList();
 		$router->addRoute('', 'Adverts:Home:default');
-        $router->addRoute('image/<imageName>', 'Adverts:Browse:image');
-        $router->addRoute('images/<imageName>', 'Adverts:Detail:images');
+		$router->addRoute('image/<imageName>', 'Adverts:Browse:image');
+		$router->addRoute('images/<imageName>', 'Adverts:Detail:images');
 		$router->addRoute('[<module>/]<presenter>/<action>[/<id>]', 'Home:default');
 		return $router;
 	}

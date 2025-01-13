@@ -9,13 +9,12 @@ use Ondra\App\Adverts\Application\Query\DTOs\SearchCriteria;
 use Ondra\App\Adverts\Application\Query\Messages\Request\GetAdvertsQuery;
 use Ondra\App\Shared\Application\BusProvider;
 
-class AdvertsListControl extends Control
+final class AdvertsListControl extends Control
 {
 	public function __construct(
-        private readonly BusProvider $busProvider,
-        private readonly SearchCriteria $criteria,
-    )
-	{
+		private readonly BusProvider $busProvider,
+		private readonly SearchCriteria $criteria,
+	) {
 	}
 	public function render(): void
 	{

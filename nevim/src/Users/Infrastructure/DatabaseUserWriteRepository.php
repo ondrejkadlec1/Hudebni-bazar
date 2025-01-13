@@ -20,7 +20,7 @@ final class DatabaseUserWriteRepository implements IUserWriteRepository
 	}
 	public function createUser(?Row $userData): ?User
 	{
-		return $userData ? new User($userData->username, $userData->email, $userData->password, $userData->id) : null;
+		return $userData !== null ? new User($userData->username, $userData->email, $userData->password, $userData->id) : null;
 	}
 	public function getUserById(string $id): ?User
 	{
@@ -37,7 +37,7 @@ final class DatabaseUserWriteRepository implements IUserWriteRepository
 
 	public function save(User $user): void
 	{
-		if ($this->explorer->fetch("SELECT id FROM users WHERE id = ?", $user->getId())) {
+		if ($this->explorer->fetch("SELECT id FROM users WHERE id = ?", $user->getId()) !== null) {
 			$query = "UPDATE users SET password = ? WHERE id = ?";
 			$this->connection->query($query, $user->getPassword(), $user->getId());
 		} else {

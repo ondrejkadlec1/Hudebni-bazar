@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Ondra\App\Adverts\UI\Http\Web;
 
+use Exception;
+use stdClass;
 use Nette\Application\UI\Form;
 use Nette\Http\Request;
 use Ondra\App\Adverts\Application\Command\Messages\CreateAdvertCommandRequest;
@@ -17,7 +19,7 @@ use Ondra\App\Shared\Application\Exceptions\PermissionException;
 use Ondra\App\Shared\UI\Http\Web\FrontendPresenter;
 use Ondra\App\Shared\UI\Http\Web\UsersOnly;
 
-class AdvertPresenter extends FrontendPresenter
+final class AdvertPresenter extends FrontendPresenter
 {
 	use UsersOnly;
 	public function __construct(private readonly AdvertFormFactory $formFactory, private readonly Request $httpRequest)
@@ -28,35 +30,39 @@ class AdvertPresenter extends FrontendPresenter
 	{
 		try {
 			$this->sendCommand(new DeleteAdvertCommandRequest($id));
-		} catch (\Exception $e) {
-			if ($e->getPrevious() instanceof PermissionException & $e->getPrevious()->getCode() === 0) {
+		} catch (Exception $e) {
+			if (($e->getPrevious() instanceof PermissionException & $e->getPrevious()->getCode() === 0) !== 0) {
 				$this->error('Tuto nabídku nesmíte upravovat, protože není vaše.', 403);
 			}
-            if ($e->getPrevious() instanceof MissingContentException){
-                $this->error('Hledaná nabídka (už) neexistuje.', 404);
-            }
+			if ($e->getPrevious() instanceof MissingContentException) {
+				$this->error('Hledaná nabídka (už) neexistuje.', 404);
+			}
 		}
-        $this->flashMessage("Úspěšně smazáno");
+		$this->flashMessage("Úspěšně smazáno");
 		$this->redirect(":Users:Profile:default");
 	}
-    public function renderDefault(): void
-    {
-        $this->template->imageNames = [];
-    }
+	public function renderDefault(): void
+	{
+		$this->template->imageNames = [];
+	}
 	public function renderUpdate(string $id): void
 	{
 		$existingAdvert = $this->sendQuery(new GetAdvertQuery($id))->dto;
-        $this->template->imageNames = $existingAdvert->imageNames;
-        $this->template->imageIds = $existingAdvert->imageIds;
-        $categoryIds = array_keys($existingAdvert->categories);
-        $categoryId = $categoryIds[0];
-        $subcategoryId = $categoryIds[1] ?? null;
-        $subsubcategoryId = $categoryIds[2] ?? null;
-        $form = $this->getComponent('advertForm');
-        $form->getComponent('subcategoryId')->setItems($this->sendQuery(new GetSubordinateCategoriesQuery($categoryId))->subordinate);
-        if (isset($subcategoryId)) {
-            $form->getComponent('subsubcategoryId')->setItems($this->sendQuery(new GetSubordinateCategoriesQuery($subcategoryId))->subordinate);
-        }
+		$this->template->imageNames = $existingAdvert->imageNames;
+		$this->template->imageIds = $existingAdvert->imageIds;
+		$categoryIds = array_keys($existingAdvert->categories);
+		$categoryId = $categoryIds[0];
+		$subcategoryId = $categoryIds[1] ?? null;
+		$subsubcategoryId = $categoryIds[2] ?? null;
+		$form = $this->getComponent('advertForm');
+		$form->getComponent('subcategoryId')->setItems(
+			$this->sendQuery(new GetSubordinateCategoriesQuery($categoryId))->subordinate,
+		);
+		if (isset($subcategoryId)) {
+			$form->getComponent('subsubcategoryId')->setItems(
+				$this->sendQuery(new GetSubordinateCategoriesQuery($subcategoryId))->subordinate,
+			);
+		}
 		$form->setDefaults([
 			'name' => $existingAdvert->name,
 			'stateId' => $existingAdvert->stateId,
@@ -67,37 +73,34 @@ class AdvertPresenter extends FrontendPresenter
 			'subcategoryId' => $subcategoryId,
 			'subsubcategoryId' => $subsubcategoryId,
 			'brand' => $existingAdvert->brand,
-            'keepImages' => '[]'
+			'keepImages' => '[]',
 		]);
-
 	}
 	public function createComponentAdvertForm(): Form
 	{
 		$form = $this->formFactory->create();
-		$form->onSuccess[] = function (Form $form, \stdClass $data): void {
+		$form->onSuccess[] = function (Form $form, stdClass $data): void {
 			$id = $this->getParameter('id');
-            $imageMask = json_decode($data->keepImages);
-            $images = [];
+			$imageMask = json_decode((string) $data->keepImages, null, 512, JSON_THROW_ON_ERROR);
+			$images = [];
 
-            $imageFiles = [];
+			$imageFiles = [];
 			if ($this->httpRequest->getFiles()['images'][0] !== null) {
-                $imageFiles = $this->httpRequest->getFiles()['images'];
-            }
-            foreach ($imageMask as $key => $imageId) {
-                $images[$key] = ($imageId === 'uploaded') ? array_shift($imageFiles) : (int) $imageId;
-            }
-            if (count($imageMask) != count($images) or !empty($imageFiles)) {
-                $this->error('Odeslána neplatná data.', 400);
-            }
-            if (isset($data->subsubcategoryId)) {
-                $lowestCategoryId = $data->subsubcategoryId;
-            }
-            elseif (isset($data->subcategoryId)) {
-                $lowestCategoryId = $data->subcategoryId;
-            }
-            else {
-                $lowestCategoryId = $data->categoryId;
-            }
+				$imageFiles = $this->httpRequest->getFiles()['images'];
+			}
+			foreach ($imageMask as $key => $imageId) {
+				$images[$key] = ($imageId === 'uploaded') ? array_shift($imageFiles) : (int) $imageId;
+			}
+			if (count($imageMask) !== count($images) or ! empty($imageFiles)) {
+				$this->error('Odeslána neplatná data.', 400);
+			}
+			if (isset($data->subsubcategoryId)) {
+				$lowestCategoryId = $data->subsubcategoryId;
+			} elseif (isset($data->subcategoryId)) {
+				$lowestCategoryId = $data->subcategoryId;
+			} else {
+				$lowestCategoryId = $data->categoryId;
+			}
 			try {
 				if (isset($id)) {
 					$this->sendCommand(
@@ -119,7 +122,7 @@ class AdvertPresenter extends FrontendPresenter
 							$data->name,
 							$data->stateId,
 							$data->price,
-                            $lowestCategoryId,
+							$lowestCategoryId,
 							$data->quantity,
 							$data->details,
 							$images,
@@ -127,21 +130,20 @@ class AdvertPresenter extends FrontendPresenter
 						),
 					);
 				}
-			} catch (\Exception $e) {
-                if ($e->getPrevious() instanceof PermissionException) {
-                    if ($e->getPrevious()->getCode() === 0) {
-                        $this->error('Pro tuto akci se musíte přihlásit.', 401);
-                    }
-                    if ($e->getPrevious()->getCode() === 1) {
-                        $this->error('Tuto nabídku nesmíte upravovat, protože není vaše.', 403);
-                    }
-                }
-                if ($e->getPrevious() instanceof MissingContentException) {
-                    $this->error('Tato nabídka neexistuje.', 404);
-                }
-                else {
-                    throw $e->getPrevious();
-                }
+			} catch (Exception $e) {
+				if ($e->getPrevious() instanceof PermissionException) {
+					if ($e->getPrevious()->getCode() === 0) {
+						$this->error('Pro tuto akci se musíte přihlásit.', 401);
+					}
+					if ($e->getPrevious()->getCode() === 1) {
+						$this->error('Tuto nabídku nesmíte upravovat, protože není vaše.', 403);
+					}
+				}
+				if ($e->getPrevious() instanceof MissingContentException) {
+					$this->error('Tato nabídka neexistuje.', 404);
+				} else {
+					throw $e->getPrevious();
+				}
 			}
 			$this->flashMessage('Úspěšně uloženo');
 			$this->redirect(":Users:Profile:default");
@@ -149,7 +151,8 @@ class AdvertPresenter extends FrontendPresenter
 		return $form;
 	}
 
-    public function actionCategories(string $superordinate): void {
-        $this->sendJson($this->sendQuery(new GetSubordinateCategoriesQuery((int) ($superordinate)))->subordinate);
-    }
+	public function actionCategories(string $superordinate): void
+	{
+		$this->sendJson($this->sendQuery(new GetSubordinateCategoriesQuery((int) ($superordinate)))->subordinate);
+	}
 }

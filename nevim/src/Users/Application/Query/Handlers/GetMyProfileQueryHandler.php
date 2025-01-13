@@ -17,7 +17,8 @@ final class GetMyProfileQueryHandler implements Autowired
 {
 	public function __construct(
 		private readonly DatabaseUserReadRepository $repository,
-	private readonly User $user) {
+		private readonly User $user,
+	) {
 	}
 
 	public function __invoke(GetMyProfileQuery $_): GetMyProfileResponse

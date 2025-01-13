@@ -8,13 +8,7 @@ use Ondra\App\Shared\Application\BusProvider;
 
 abstract class ControlFactory
 {
-	protected BusProvider $busProvider;
-
-	/**
-	 * @param BusProvider $busProvider
-	 */
-	public function __construct(BusProvider $busProvider)
-	{
-		$this->busProvider = $busProvider;
-	}
+	public function __construct(protected BusProvider $busProvider)
+ {
+ }
 }

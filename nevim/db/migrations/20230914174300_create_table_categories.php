@@ -9,7 +9,12 @@ final class CreateTableCategories extends AbstractMigration
 	public function change(): void
 	{
         $this->execute("create table categories
-        (id serial primary key,
-        name varchar not null);");
+(
+    name varchar not null,
+    id   serial
+        constraint categories_pk
+            primary key
+        unique
+);");
 	}
 }

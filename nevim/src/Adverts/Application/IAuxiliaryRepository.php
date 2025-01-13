@@ -6,10 +6,10 @@ namespace Ondra\App\Adverts\Application;
 
 interface IAuxiliaryRepository
 {
-    public function getCategories(): array;
-    public function getSubcategories(): array;
-    public function getSubsubcategories(): array;
-    public function getSubordinateCategories(?int $superordinateId = null): array;
+	public function getCategories(): array;
+	public function getSubcategories(): array;
+	public function getSubsubcategories(): array;
+	public function getSubordinateCategories(?int $superordinateId = null): array;
 	public function getCategoryName(int $id): ?string;
-    public function getStates(): array;
+	public function getStates(): array;
 }

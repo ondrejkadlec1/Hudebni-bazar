@@ -6,9 +6,9 @@ namespace Ondra\App\Shared\Application\Roles;
 
 use Nette\Security\Role;
 
-class SellerRole implements Role
+final class SellerRole implements Role
 {
-	public function __construct(private string $id)
+	public function __construct(private readonly string $id)
 	{
 	}
 

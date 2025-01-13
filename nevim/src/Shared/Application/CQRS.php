@@ -21,8 +21,9 @@ trait CQRS
 	 * @phpstan-param T $query
 	 * @phpstan-return T
 	 */
-	public function sendQuery(Query $query): Query
-	{
+	public function sendQuery(
+		Query $query,
+	): Query {
 		return $this->busProvider->sendQuery($query);
 	}
 

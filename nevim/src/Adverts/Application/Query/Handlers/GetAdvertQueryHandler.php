@@ -12,17 +12,17 @@ use Ondra\App\Shared\Application\Exceptions\MissingContentException;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-class GetAdvertQueryHandler implements Autowired
+final class GetAdvertQueryHandler implements Autowired
 {
-	public function __construct(private readonly IAdvertReadRepository $repository)
-	{
-	}
-	public function __invoke(GetAdvertQuery $query): GetAdvertResponse
-	{
-		$dto = $this->repository->getDetail($query->id);
-		if (! isset($dto)) {
-			throw new MissingContentException('advert does not exist', 0);
-		}
-		return new GetAdvertResponse($dto);
-	}
+    public function __construct(private readonly IAdvertReadRepository $repository)
+   	{
+   	}
+    public function __invoke(GetAdvertQuery $query): GetAdvertResponse
+   	{
+   		$dto = $this->repository->getDetail($query->id);
+   		if (! isset($dto)) {
+   			throw new MissingContentException('advert does not exist', 0);
+   		}
+   		return new GetAdvertResponse($dto);
+   	}
 }

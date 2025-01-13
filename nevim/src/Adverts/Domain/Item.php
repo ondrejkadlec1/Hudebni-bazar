@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Ondra\App\Adverts\Domain;
 
-class Item
+final class Item
 {
 	public function __construct(
-        private string $id,
-        private string $name,
-        private string $details,
-        private int $stateId,
-        private array $itemImages,
-        private int $subsubcategoryId,
-        private ?string $brand = null)
-	{
+		private readonly string $id,
+		private string $name,
+		private string $details,
+		private int $stateId,
+		private array $itemImages,
+		private int $subsubcategoryId,
+		private ?string $brand = null,
+	) {
 	}
 
 	public function getBrand(): ?string
@@ -27,7 +27,7 @@ class Item
 		$this->brand = $brand;
 	}
 
-    public function getName(): string
+	public function getName(): string
 	{
 		return $this->name;
 	}
@@ -37,22 +37,22 @@ class Item
 		$this->name = $name;
 	}
 
-    public function getDetails(): string
-    {
-        return $this->details;
-    }
+	public function getDetails(): string
+	{
+		return $this->details;
+	}
 
 	public function setDetails(string $details): void
 	{
 		$this->details = $details;
 	}
 
-    public function getStateId(): int
+	public function getStateId(): int
 	{
 		return $this->stateId;
 	}
 
-    public function setSubsubcategoryId(int $subsubcategoryId): void
+	public function setSubsubcategoryId(int $subsubcategoryId): void
 	{
 		$this->subsubcategoryId = $subsubcategoryId;
 	}
@@ -79,7 +79,6 @@ class Item
 
 	public function setItemImages(array $itemImages): void
 	{
-        $this->itemImages = array_slice($itemImages, 0, (int) $_ENV['MAX_IMAGES_PER_ADVERT']);
+		$this->itemImages = array_slice($itemImages, 0, (int) $_ENV['MAX_IMAGES_PER_ADVERT']);
 	}
-
 }

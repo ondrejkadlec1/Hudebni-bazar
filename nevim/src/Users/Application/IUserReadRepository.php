@@ -15,6 +15,6 @@ interface IUserReadRepository
 	public function getIdentityByAuthtoken(string $authtoken): ?SimpleIdentity;
 	public function getIdentityByUsername(string $username): ?SimpleIdentity;
 	public function getPasswordHash(string $username): ?string;
-    public function getSellerName(string $id): ?string;
-    public function getAnyProfile(string $id): ?IProfileDTO;
+	public function getSellerName(string $id): ?string;
+	public function getAnyProfile(string $id): ?IProfileDTO;
 }

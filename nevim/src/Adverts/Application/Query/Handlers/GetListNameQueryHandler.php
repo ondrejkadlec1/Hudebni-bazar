@@ -8,23 +8,21 @@ use Ondra\App\Adverts\Application\IAuxiliaryRepository;
 use Ondra\App\Adverts\Application\Query\Messages\Request\GetListNameQuery;
 use Ondra\App\Adverts\Application\Query\Messages\Response\GetListNameResponse;
 use Ondra\App\Shared\Application\Autowired;
-use Ondra\App\Shared\Application\Exceptions\InvalidValueException;
 use Ondra\App\Shared\Application\Exceptions\MissingContentException;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-class GetListNameQueryHandler implements Autowired
+final class GetListNameQueryHandler implements Autowired
 {
-	public function __construct(private readonly IAuxiliaryRepository $repository)
-	{
-	}
-
-	public function __invoke(GetListNameQuery $query): GetListNameResponse
-	{
-		$name = $this->repository->getCategoryName($query->id);
-		if (!$name) {
-			throw new MissingContentException('category with id ' . $query->id . ' does not exist', 1);
-		}
-		return new GetListNameResponse($name);
-	}
+    public function __construct(private readonly IAuxiliaryRepository $repository)
+   	{
+   	}
+    public function __invoke(GetListNameQuery $query): GetListNameResponse
+   	{
+   		$name = $this->repository->getCategoryName($query->id);
+   		if (! $name) {
+   			throw new MissingContentException('category with id ' . $query->id . ' does not exist', 1);
+   		}
+   		return new GetListNameResponse($name);
+   	}
 }

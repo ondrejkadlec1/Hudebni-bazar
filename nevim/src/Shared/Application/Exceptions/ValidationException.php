@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ondra\App\Shared\Application\Exceptions;
 
-class ValidationException extends \Exception
+use Exception;
+final class ValidationException extends Exception
 {
 }

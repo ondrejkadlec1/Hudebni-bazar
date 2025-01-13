@@ -51,24 +51,24 @@ trait Browsing
 	}
 	public function createComponentFilterForm(): Form
 	{
-        $defaults = [];
-        if ($this->getParameter('max') !== null){
-            $defaults['max'] = $this->getParameter('max');
-        }
-        if ($this->getParameter('min') !== null){
-            $defaults['min'] = $this->getParameter('min');
-        }
-        if ($this->getParameter('brand') !== null){
-            $defaults['brand'] = $this->getParameter('brand');
-        }
-        if ($this->getParameter('stateId') !== null){
-            $defaults['stateId'] = $this->getParameter('stateId');
-        }
+		$defaults = [];
+		if ($this->getParameter('max') !== null) {
+			$defaults['max'] = $this->getParameter('max');
+		}
+		if ($this->getParameter('min') !== null) {
+			$defaults['min'] = $this->getParameter('min');
+		}
+		if ($this->getParameter('brand') !== null) {
+			$defaults['brand'] = $this->getParameter('brand');
+		}
+		if ($this->getParameter('stateId') !== null) {
+			$defaults['stateId'] = $this->getParameter('stateId');
+		}
 		$form = $this->filterFormFactory->create();
-        $form->setDefaults($defaults);
+		$form->setDefaults($defaults);
 		$form->onSuccess[] = function (array $data): void {
 			$this->redirect("this", $data);
 		};
-        return $form;
+		return $form;
 	}
 }

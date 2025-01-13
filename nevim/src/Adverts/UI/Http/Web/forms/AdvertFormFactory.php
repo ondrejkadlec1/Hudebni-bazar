@@ -9,7 +9,7 @@ use Ondra\App\Adverts\Application\Query\Messages\Request\GetStatesQuery;
 use Ondra\App\Adverts\Application\Query\Messages\Request\GetSubordinateCategoriesQuery;
 use Ondra\App\Shared\UI\Http\Web\forms\FormFactory;
 
-class AdvertFormFactory extends FormFactory
+final class AdvertFormFactory extends FormFactory
 {
 	public function create(): Form
 	{
@@ -19,36 +19,45 @@ class AdvertFormFactory extends FormFactory
 
 		$form = new Form();
 		$form->addText('name', 'Název')
-			->setRequired("Zadé název, ty jitrnico!");
+			->setRequired("Zadejte název.");
 		$form->addSelect('stateId', 'Stav', $states)
 			->setPrompt('Zvolte stav předmětu')
-			->setRequired("Tak je to rozflákaný nebo to valí?");
+			->setRequired("Zvolte stav.");
 		$form->addInteger('price', 'Cena')
-			->setRequired("Kolik to má stát, debile?");
+			->setRequired("Zadejte cenu.");
 		$form->addText('details', 'Podrobnosti');
 		$form->addInteger('quantity', 'počet')
 			->setDefaultValue(1)
-			->addRule($form::Range, 'Kolik že toho chceš prodat?', [1, 1000000])
+			->addRule($form::Range, 'Kámo tohle je bazar…', [1, 9999])
 			->setRequired("!!");
 		$category = $form->addSelect('categoryId', 'Kategorie', $allCategories)
 			->setPrompt('Zvolte kategorii')
-			->setRequired("Kam to patří?");
+			->setRequired("Zvolte zařazení.");
 		$subcategory = $form->addSelect('subcategoryId', 'Podkategorie')
 			->setPrompt('Zvolte kategorii');
 		$subsubcategory = $form->addSelect('subsubcategoryId', 'Další zařazení')
 			->setPrompt('Zvolte kategorii');
 		$form->addText('brand', 'Značka');
-//        TODO: use some database of brands or completely remove brands
-		$form->addMultiUpload('images', 'Nahrát obrázky')
-			->addRule($form::MaxLength, 'Maximální počet souborů je' . $_ENV['MAX_IMAGES_PER_ADVERT'] . '.', $_ENV['MAX_IMAGES_PER_ADVERT'])
+		//        TODO: use some database of brands or decide to remove brands completely
+		$form->addMultiUpload(
+			'images',
+			'Nahrát obrázky',
+		)
+			->addRule(
+				$form::MaxLength,
+				'Maximální počet souborů je' . $_ENV['MAX_IMAGES_PER_ADVERT'] . '.',
+				$_ENV['MAX_IMAGES_PER_ADVERT'],
+			)
 			->addRule($form::Image, 'Soubory musí být .jpg, nebo .png');
 		$form->addSubmit('send', 'Zveřejnit');
-        $form->addText('keepImages', 'keepImages');
+		$form->addText('keepImages', 'keepImages');
 
-        $form->onValidate[] = fn () =>
-            $subcategory->setItems($this->sendQuery(new GetSubordinateCategoriesQuery($category->getValue()))->subordinate);
-        $form->onValidate[] = fn () =>
-            $subsubcategory->setItems($this->sendQuery(new GetSubordinateCategoriesQuery($subcategory->getValue()))->subordinate);
+		$form->onValidate[] = fn () =>
+			$subcategory->setItems($this->sendQuery(new GetSubordinateCategoriesQuery($category->getValue()))->subordinate);
+		$form->onValidate[] = fn () =>
+			$subsubcategory->setItems(
+				$this->sendQuery(new GetSubordinateCategoriesQuery($subcategory->getValue()))->subordinate,
+			);
 		return $form;
 	}
 }
