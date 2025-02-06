@@ -12,8 +12,7 @@ services:
 	- Ondra\App\Users\Application\Command\Handlers\CreateUserCommandHandler
 	- Ondra\App\Users\Application\Command\Handlers\ChangePasswordCommandHandler
 	- Ondra\App\Users\Application\Query\Handlers\GetSellerProfileQueryHandler
-	- Ondra\App\Adverts\Application\Command\Handlers\CreateAdvertCommandHandler
-	- Ondra\App\Adverts\Application\Command\Handlers\UpdateAdvertCommandHandler
+	- Ondra\App\Adverts\Application\Command\Handlers\HandleAdvertCommandHandler
 	- Ondra\App\Adverts\Application\Command\Handlers\DeleteAdvertCommandHandler
 	- Ondra\App\Adverts\Application\Query\Handlers\GetAdvertQueryHandler
 	- Ondra\App\Adverts\Application\Query\Handlers\GetAdvertsCountQueryHandler
@@ -23,6 +22,7 @@ services:
 	- Ondra\App\Adverts\Application\Query\Handlers\GetItemImageQueryHandler
 	- Ondra\App\Adverts\Application\Query\Handlers\GetCategoriesQueryHandler
 	- Ondra\App\Shared\Application\Roles\RoleAssigner
+	- Ondra\App\ApplicationConfiguration
 
 	security.passwords: Nette\Security\Passwords(::PASSWORD_BCRYPT, [cost: 10])
 

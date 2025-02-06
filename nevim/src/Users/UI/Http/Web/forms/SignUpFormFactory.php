@@ -52,7 +52,8 @@ final class SignUpFormFactory extends FormFactory
 				new CreateUserCommandRequest($data->username, $data->email, $this->passwords->hash($data->password)),
 			);
 			$this->user->login($data->username, $data->password);
-		} catch (Exception $e) {
+		}
+        catch (Exception $e) {
 			$previous = $e->getPrevious();
 			if ($previous instanceof ValidationException) {
 				if ($e->getPrevious()->getCode() === 0) {

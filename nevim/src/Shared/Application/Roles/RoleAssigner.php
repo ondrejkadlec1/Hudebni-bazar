@@ -20,7 +20,7 @@ final class RoleAssigner
 		$this->role = match ($user->getRoles()) {
       ['seller'] => new SellerRole($user->getId()),
       default => 'guest',
-  };
+        };
 	}
 	public function isAllowed(Resource|string $resource, string $priviledge): bool
 	{

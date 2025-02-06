@@ -14,17 +14,18 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 final class GetSellerNameQueryHandler implements Autowired
 {
-	public function __construct(
-		private readonly DatabaseUserReadRepository $repository,
-	) {
-	}
+    public function __construct(
+        private readonly DatabaseUserReadRepository $repository,
+    )
+    {
+    }
 
-	public function __invoke(GetSellerNameQuery $query): GetSellerNameResponse
-	{
-		$name = $this->repository->getSellerName($query->id);
-		if (! isset($name)) {
-			throw new MissingContentException('seller does not exist');
-		}
-		return new GetSellerNameResponse($name);
-	}
+    public function __invoke(GetSellerNameQuery $query): GetSellerNameResponse
+    {
+        $name = $this->repository->getSellerName($query->id);
+        if ($name === null) {
+            throw new MissingContentException('seller does not exist');
+        }
+        return new GetSellerNameResponse($name);
+    }
 }

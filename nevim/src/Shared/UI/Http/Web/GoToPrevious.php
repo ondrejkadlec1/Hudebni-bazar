@@ -8,20 +8,22 @@ use Nette\Application\Attributes\Persistent;
 
 trait GoToPrevious
 {
-	#[Persistent]
-	public $backlink;
-	public function injectGetBacklink(): void
-	{
-		$this->onStartup[] = function (): void {
-			$this->backlink = $this->getParameter('backlink');
-		};
-	}
-	public function goToPrevious(): void
-	{
-		if (isset($this->backlink)) {
-			$this->restoreRequest($this->backlink);
-		} else {
-			$this->redirect(':Adverts:Home:default');
-		}
-	}
+    #[Persistent]
+    public $backlink;
+
+    public function goToPrevious(): void
+    {
+        if ($this->backlink !== null) {
+            $this->restoreRequest($this->backlink);
+            return;
+        }
+        $this->redirect(':Adverts:Home:default');
+    }
+
+    public function injectGetBacklink(): void
+    {
+        $this->onStartup[] = function (): void {
+            $this->backlink = $this->getParameter('backlink');
+        };
+    }
 }

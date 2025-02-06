@@ -6,6 +6,8 @@ namespace Ondra\App\Users\UI\Http\Web;
 
 use Nette\Application\UI\Form;
 use Nette\Security\User;
+use Ondra\App\Adverts\Application\Query\DTOs\SearchCriteria;
+use Ondra\App\Adverts\UI\Http\Web\AdvertsListControl;
 use Ondra\App\Adverts\UI\Http\Web\AdvertsListFactory;
 use Ondra\App\Adverts\UI\Http\Web\Paginated;
 use Ondra\App\Shared\UI\Http\Web\FrontendPresenter;
@@ -25,18 +27,6 @@ final class ProfilePresenter extends FrontendPresenter
 	) {
 	}
 
-	public function renderDefault(): void
-	{
-		$result = $this->sendQuery(new GetMyProfileQuery())->dto;
-		if ($result instanceof SellerProfileDTO) {
-			$this->template->description = $result->description;
-			$this->template->isSeller = true;
-			$this->template->profile = $result->profile;
-		} else {
-			$this->template->profile = $result;
-			$this->template->isSeller = false;
-		}
-	}
 	public function createComponentChangePwdForm(): Form
 	{
 		$form = $this->factory->create();
@@ -45,5 +35,23 @@ final class ProfilePresenter extends FrontendPresenter
 			$this->redirect('Profile:default');
 		};
 		return $form;
+	}
+
+    public function createComponentMyAdvertsList(): AdvertsListControl
+    {
+        return $this->advertsListFactory->create(new SearchCriteria(sellerId: $this->user->getId()));
+    }
+
+	public function renderDefault(): void
+	{
+		$result = $this->sendQuery(new GetMyProfileQuery())->dto;
+		if ($result instanceof SellerProfileDTO) {
+			$this->template->description = $result->description;
+			$this->template->isSeller = true;
+			$this->template->profile = $result->profile;
+            return;
+		}
+        $this->template->profile = $result;
+        $this->template->isSeller = false;
 	}
 }

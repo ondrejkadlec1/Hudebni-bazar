@@ -20,7 +20,7 @@ final class GetAdvertQueryHandler implements Autowired
     public function __invoke(GetAdvertQuery $query): GetAdvertResponse
    	{
    		$dto = $this->repository->getDetail($query->id);
-   		if (! isset($dto)) {
+   		if ($dto === null) {
    			throw new MissingContentException('advert does not exist', 0);
    		}
    		return new GetAdvertResponse($dto);

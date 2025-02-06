@@ -7,9 +7,6 @@ parameters:
 		database: %env.POSTGRES_DB%
 	cache:
 		enabled: true
-	redis:
-		uri: %env.REDIS_DSN%
-		database: %env.REDIS_SHIPMENT_DB%
 
 database:
 	dsn: 'pgsql:host=%postgresql.host%;dbname=%postgresql.database%'

@@ -11,7 +11,14 @@ trait Paginated
 {
 	use Browsing;
 	private Paginator $paginator;
-	public function injectSetupPaginated(): void
+
+	public function createComponentPaginator(): PaginatorControl
+	{
+		$this->paginator->setItemCount($this->sendQuery(new GetAdvertsCountQuery($this->criteria))->count);
+		return new PaginatorControl($this->paginator);
+	}
+
+    public function injectSetupPaginated(): void
 	{
 		$this->onStartup[] = function () {
 			if ($this->getParameter('page') !== null) {
@@ -25,11 +32,5 @@ trait Paginated
 			$this->offset = $this->paginator->getOffset();
 			$this->limit = $this->paginator->getItemsPerPage();
 		};
-	}
-
-	public function createComponentPaginator(): PaginatorControl
-	{
-		$this->paginator->setItemCount($this->sendQuery(new GetAdvertsCountQuery($this->criteria))->count);
-		return new PaginatorControl($this->paginator);
 	}
 }

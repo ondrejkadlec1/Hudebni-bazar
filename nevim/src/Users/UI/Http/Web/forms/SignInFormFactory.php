@@ -30,7 +30,8 @@ final class SignInFormFactory
 	{
 		try {
 			$this->user->login($data->username, $data->password);
-		} catch (AuthenticationException $e) {
+		}
+        catch (AuthenticationException $e) {
 			if ($e->getCode() === 0) {
 				$form->addError('Takový uživatel tady ani není.');
 			}

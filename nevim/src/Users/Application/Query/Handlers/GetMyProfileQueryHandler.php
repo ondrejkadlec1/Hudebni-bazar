@@ -15,18 +15,19 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 final class GetMyProfileQueryHandler implements Autowired
 {
-	public function __construct(
-		private readonly DatabaseUserReadRepository $repository,
-		private readonly User $user,
-	) {
-	}
+    public function __construct(
+        private readonly DatabaseUserReadRepository $repository,
+        private readonly User                       $user,
+    )
+    {
+    }
 
-	public function __invoke(GetMyProfileQuery $_): GetMyProfileResponse
-	{
-		$response = $this->repository->getAnyProfile($this->user->getId());
-		if (! isset($response)) {
-			throw new MissingContentException('user does not exist');
-		}
-		return new GetMyProfileResponse($response);
-	}
+    public function __invoke(GetMyProfileQuery $_): GetMyProfileResponse
+    {
+        $response = $this->repository->getAnyProfile($this->user->getId());
+        if ($response === null) {
+            throw new MissingContentException('user does not exist');
+        }
+        return new GetMyProfileResponse($response);
+    }
 }

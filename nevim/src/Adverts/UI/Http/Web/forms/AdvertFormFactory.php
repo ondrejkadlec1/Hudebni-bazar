@@ -7,11 +7,17 @@ namespace Ondra\App\Adverts\UI\Http\Web\forms;
 use Nette\Application\UI\Form;
 use Ondra\App\Adverts\Application\Query\Messages\Request\GetStatesQuery;
 use Ondra\App\Adverts\Application\Query\Messages\Request\GetSubordinateCategoriesQuery;
+use Ondra\App\ApplicationConfiguration;
 use Ondra\App\Shared\UI\Http\Web\forms\FormFactory;
 
 final class AdvertFormFactory extends FormFactory
 {
-	public function create(): Form
+
+    public function __construct(private readonly ApplicationConfiguration $configuration)
+    {
+    }
+
+    public function create(): Form
 	{
 		$allCategories = $this->sendQuery(new GetSubordinateCategoriesQuery())->subordinate;
 
@@ -45,8 +51,8 @@ final class AdvertFormFactory extends FormFactory
 		)
 			->addRule(
 				$form::MaxLength,
-				'Maximální počet souborů je' . $_ENV['MAX_IMAGES_PER_ADVERT'] . '.',
-				$_ENV['MAX_IMAGES_PER_ADVERT'],
+                sprintf("Maximální počet souborů je%s.", $this->configuration->get()['imagesPerItem']),
+                $this->configuration->get()['imagesPerItem'],
 			)
 			->addRule($form::Image, 'Soubory musí být .jpg, nebo .png');
 		$form->addSubmit('send', 'Zveřejnit');
@@ -54,6 +60,7 @@ final class AdvertFormFactory extends FormFactory
 
 		$form->onValidate[] = fn () =>
 			$subcategory->setItems($this->sendQuery(new GetSubordinateCategoriesQuery($category->getValue()))->subordinate);
+
 		$form->onValidate[] = fn () =>
 			$subsubcategory->setItems(
 				$this->sendQuery(new GetSubordinateCategoriesQuery($subcategory->getValue()))->subordinate,

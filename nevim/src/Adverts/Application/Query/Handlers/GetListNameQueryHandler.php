@@ -20,7 +20,7 @@ final class GetListNameQueryHandler implements Autowired
     public function __invoke(GetListNameQuery $query): GetListNameResponse
    	{
    		$name = $this->repository->getCategoryName($query->id);
-   		if (! $name) {
+   		if ($name === null) {
    			throw new MissingContentException('category with id ' . $query->id . ' does not exist', 1);
    		}
    		return new GetListNameResponse($name);

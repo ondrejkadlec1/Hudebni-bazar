@@ -13,7 +13,7 @@ final class Bootstrap
 	{
 		$configurator = new Configurator();
 		$appDir = dirname(__DIR__);
-
+        bdump($appDir);
 		define('__WWW_DIR__', $appDir . '/www');
 
 		$configurator->setDebugMode(true);

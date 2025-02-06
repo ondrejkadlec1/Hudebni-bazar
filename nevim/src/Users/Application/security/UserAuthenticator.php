@@ -14,29 +14,32 @@ use Ondra\App\Users\Application\IUserReadRepository;
 
 final class UserAuthenticator implements Authenticator, IdentityHandler
 {
-	public function __construct(
-		private readonly IUserReadRepository $repository,
-		private readonly Passwords $passwords,
-	) {
-	}
-	public function authenticate(string $username, string $password): SimpleIdentity
-	{
-		$passwordHash = $this->repository->getPasswordHash($username);
-		if (! $passwordHash) {
-			throw new AuthenticationException('user does not exist', 0);
-		}
-		if (! $this->passwords->verify($password, $passwordHash)) {
-			throw new AuthenticationException('wrong password', 1);
-		}
-		return $this->repository->getIdentityByUsername($username);
-	}
-	function sleepIdentity(IIdentity $identity): IIdentity
-	{
-		return new SimpleIdentity($this->repository->getAuthtoken($identity->getId()));
-	}
+    public function __construct(
+        private readonly IUserReadRepository $repository,
+        private readonly Passwords           $passwords,
+    )
+    {
+    }
 
-	function wakeupIdentity(IIdentity $identity): ?IIdentity
-	{
-		return $this->repository->getIdentityByAuthtoken($identity->getId());
-	}
+    public function authenticate(string $username, string $password): SimpleIdentity
+    {
+        $passwordHash = $this->repository->getPasswordHash($username);
+        if ($passwordHash === null) {
+            throw new AuthenticationException('user does not exist', 0);
+        }
+        if ($this->passwords->verify($password, $passwordHash)) {
+            return $this->repository->getIdentityByUsername($username);
+        }
+        throw new AuthenticationException('wrong password', 1);
+    }
+
+    function sleepIdentity(IIdentity $identity): IIdentity
+    {
+        return new SimpleIdentity($this->repository->getAuthtoken($identity->getId()));
+    }
+
+    function wakeupIdentity(IIdentity $identity): ?IIdentity
+    {
+        return $this->repository->getIdentityByAuthtoken($identity->getId());
+    }
 }

@@ -19,7 +19,8 @@ final class SellerPresenter extends FrontendPresenter
 			$result = $this->sendQuery(new GetSellerProfileQuery($sellerId))->dto;
 			$this->template->profile = $result->profile;
 			$this->template->description = $result->description;
-		} catch (Exception $e) {
+		}
+        catch (Exception $e) {
 			if ($e->getPrevious() instanceof MissingContentException) {
 				$this->error('Hledaný prodejce neexistuje.', 404);
 			}

@@ -14,17 +14,18 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 final class GetSellerProfileQueryHandler implements Autowired
 {
-	public function __construct(
-		private readonly DatabaseUserReadRepository $repository,
-	) {
-	}
+    public function __construct(
+        private readonly DatabaseUserReadRepository $repository,
+    )
+    {
+    }
 
-	public function __invoke(GetSellerProfileQuery $query): GetSellerProfileResponse
-	{
-		$response = $this->repository->getSellerProfile($query->id);
-		if (! isset($response)) {
-			throw new MissingContentException('seller does not exist');
-		}
-		return new GetSellerProfileResponse($response);
-	}
+    public function __invoke(GetSellerProfileQuery $query): GetSellerProfileResponse
+    {
+        $response = $this->repository->getSellerProfile($query->id);
+        if ($response === null) {
+            throw new MissingContentException('seller does not exist');
+        }
+        return new GetSellerProfileResponse($response);
+    }
 }

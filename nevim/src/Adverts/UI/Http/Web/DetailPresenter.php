@@ -17,14 +17,13 @@ final class DetailPresenter extends FrontendPresenter
 			$queryResponse = $this->sendQuery(new GetAdvertQuery($id));
 		} catch (Exception $e) {
 			if ($e->getPrevious() instanceof MissingContentException) {
-				$this->error('Hledaná nabídka neexistuje', 404);
-			} else {
-				throw $e;
-			}
+                $this->error('Hledaná nabídka neexistuje', 404);
+            }
+			throw $e;
 		}
 		$this->template->advert = $queryResponse->dto;
 		$otherImages = $queryResponse->dto->imageNames;
-		if (! empty($otherImages)) {
+		if ($otherImages === []) {
 			unset($otherImages[0]);
 		}
 		$this->template->imageNames = $otherImages;

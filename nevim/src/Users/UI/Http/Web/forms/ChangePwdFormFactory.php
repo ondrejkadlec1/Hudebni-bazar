@@ -43,7 +43,8 @@ final class ChangePwdFormFactory extends FormFactory
 					$data->newPassword,
 				), $data->oldPassword),
 			);
-		} catch (Exception $e) {
+		}
+        catch (Exception $e) {
 			if ($e->getPrevious()->getCode() === 1) {
 				$form->addError("Špatné heslo");
 			}

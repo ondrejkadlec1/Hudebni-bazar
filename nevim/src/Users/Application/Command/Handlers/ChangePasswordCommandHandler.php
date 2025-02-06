@@ -16,21 +16,23 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 final class ChangePasswordCommandHandler implements Autowired
 {
     public function __construct(
-   		private readonly IUserWriteRepository $repository,
-   		private readonly Passwords $passwords,
-   	) {
-   	}
+        private readonly IUserWriteRepository $repository,
+        private readonly Passwords            $passwords,
+    )
+    {
+    }
+
     public function __invoke(ChangePasswordCommandRequest $command): void
-   	{
-   		$user = $this->repository->getUserById($command->id);
-   		if (! isset($user)) {
-   			throw new Exception('user not found', 0);
-   		}
-   		if (! $this->passwords->verify($command->oldPassword, $user->getPassword())) {
-   			throw new AuthenticationException('wrong password', 1);
-   		}
-   
-   		$user->setPassword($command->newPassword);
-   		$this->repository->save($user);
-   	}
+    {
+        $user = $this->repository->getUserById($command->id);
+        if ($user === null) {
+            throw new Exception('user not found', 0);
+        }
+        if ($this->passwords->verify($command->oldPassword, $user->getPassword()) === null) {
+            throw new AuthenticationException('wrong password', 1);
+        }
+
+        $user->setPassword($command->newPassword);
+        $this->repository->save($user);
+    }
 }
