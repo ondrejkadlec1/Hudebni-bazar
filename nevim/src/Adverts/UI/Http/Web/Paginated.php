@@ -29,8 +29,10 @@ trait Paginated
 			$this->paginator = new Paginator();
 			$this->paginator->setItemsPerPage(12);
 			$this->paginator->setPage($page);
-			$this->offset = $this->paginator->getOffset();
-			$this->limit = $this->paginator->getItemsPerPage();
+            $this->criteria->addArray([
+                'limit' => $this->paginator->getItemsPerPage(),
+                'offset' => $this->paginator->getOffset(),
+            ]);
 		};
 	}
 }

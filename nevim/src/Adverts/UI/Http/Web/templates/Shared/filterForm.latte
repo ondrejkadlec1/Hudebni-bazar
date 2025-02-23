@@ -1,10 +1,10 @@
 {define filterForm}
     <div class="clearfix">
     <form n:name=filterForm id="frm-filterForm">
-        <label>Nejvyšší cena<input n:name=max id="frm-filterForm-max"></label>
-        <label>Nejnižší cena<input n:name=min id="frm-filterForm-min"></label>
+        <label>Nejvyšší cena<input n:name=maxPrice id="frm-filterForm-max"></label>
+        <label>Nejnižší cena<input n:name=minPrice id="frm-filterForm-min"></label>
         <label id="frm-filterForm-stateId">Stav
-        {input stateId}
+        {input stateIds}
         </label>
         <label>Značka<input n:name=brand id="frm-filterForm-brand"></label>
         <input n:name=filter id="frm-filterForm-filter" value="Filtrovat">

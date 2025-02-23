@@ -18,6 +18,7 @@ final class AdvertsListControl extends Control
 	}
 	public function render(): void
 	{
+        bdump($this->criteria);
 		$response = $this->busProvider->sendQuery(new GetAdvertsQuery($this->criteria));
 		$this->template->adverts = $response->dtos;
 		$this->template->render(__DIR__ . "/templates/Shared/advertsList.latte");

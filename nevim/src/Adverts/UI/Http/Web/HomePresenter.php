@@ -19,27 +19,32 @@ final class HomePresenter extends FrontendPresenter
 		$this->recSellerId = '668682c5b1185';
 		$this->recCategoryId = 38;
 	}
+
+	public function createComponentAdvertsListCategory(): AdvertsListControl
+	{
+		return $this->factory->create(SearchCriteria::fromArray(['limit' => 3, 'categoryId' => $this->recCategoryId]));
+	}
+
+	public function createComponentAdvertsListNewest(): AdvertsListControl
+	{
+		return $this->factory->create(SearchCriteria::fromArray(['limit' => 3]));
+	}
+
+	public function createComponentAdvertsListSeller(): AdvertsListControl
+	{
+		return $this->factory->create(SearchCriteria::fromArray(['limit' => 3, 'sellerId' => $this->recSellerId]));
+	}
+
+	public function createComponentAdvertsListStateNew(): AdvertsListControl
+	{
+		return $this->factory->create(SearchCriteria::fromArray(['limit' => 3, 'stateIds' => [1]]));
+	}
+
 	public function renderDefault(): void
 	{
 		$this->template->recCategoryId = $this->recCategoryId;
 		$this->template->recSellerId = $this->recSellerId;
 		$this->template->recCategoryName = $this->sendQuery(new GetListNameQuery($this->recCategoryId))->name;
 		$this->template->recSellerName = $this->sendQuery(new GetSellerNameQuery($this->recSellerId))->name;
-	}
-	public function createComponentAdvertsListCategory(): AdvertsListControl
-	{
-		return $this->factory->create(new SearchCriteria(limit: 3, categoryId: $this->recCategoryId));
-	}
-	public function createComponentAdvertsListNewest(): AdvertsListControl
-	{
-		return $this->factory->create(new SearchCriteria(limit: 3));
-	}
-	public function createComponentAdvertsListSeller(): AdvertsListControl
-	{
-		return $this->factory->create(new SearchCriteria(limit: 3, sellerId: $this->recSellerId));
-	}
-	public function createComponentAdvertsListStateNew(): AdvertsListControl
-	{
-		return $this->factory->create(new SearchCriteria(limit: 3, stateIds: [1]));
 	}
 }

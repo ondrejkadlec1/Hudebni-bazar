@@ -149,8 +149,8 @@ final class DatabaseAdvertReadRepository implements IAdvertReadRepository
         if ($criteria->stateIds) {
             $where["state_id"] = $criteria->stateIds;
         }
-        if ($criteria->brands) {
-            $where["brand"] = $criteria->brands;
+        if ($criteria->brand) {
+            $where["brand"] = $criteria->brand;
         }
         if ($criteria->categoryId) {
             $where[] = $this->connection::literal(

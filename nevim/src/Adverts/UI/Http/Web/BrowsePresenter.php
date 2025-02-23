@@ -12,7 +12,7 @@ use Ondra\App\Shared\UI\Http\Web\FrontendPresenter;
 
 final class BrowsePresenter extends FrontendPresenter
 {
-	use Paginated;
+	use Filtered;
 	public function actionImage(string $imageName): void
 	{
 		$response = $this->sendQuery(new GetItemImageQuery($imageName));
@@ -22,6 +22,7 @@ final class BrowsePresenter extends FrontendPresenter
 
 	public function renderCategory(int $categoryId): void
 	{
+        $this->criteria->addArray(["categoryId" => $categoryId]);
 		try {
 			$this->template->category = $this->sendQuery(
 				new GetListNameQuery($categoryId),
@@ -36,5 +37,9 @@ final class BrowsePresenter extends FrontendPresenter
 
 	public function renderDefault(?string $search = null): void
 	{
+        $search = $this->getParameter('search');
+        if ($search !== null){
+            $this->criteria->addArray(['expression' => $search]);
+        }
 	}
 }

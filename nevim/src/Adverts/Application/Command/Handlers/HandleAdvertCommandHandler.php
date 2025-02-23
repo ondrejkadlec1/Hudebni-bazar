@@ -58,7 +58,7 @@ final class HandleAdvertCommandHandler implements Autowired
             $dto->details,
             $dto->stateId,
             $itemImages,
-            $dto->subsubcategoryId,
+            $dto->lowestCategoryId,
             $this->configuration->get()['imagesPerItem'],
             $dto->brand,
         );
@@ -91,7 +91,7 @@ final class HandleAdvertCommandHandler implements Autowired
             $advert->setItemBrand($dto->brand);
             $advert->setItemDetails($dto->details);
             $advert->setItemStateId($dto->stateId);
-            $advert->setItemLowestCategoryId($dto->subsubcategoryId);
+            $advert->setItemLowestCategoryId($dto->lowestCategoryId);
             $advert->setItemImages($itemImages);
             $this->repository->save($advert);
             return;

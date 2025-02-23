@@ -14,9 +14,9 @@ final class FilterFormFactory extends FormFactory
 	{
 		$states = $this->sendQuery(new GetStatesQuery())->states;
 		$form = new Form();
-		$form->addInteger('max', 'Nejvyšší cena');
-		$form->addInteger('min', 'Nejnižší cena');
-		$form->addCheckboxList('stateId', 'Stav', $states);
+		$form->addInteger('maxPrice', 'Nejvyšší cena');
+		$form->addInteger('minPrice', 'Nejnižší cena');
+		$form->addCheckboxList('stateIds', 'Stav', $states);
 		$form->addText('brand', 'Značka')->setNullable();
 		$form->addSubmit('filter', 'filtrovat');
 		return $form;

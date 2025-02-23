@@ -71,7 +71,6 @@ final class AdvertPresenter extends FrontendPresenter
             try {
                 $this->sendCommand(
                     new HandleAdvertCommandRequest(new AdvertDTO(
-                            $id,
                             $data->name,
                             $data->stateId,
                             $data->price,
@@ -79,6 +78,7 @@ final class AdvertPresenter extends FrontendPresenter
                             $data->quantity,
                             $images,
                             $data->details,
+                            $id,
                             $data->brand,
                         )
                     ),
