@@ -1,14 +1,16 @@
 <?php
 
-namespace Ondra\App\Adverts\UI\Http\Web;
+namespace Ondra\App\Adverts\UI\Http\Web\traits;
 
 use Nette\Application\UI\Form;
 use Ondra\App\Adverts\Application\Query\DTOs\SearchCriteria;
+use Ondra\App\Adverts\UI\Http\Web\forms\FilterFormFactory;
 use Ondra\App\Adverts\UI\Http\Web\templates\Browsing;
 
 trait Filtered
 {
-    use Paginated;
+    private FilterFormFactory $filterFormFactory;
+
     public function createComponentFilterForm(): Form
     {
         $defaults = [];
@@ -42,5 +44,10 @@ trait Filtered
             }
             $this->criteria->addArray($params);
         };
+    }
+
+    public function injectFilterFactory(FilterFormFactory $factory): void
+    {
+        $this->filterFormFactory = $factory;
     }
 }

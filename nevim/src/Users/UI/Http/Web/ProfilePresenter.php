@@ -6,24 +6,20 @@ namespace Ondra\App\Users\UI\Http\Web;
 
 use Nette\Application\UI\Form;
 use Nette\Security\User;
-use Ondra\App\Adverts\Application\Query\DTOs\SearchCriteria;
-use Ondra\App\Adverts\UI\Http\Web\AdvertsListControl;
-use Ondra\App\Adverts\UI\Http\Web\AdvertsListFactory;
-use Ondra\App\Adverts\UI\Http\Web\Paginated;
-use Ondra\App\Shared\UI\Http\Web\FrontendPresenter;
-use Ondra\App\Shared\UI\Http\Web\UsersOnly;
+use Ondra\App\Adverts\UI\Http\Web\base\Browsable;
+use Ondra\App\Adverts\UI\Http\Web\traits\Paginated;
+use Ondra\App\Shared\UI\Http\Web\traits\UsersOnly;
 use Ondra\App\Users\Application\Query\DTOs\SellerProfileDTO;
 use Ondra\App\Users\Application\Query\Messages\GetMyProfileQuery;
 use Ondra\App\Users\UI\Http\Web\forms\ChangePwdFormFactory;
 
-final class ProfilePresenter extends FrontendPresenter
+final class ProfilePresenter extends Browsable
 {
 	use UsersOnly;
 	use Paginated;
 	public function __construct(
 		private readonly User $user,
 		private readonly ChangePwdFormFactory $factory,
-		private readonly AdvertsListFactory $advertsListFactory,
 	) {
 	}
 
@@ -37,13 +33,9 @@ final class ProfilePresenter extends FrontendPresenter
 		return $form;
 	}
 
-    public function createComponentMyAdvertsList(): AdvertsListControl
-    {
-        return $this->advertsListFactory->create(new SearchCriteria(sellerId: $this->user->getId()));
-    }
-
 	public function renderDefault(): void
 	{
+        $this->criteria->addArray(['sellerId' => $this->user->getId()]);
 		$result = $this->sendQuery(new GetMyProfileQuery())->dto;
 		if ($result instanceof SellerProfileDTO) {
 			$this->template->description = $result->description;

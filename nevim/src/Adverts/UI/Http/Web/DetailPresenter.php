@@ -7,7 +7,7 @@ namespace Ondra\App\Adverts\UI\Http\Web;
 use Exception;
 use Ondra\App\Adverts\Application\Query\Messages\Request\GetAdvertQuery;
 use Ondra\App\Shared\Application\Exceptions\MissingContentException;
-use Ondra\App\Shared\UI\Http\Web\FrontendPresenter;
+use Ondra\App\Shared\UI\Http\Web\base\FrontendPresenter;
 
 final class DetailPresenter extends FrontendPresenter
 {

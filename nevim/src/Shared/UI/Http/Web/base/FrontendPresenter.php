@@ -2,26 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Ondra\App\Shared\UI\Http\Web;
+namespace Ondra\App\Shared\UI\Http\Web\base;
 
-use stdClass;
 use Nette\Application\UI\Form;
 use Nette\Application\UI\Presenter;
 use Ondra\App\Adverts\Application\Query\Messages\Request\GetCategoriesQuery;
 use Ondra\App\Shared\Application\CQRS;
 use Ondra\App\Shared\Application\CQRSCapable;
+use stdClass;
 
 abstract class FrontendPresenter extends Presenter implements CQRSCapable
 {
 	use CQRS;
-	protected function beforeRender(): void
-	{
-		parent::beforeRender();
-		$queryResult = $this->sendQuery(new GetCategoriesQuery());
-		$this->template->categories = $queryResult->categories;
-		$this->template->subcategories = $queryResult->subcategories;
-		$this->template->subsubcategories = $queryResult->subsubcategories;
-	}
 	public function createComponentSearchForm(): Form
 	{
 		$form = new Form();
@@ -34,5 +26,14 @@ abstract class FrontendPresenter extends Presenter implements CQRSCapable
 	public function search(stdClass $data): void
 	{
 		$this->redirect(":Adverts:Browse:default", ($data->expression));
+	}
+
+	protected function beforeRender(): void
+	{
+		parent::beforeRender();
+		$queryResult = $this->sendQuery(new GetCategoriesQuery());
+		$this->template->categories = $queryResult->categories;
+		$this->template->subcategories = $queryResult->subcategories;
+		$this->template->subsubcategories = $queryResult->subsubcategories;
 	}
 }

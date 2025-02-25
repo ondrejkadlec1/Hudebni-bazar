@@ -29,7 +29,7 @@ final class DeleteAdvertCommandHandler implements Autowired
         if ($advert === null) {
             throw new MissingContentException('advert does not exist', 0);
         }
-        if ($this->roleAssigner->isAllowed(new AdvertResource($advert->getSeller()->getId()), 'delete')) {
+        if ($this->roleAssigner->isAllowed(new AdvertResource($advert->getSellerId()), 'delete')) {
             $this->repository->delete($advert->getId());
             return;
         }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ondra\App\Adverts\UI\Http\Web;
+namespace Ondra\App\Adverts\UI\Http\Web\controls;
 
 use Nette\Application\UI\Control;
 use Ondra\App\Adverts\Application\Query\DTOs\SearchCriteria;
@@ -21,6 +21,6 @@ final class AdvertsListControl extends Control
         bdump($this->criteria);
 		$response = $this->busProvider->sendQuery(new GetAdvertsQuery($this->criteria));
 		$this->template->adverts = $response->dtos;
-		$this->template->render(__DIR__ . "/templates/Shared/advertsList.latte");
+		$this->template->render(dirname(__DIR__, 1) . "/templates/Shared/advertsList.latte");
 	}
 }

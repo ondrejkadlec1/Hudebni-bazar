@@ -7,12 +7,15 @@ namespace Ondra\App\Adverts\UI\Http\Web;
 use Exception;
 use Ondra\App\Adverts\Application\Query\Messages\Request\GetItemImageQuery;
 use Ondra\App\Adverts\Application\Query\Messages\Request\GetListNameQuery;
+use Ondra\App\Adverts\UI\Http\Web\base\Browsable;
+use Ondra\App\Adverts\UI\Http\Web\traits\Filtered;
+use Ondra\App\Adverts\UI\Http\Web\traits\Paginated;
 use Ondra\App\Shared\Application\Exceptions\MissingContentException;
-use Ondra\App\Shared\UI\Http\Web\FrontendPresenter;
 
-final class BrowsePresenter extends FrontendPresenter
+final class BrowsePresenter extends Browsable
 {
 	use Filtered;
+    use Paginated;
 	public function actionImage(string $imageName): void
 	{
 		$response = $this->sendQuery(new GetItemImageQuery($imageName));

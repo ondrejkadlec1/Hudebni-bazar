@@ -28,14 +28,15 @@ final class DatabaseAdvertWriteRepository implements IAdvertWriteRepository
     {
         $this->connection->beginTransaction();
         try {
+            bdump("step4");
             $toDelete = $this->connection->query("SELECT id, extension FROM item_images WHERE item_id = ?", $id);
-            $this->connection->query("DELETE FROM item_images WHERE item_id = ?", $id);
             $this->connection->query("DELETE FROM adverts WHERE id = ?", $id);
-            $this->connection->query("DELETE FROM items WHERE id = ?", $id);
             $this->connection->commit();
         } catch (Exception $e) {
             $this->connection->rollBack();
+            throw $e;
         }
+        bdump("step5");
         foreach ($toDelete as $row) {
             unlink(sprintf("%s%s_%s.%s", $this->configuration->get()['itemImagesDirectory'], $id, $row->id, $row->extension));
         }
@@ -144,21 +145,21 @@ final class DatabaseAdvertWriteRepository implements IAdvertWriteRepository
         $advertQuery = "INSERT INTO adverts (id, seller_id, price, quantity, created_at) values (?, ?, ?, ?, ?)";
 
         $this->connection->query(
-            $itemQuery,
-            $advert->getItemId(),
-            $advert->getItemName(),
-            $advert->getItemStateId(),
-            $advert->getItemDetails(),
-            $advert->getItemLowestCategoryId(),
-            $advert->getItemBrand(),
-        );
-        $this->connection->query(
             $advertQuery,
             $advert->getId(),
             $advert->getSellerId(),
             $advert->getPrice(),
             $advert->getQuantity(),
             $this->date(),
+        );
+        $this->connection->query(
+            $itemQuery,
+            $advert->getId(),
+            $advert->getItemName(),
+            $advert->getItemStateId(),
+            $advert->getItemDetails(),
+            $advert->getItemLowestCategoryId(),
+            $advert->getItemBrand(),
         );
     }
 
@@ -184,7 +185,7 @@ final class DatabaseAdvertWriteRepository implements IAdvertWriteRepository
         foreach ($advert->getItemImages() as $image) {
             if ($image->getFile() !== null) {
                 $image->moveFile(
-                    sprintf('%s%s_%s.%s', $this->configuration->get()['itemImagesDirectory'], $item->getId(), $image->getId(), $image->getFileExtension())
+                    sprintf('%s%s_%s.%s', $this->configuration->get()['itemImagesDirectory'], $advert->getId(), $image->getId(), $image->getFileExtension())
                 );
             }
         }
@@ -195,7 +196,7 @@ final class DatabaseAdvertWriteRepository implements IAdvertWriteRepository
             $shouldExist,
         );
         foreach ($toDelete as $row) {
-            unlink(sprintf('%s%s_%s.%s', $this->configuration->get()['itemImagesDirectory'], $item->getId(), $row->id, $row->extension));
+            unlink(sprintf('%s%s_%s.%s', $this->configuration->get()['itemImagesDirectory'], $advert->getId(), $row->id, $row->extension));
         }
     }
 }

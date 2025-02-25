@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ondra\App\Shared\UI\Http\Web;
+namespace Ondra\App\Shared\UI\Http\Web\traits;
 
 use Nette\Application\Attributes\Persistent;
 

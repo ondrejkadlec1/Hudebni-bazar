@@ -6,7 +6,9 @@ namespace Ondra\App\Adverts\UI\Http\Web;
 
 use Ondra\App\Adverts\Application\Query\DTOs\SearchCriteria;
 use Ondra\App\Adverts\Application\Query\Messages\Request\GetListNameQuery;
-use Ondra\App\Shared\UI\Http\Web\FrontendPresenter;
+use Ondra\App\Adverts\UI\Http\Web\controls\AdvertsListControl;
+use Ondra\App\Adverts\UI\Http\Web\controls\AdvertsListFactory;
+use Ondra\App\Shared\UI\Http\Web\base\FrontendPresenter;
 use Ondra\App\Users\Application\Query\Messages\GetSellerNameQuery;
 
 final class HomePresenter extends FrontendPresenter

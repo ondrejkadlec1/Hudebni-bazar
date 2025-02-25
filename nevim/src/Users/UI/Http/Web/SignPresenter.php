@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Ondra\App\Users\UI\Http\Web;
 
 use Nette\Application\UI\Form;
-use Ondra\App\Shared\UI\Http\Web\FrontendPresenter;
-use Ondra\App\Shared\UI\Http\Web\GoToPrevious;
+use Ondra\App\Shared\UI\Http\Web\base\FrontendPresenter;
+use Ondra\App\Shared\UI\Http\Web\traits\GoToPrevious;
 use Ondra\App\Users\UI\Http\Web\forms\SignInFormFactory;
 use Ondra\App\Users\UI\Http\Web\forms\SignUpFormFactory;
 
@@ -18,26 +18,12 @@ final class SignPresenter extends FrontendPresenter
 	{
 	}
 
-	public function redirectUser(): void
-	{
-		if ($this->user->isloggedIn()) {
-			$this->flashMessage('Pro tuto akci se musíte odhlásit.');
-			$this->goToPrevious();
-		}
-	}
 	public function actionOut(): void
 	{
 		$this->user->logout();
 		$this->goToPrevious();
 	}
-	public function renderIn(): void
-	{
-		$this->redirectUser();
-	}
-	public function renderUp(): void
-	{
-		$this->redirectUser();
-	}
+
 	public function createComponentSignInForm(): Form
 	{
 		$form = $this->inFactory->create();
@@ -54,5 +40,23 @@ final class SignPresenter extends FrontendPresenter
 			$this->goToPrevious();
 		};
 		return $form;
+	}
+
+	public function redirectUser(): void
+	{
+		if ($this->user->isloggedIn()) {
+			$this->flashMessage('Pro tuto akci se musíte odhlásit.');
+			$this->goToPrevious();
+		}
+	}
+
+	public function renderIn(): void
+	{
+		$this->redirectUser();
+	}
+
+	public function renderUp(): void
+	{
+		$this->redirectUser();
 	}
 }

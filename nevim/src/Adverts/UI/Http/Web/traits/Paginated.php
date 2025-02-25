@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ondra\App\Adverts\UI\Http\Web;
+namespace Ondra\App\Adverts\UI\Http\Web\traits;
 
 use Nette\Utils\Paginator;
 use Ondra\App\Adverts\Application\Query\Messages\Request\GetAdvertsCountQuery;
+use Ondra\App\Adverts\UI\Http\Web\controls\PaginatorControl;
 
 trait Paginated
 {
-	use Browsing;
 	private Paginator $paginator;
 
 	public function createComponentPaginator(): PaginatorControl

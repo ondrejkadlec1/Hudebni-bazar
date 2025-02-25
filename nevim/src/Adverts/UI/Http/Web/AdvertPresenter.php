@@ -5,20 +5,20 @@ declare(strict_types=1);
 namespace Ondra\App\Adverts\UI\Http\Web;
 
 use Exception;
-use Ondra\App\Adverts\Application\Command\DTOs\AdvertDTO;
-use stdClass;
 use Nette\Application\UI\Form;
 use Nette\Http\Request;
-use Ondra\App\Adverts\Application\Command\Messages\HandleAdvertCommandRequest;
+use Ondra\App\Adverts\Application\Command\DTOs\AdvertDTO;
 use Ondra\App\Adverts\Application\Command\Messages\DeleteAdvertCommandRequest;
+use Ondra\App\Adverts\Application\Command\Messages\HandleAdvertCommandRequest;
 use Ondra\App\Adverts\Application\Command\Messages\UpdateAdvertCommandRequest;
 use Ondra\App\Adverts\Application\Query\Messages\Request\GetAdvertQuery;
 use Ondra\App\Adverts\Application\Query\Messages\Request\GetSubordinateCategoriesQuery;
 use Ondra\App\Adverts\UI\Http\Web\forms\AdvertFormFactory;
 use Ondra\App\Shared\Application\Exceptions\MissingContentException;
 use Ondra\App\Shared\Application\Exceptions\PermissionException;
-use Ondra\App\Shared\UI\Http\Web\FrontendPresenter;
-use Ondra\App\Shared\UI\Http\Web\UsersOnly;
+use Ondra\App\Shared\UI\Http\Web\base\FrontendPresenter;
+use Ondra\App\Shared\UI\Http\Web\traits\UsersOnly;
+use stdClass;
 
 final class AdvertPresenter extends FrontendPresenter
 {
@@ -44,6 +44,7 @@ final class AdvertPresenter extends FrontendPresenter
             if ($e->getPrevious() instanceof MissingContentException) {
                 $this->error('Hledaná nabídka (už) neexistuje.', 404);
             }
+            throw $e;
         }
         $this->flashMessage("Úspěšně smazáno");
         $this->redirect(":Users:Profile:default");
