@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Ondra\App\Adverts\Application\Query\DTOs;
 
+use Ondra\App\Shared\Application\Exceptions\InvalidValueException;
+
 final readonly class AdvertDetailDTO
 {
 	public function __construct(

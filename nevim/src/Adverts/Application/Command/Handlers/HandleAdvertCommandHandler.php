@@ -58,10 +58,11 @@ final class HandleAdvertCommandHandler implements Autowired
             $dto->brand,
         );
 
+        $images = [];
         foreach ($dto->images as $imageId => $file) {
-            $item->addItemImage(new ItemImage($imageId, $file));
+            $images[] = new ItemImage($imageId, $file);
         }
-
+        $item->setImages($images);
         $seller = new Seller($this->user->getId());
         $this->repository->save(new Advert(uniqid(), $item, $seller, $dto->price, $dto->quantity));
     }

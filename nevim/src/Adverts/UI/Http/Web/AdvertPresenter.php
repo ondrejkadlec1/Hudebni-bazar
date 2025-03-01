@@ -13,6 +13,7 @@ use Ondra\App\Adverts\Application\Command\Messages\HandleAdvertCommandRequest;
 use Ondra\App\Adverts\Application\Command\Messages\UpdateAdvertCommandRequest;
 use Ondra\App\Adverts\Application\Query\Messages\Request\GetAdvertQuery;
 use Ondra\App\Adverts\Application\Query\Messages\Request\GetSubordinateCategoriesQuery;
+use Ondra\App\Adverts\UI\Http\Web\forms\AdvertFormData;
 use Ondra\App\Adverts\UI\Http\Web\forms\AdvertFormFactory;
 use Ondra\App\Shared\Application\Exceptions\MissingContentException;
 use Ondra\App\Shared\Application\Exceptions\PermissionException;
@@ -53,9 +54,9 @@ final class AdvertPresenter extends FrontendPresenter
     public function createComponentAdvertForm(): Form
     {
         $form = $this->formFactory->create();
-        $form->onSuccess[] = function (Form $form, stdClass $data): void {
+        $form->onSuccess[] = function (Form $form, AdvertFormData $data): void {
             $id = $this->getParameter('id');
-            $imageMask = json_decode((string)$data->keepImages, null, 512, JSON_THROW_ON_ERROR);
+            $imageMask = json_decode($data->keepImages, null, 512, JSON_THROW_ON_ERROR);
             $images = [];
 
             $imageFiles = [];
@@ -63,7 +64,7 @@ final class AdvertPresenter extends FrontendPresenter
                 $imageFiles = $this->httpRequest->getFiles()['images'];
             }
             foreach ($imageMask as $key => $imageId) {
-                if ($imageId === 'uploaded'){
+                if ($imageId === 'uploaded') {
                     $images[$key] = array_shift($imageFiles);
                     continue;
                 }
@@ -151,7 +152,7 @@ final class AdvertPresenter extends FrontendPresenter
         ]);
     }
 
-    private function lowestCategory(stdClass $data): int
+    private function lowestCategory(AdvertFormData $data): int
     {
         if ($data->subsubcategoryId !== null) {
             return $data->subsubcategoryId;

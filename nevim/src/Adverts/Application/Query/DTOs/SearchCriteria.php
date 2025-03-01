@@ -62,6 +62,13 @@ final class SearchCriteria
             if (getType($value) !== self::$allowed[$name]){
                 throw new InvalidValueException('Type of ' . $name . ' should be ' . self::$allowed[$name] . ', but is ' . getType($value) . '.');
             }
+            if (self::$allowed[$name] === 'array'){
+                foreach ($value as $element){
+                    if (getType($element) !== 'int'){
+                        throw new InvalidValueException('Array' . $name . ' should only contain integers.');
+                    }
+                }
+            }
         }
     }
 

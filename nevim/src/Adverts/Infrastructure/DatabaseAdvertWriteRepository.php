@@ -59,11 +59,14 @@ final class DatabaseAdvertWriteRepository implements IAdvertWriteRepository
                 $data->brand,
             );
 
+            $images = [];
             if ($imagesData !== null) {
                 foreach ($imagesData as $imData) {
-                    $item->addItemImage(new ItemImage($imData->id));
+                    $images[] = new ItemImage($imData->id);
                 }
             }
+
+            $item->setImages($images);
 
             $seller = new Seller(
                 $data->seller_id,
