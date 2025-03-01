@@ -28,7 +28,6 @@ final class DatabaseAdvertWriteRepository implements IAdvertWriteRepository
     {
         $this->connection->beginTransaction();
         try {
-            bdump("step4");
             $toDelete = $this->connection->query("SELECT id, extension FROM item_images WHERE item_id = ?", $id);
             $this->connection->query("DELETE FROM adverts WHERE id = ?", $id);
             $this->connection->commit();
@@ -36,7 +35,6 @@ final class DatabaseAdvertWriteRepository implements IAdvertWriteRepository
             $this->connection->rollBack();
             throw $e;
         }
-        bdump("step5");
         foreach ($toDelete as $row) {
             unlink(sprintf("%s%s_%s.%s", $this->configuration->get()['itemImagesDirectory'], $id, $row->id, $row->extension));
         }
@@ -52,22 +50,20 @@ final class DatabaseAdvertWriteRepository implements IAdvertWriteRepository
         if ($data !== null) {
             $imagesData = $this->explorer->table('item_images')->where('item_id = ?', $data->item_id)->order('rank ASC');
 
-            $images = [];
-            if ($imagesData !== null) {
-                foreach ($imagesData as $imData) {
-                    $images[] = new ItemImage($imData->id);
-                }
-            }
-
             $item = new Item(
                 $data->name,
                 $data->details,
                 $data->state_id,
-                $images,
                 $data->lowest_category_id,
                 $this->configuration->get()['imagesPerItem'],
                 $data->brand,
             );
+
+            if ($imagesData !== null) {
+                foreach ($imagesData as $imData) {
+                    $item->addItemImage(new ItemImage($imData->id));
+                }
+            }
 
             $seller = new Seller(
                 $data->seller_id,

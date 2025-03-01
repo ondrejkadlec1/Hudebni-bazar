@@ -63,7 +63,16 @@ final class AdvertPresenter extends FrontendPresenter
                 $imageFiles = $this->httpRequest->getFiles()['images'];
             }
             foreach ($imageMask as $key => $imageId) {
-                $images[$key] = ($imageId === 'uploaded') ? array_shift($imageFiles) : (int)$imageId;
+                if ($imageId === 'uploaded'){
+                    $images[$key] = array_shift($imageFiles);
+                    continue;
+                }
+                if (is_numeric($imageId)) {
+                    $images[$key] = (int)$imageId;
+                    continue;
+                }
+                $this->error('Odeslána neplatná data.', 400);
+
             }
             if (count($imageMask) !== count($images) or $imageFiles !== []) {
                 $this->error('Odeslána neplatná data.', 400);

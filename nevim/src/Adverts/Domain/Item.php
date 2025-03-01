@@ -6,16 +6,23 @@ namespace Ondra\App\Adverts\Domain;
 
 final class Item
 {
+    private ImageCollection $itemImages;
+
     public function __construct(
-        private string  $name,
-        private string  $details,
-        private int     $stateId,
-        private array   $itemImages,
-        private int     $lowestCategoryId,
-        private int $maxImages,
-        private ?string $brand = null,
+        private string       $name,
+        private string       $details,
+        private int          $stateId,
+        private int          $lowestCategoryId,
+        private readonly int $maxImages,
+        private ?string      $brand = null,
     )
     {
+        $this->itemImages = new ImageCollection($this->maxImages);
+    }
+
+    public function clearImages(): void
+    {
+        $this->itemImages->clear();
     }
 
     public function getBrand(): ?string
@@ -28,7 +35,7 @@ final class Item
         return $this->details;
     }
 
-    public function getItemImages(): array
+    public function getItemImages(): ImageCollection
     {
         return $this->itemImages;
     }
@@ -58,9 +65,12 @@ final class Item
         $this->details = $details;
     }
 
-    public function setItemImages(array $itemImages): void
+    public function setImages(array $images): void
     {
-        $this->itemImages = array_slice($itemImages, 0, $this->maxImages);
+        $this->itemImages->clear();
+        foreach ($images as $image){
+            $this->itemImages->add($image);
+        }
     }
 
     public function setLowestCategoryId(int $lowestCategoryId): void

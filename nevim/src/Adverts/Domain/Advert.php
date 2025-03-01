@@ -31,7 +31,7 @@ final class Advert
         return $this->item->getDetails();
     }
 
-    public function getItemImages(): array
+    public function getItemImages(): ImageCollection
     {
         return $this->item->getItemImages();
     }
@@ -78,7 +78,7 @@ final class Advert
 
     public function setItemImages(array $images): void
     {
-        $this->item->setItemImages($images);
+        $this->item->setImages($array);
     }
 
     public function setItemLowestCategoryId(int $categoryId): void

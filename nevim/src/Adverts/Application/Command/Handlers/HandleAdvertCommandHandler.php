@@ -49,19 +49,18 @@ final class HandleAdvertCommandHandler implements Autowired
 
     private function create(AdvertDTO $dto): void
     {
-        $itemImages = [];
-        foreach ($dto->images as $imageId => $file) {
-            $itemImages[] = new ItemImage($imageId, $file);
-        }
         $item = new Item(
             $dto->name,
             $dto->details,
             $dto->stateId,
-            $itemImages,
             $dto->lowestCategoryId,
             $this->configuration->get()['imagesPerItem'],
             $dto->brand,
         );
+
+        foreach ($dto->images as $imageId => $file) {
+            $item->addItemImage(new ItemImage($imageId, $file));
+        }
 
         $seller = new Seller($this->user->getId());
         $this->repository->save(new Advert(uniqid(), $item, $seller, $dto->price, $dto->quantity));
